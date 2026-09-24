@@ -134,7 +134,7 @@ class OfferApi extends KonnektiveApi {
                 $this->clearCampaignCache($this->campaignId); //force a fresh fetch below
             }
 
-            //get the campaign setup
+            //get the campaign setup //test comment
             $resp=json_decode($this->get_campaign($this->campaignId));
         
             if($resp->result==="SUCCESS"){   
