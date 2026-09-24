@@ -8,7 +8,7 @@
  * MISSING from a target language file compared to src/system/en.js - it never
  * overwrites an existing translation. Re-running this script is safe and
  * cheap; it's the tool to use after adding a new key to src/system/en.js.
- *
+ * test
  * Usage: php src/systemLangTranslator.php   (from the project root, CLI)
  *     or open http://localhost/melaraapex/src/systemLangTranslator.php in a browser
  */
