@@ -808,8 +808,8 @@ class OfferApi extends KonnektiveApi {
                                 $folders['id'] = 'Bahasa Indonesia' ;
                                 break;
 
-                            case 'pt':
-                                $folders['pt'] = 'Português' ;
+                            case 'pt-pt':
+                                $folders['pt-pt'] = 'Português' ;
                                 break;
 
                             case 'ar':
