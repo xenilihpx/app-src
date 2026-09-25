@@ -1655,120 +1655,159 @@
         }
 
         
+        //max wait (ms) for EF.click before falling back to the direct click request
+        form_obj.efClickTimeout=8000;
+
+        //resolves with the transaction id of the click fired on this page load ("" if none could be generated)
+        form_obj.efClickPromise=null;
+
+        //EF.click through the Everflow SDK. The SDK promise never settles when /sdk/click returns no transaction id,
+        //so it is capped by a timeout, and when the SDK is missing (blocked) or fails, /sdk/click is called directly.
+        //Never rejects, resolves with the transaction id or "".
+        form_obj.efClick=function(options){
+            var sdkClick = (typeof EF!="undefined")
+                ? form_obj.efPromiseTimeout(EF.click(options), form_obj.efClickTimeout, "EF.click")
+                : Promise.reject(new Error("Everflow SDK not loaded"));
+
+            return sdkClick.then(function(transactionId){
+                return transactionId || form_obj.efClickRequest(options);
+            }, function(err){
+                console.warn(err && err.message ? err.message : err);
+                return form_obj.efClickRequest(options);
+            });
+        }
+
+        //same request the SDK makes for EF.click (GET {tracking_domain}/sdk/click?...&async=json)
+        form_obj.efClickRequest=function(options){
+            if(!options.offer_id && !options.transaction_id){
+                console.warn('Everflow click skipped: missing "offer_id"');
+                return Promise.resolve("");
+            }
+            var query={
+                _ef_transaction_id: options.transaction_id || "",
+                oid: options.offer_id || "",
+                affid: options.affiliate_id || "",
+                async: "json"
+            };
+            ["uid","source_id","sub1","sub2","sub3","sub4","sub5","sub6","sub7","sub8","sub9","sub10"].forEach(function(key){
+                if(options[key]!==undefined && options[key]!==null && options[key]!==""){
+                    query[key]=options[key];
+                }
+            });
+
+            var request = fetch(options.tracking_domain + "/sdk/click?" + $.param(query), {
+                method: "GET",
+                credentials: "include"
+            }).then(function (response) {
+                return response.json();
+            }).then(function (resp) {
+                return (resp && resp.transaction_id) ? resp.transaction_id : "";
+            });
+
+            return form_obj.efPromiseTimeout(request, form_obj.efClickTimeout, "Everflow click request").catch(function (err) {
+                console.warn(err && err.message ? err.message : err);
+                return "";
+            });
+        }
+
         form_obj.triggerEFClick = function(param, retryCount){
             retryCount = retryCount || 0;
-            if(typeof EF=="undefined"){
-                //Everflow SDK (scripts/main.js) may still be loading or blocked by the browser/ad-blocker;
-                //retry for ~6s before giving up so the click (and transaction_id) isn't silently dropped
-                if(retryCount<20){
-                    setTimeout(function(){
-                        form_obj.triggerEFClick(param, retryCount+1);
-                    },300);
-                }
+            if(typeof EF=="undefined" && retryCount<20){
+                //Everflow SDK (scripts/main.js) may still be loading; wait ~6s for it,
+                //after that efClick() calls /sdk/click directly so the transaction_id is still generated
+                setTimeout(function(){
+                    form_obj.triggerEFClick(param, retryCount+1);
+                },300);
                 return;
             }
-            if(param.transaction_id==""){
-                if (EF.urlParameter("affid2")) {
-                    EF.click({
+            if(!param.transaction_id){
+                //direct links may come without oid in the url, fall back to the offer's configured Everflow offer id
+                param.oid = param.oid || form_obj.getEFOfferId();
+
+                var ddmClick = function(){
+                    return form_obj.efClick({
+                        tracking_domain: $("#ddm_tracking_url").val() || "https://www.b04jdmd.com",
+                        offer_id: param.oid,
+                        affiliate_id: param.affId,
+                        sub1: param.sub1,
+                        sub2: param.sub2,
+                        sub3: param.sub3,
+                        sub4: param.sub4,
+                        sub5: param.sub5,
+                        sub6: param.sub6,
+                        sub7: param.sub7,
+                        sub8: param.sub8,
+                        sub9: param.sub9,
+                        sub10: param.sub10,
+                        uid: param.uid,
+                        source_id: param.source_id,
+                        transaction_id: param.transaction_id || ""
+                    }).then(function (transactionId) {
+                        // transactionId containts the unique Everflow transaction ID
+                        form_obj.saveEFTransactionId(param, transactionId);
+                        return transactionId;
+                    });
+                };
+
+                if (getQueryStringByName("affid2")) {
+                    form_obj.efClickPromise = form_obj.efClick({
                             tracking_domain: $("#affiliate_tracking_url").val() || "https://www.smartbuy4u.club",
-                            offer_id: EF.urlParameter("oid2"),
-                            affiliate_id: EF.urlParameter("affid2"),
-                            sub1: EF.urlParameter("sub1"),
-                            sub2: EF.urlParameter("sub2"),
-                            sub3: EF.urlParameter("sub3"),
-                            sub4: EF.urlParameter("sub4"),
-                            sub5: EF.urlParameter("sub5"),
-                            sub6: EF.urlParameter("sub6"),
-                            sub7: EF.urlParameter("sub7"),
-                            sub8: EF.urlParameter("sub8"),
-                            sub9: EF.urlParameter("sub9"),
-                            sub10: EF.urlParameter("sub10"),
-                            uid: EF.urlParameter('uid '),
-                            transaction_id: EF.urlParameter('_ef_transaction_id ')
+                            offer_id: getQueryStringByName("oid2"),
+                            affiliate_id: getQueryStringByName("affid2"),
+                            sub1: getQueryStringByName("sub1"),
+                            sub2: getQueryStringByName("sub2"),
+                            sub3: getQueryStringByName("sub3"),
+                            sub4: getQueryStringByName("sub4"),
+                            sub5: getQueryStringByName("sub5"),
+                            sub6: getQueryStringByName("sub6"),
+                            sub7: getQueryStringByName("sub7"),
+                            sub8: getQueryStringByName("sub8"),
+                            sub9: getQueryStringByName("sub9"),
+                            sub10: getQueryStringByName("sub10"),
+                            uid: getQueryStringByName("uid"),
+                            transaction_id: getQueryStringByName("_ef_transaction_id")
                     }).then(function(transaction_id){
-
-                            if(transaction_id!=""){
-                                sessionStorage.setItem("Adv_offerId_"+getCurrentOffer(),EF.urlParameter("oid2"));
-                                sessionStorage.setItem("Adv_transId_"+getCurrentOffer(),transaction_id);                                
-                            }else{
-                                sessionStorage.setItem("Adv_offerId_"+getCurrentOffer(),"");
-                                sessionStorage.setItem("Adv_transId_"+getCurrentOffer(),"");  
-                            }
-
-                            EF.click({
-                                tracking_domain: $("#ddm_tracking_url").val() || "https://www.b04jdmd.com",
-                                offer_id: param.oid,
-                                affiliate_id: param.affId,
-                                sub1: param.sub1,
-                                sub2: param.sub2,
-                                sub3: param.sub3,
-                                sub4: param.sub4,
-                                sub5: param.sub5,
-                                sub6: param.sub6,
-                                sub7: param.sub7,
-                                sub8: param.sub8,
-                                sub9: param.sub9,
-                                sub10: param.sub10,
-                                uid: param.uid, 
-                                source_id: param.source_id,
-                            }).then(function (transactionId) {                
-                                    // transactionId containts the unique Everflow transaction ID
-                                    if (param.transaction_id == '') {                 
-                                            var data = form_obj.getDataStorage();
-                                            if (Object.keys(data).length!=0) {
-                                                data.transaction_id = transactionId;
-                                                sessionStorage.setItem("offer_" + getCurrentOffer(), JSON.stringify(data));
-                                            }
-                                    }
-
-                                    if(transactionId!=""){
-                                        form_obj.afterEFClicked();
-                                        $("#everflow_trans_id").val(transactionId);                                        
-                                    }
-                            });
+                            sessionStorage.setItem("Adv_offerId_"+getCurrentOffer(), transaction_id ? getQueryStringByName("oid2") : "");
+                            sessionStorage.setItem("Adv_transId_"+getCurrentOffer(), transaction_id || "");
+                            return ddmClick();
                     });
                 } else {
-                        EF.click({
-                            tracking_domain: $("#ddm_tracking_url").val() || "https://www.b04jdmd.com",
-                            offer_id: param.oid,
-                            affiliate_id: param.affId,
-                            sub1: param.sub1,
-                            sub2: param.sub2,
-                            sub3: param.sub3,
-                            sub4: param.sub4,
-                            sub5: param.sub5,
-                            sub6: param.sub6,
-                            sub7: param.sub7,
-                            sub8: param.sub8,
-                            sub9: param.sub9,
-                            sub10: param.sub10,
-                            uid: param.uid,
-                            source_id: param.source_id,
-                            transaction_id: param.transaction_id
-                        }).then(function (transactionId) {                
-                            // transactionId containts the unique Everflow transaction ID
-                            if (param.transaction_id == '') {                 
-                                var data = form_obj.getDataStorage();
-                                if (Object.keys(data).length!=0) {
-                                    data.transaction_id = transactionId;
-                                    sessionStorage.setItem("offer_" + getCurrentOffer(), JSON.stringify(data));
-                                }
-                            }
-
-                            if(transactionId!=""){
-                                form_obj.afterEFClicked();
-                                $("#everflow_trans_id").val(transactionId);
-                            }
-                        });
+                    form_obj.efClickPromise = ddmClick();
                 }
             }
-            
+
+        }
+
+        //store the transaction id generated by EF.click so the server side conversion can use it
+        form_obj.saveEFTransactionId=function(param, transactionId){
+            if(!transactionId){
+                return;
+            }
+            var data = form_obj.getDataStorage();
+            if (Object.keys(data).length==0) {
+                data = param; //click finished before the click data was stored
+            }
+            data.transaction_id = transactionId;
+            sessionStorage.setItem("offer_" + getCurrentOffer(), JSON.stringify(data));
+
+            $("#everflow_trans_id").val(transactionId);
+            form_obj.afterEFClicked();
+        }
+
+        //Everflow offer id: url oid/offer_id first, then the offer id configured for this offer (everflowOfferId)
+        form_obj.getEFOfferId=function(){
+            return getQueryStringByName("oid") || getQueryStringByName("offer_id") || $("#everFlowOfferId").val() || "";
+        }
+
+        //transaction id passed by the tracking link redirect; empty on direct links, where EF.click has to generate it
+        form_obj.getEFTransactionIdFromUrl=function(){
+            return getQueryStringByName("transaction_id") || getQueryStringByName("_ef_transaction_id");
         }
 
         form_obj.efClickData=function(){
             var _kn = {
                         affId: getQueryStringByName('affId') || getQueryStringByName('affid'),
-                        transaction_id: getQueryStringByName('transaction_id'),
+                        transaction_id: form_obj.getEFTransactionIdFromUrl(),
                         c1: getQueryStringByName('c1'),
                         c2: getQueryStringByName('c2'),
                         c3: getQueryStringByName('c3'),
@@ -1777,8 +1816,9 @@
                     }
 
                     //add everflow tracking parameters thru oid reserve paramater
-                    if(getQueryStringByName("offer_id")!="" || getQueryStringByName("oid")!=""){
-                        _kn.oid=getQueryStringByName("oid") || getQueryStringByName('offer_id') || $('#everFlowOfferId').val();
+                    //(falls back to the configured offer id so direct links without oid still get a transaction id)
+                    if(form_obj.getEFOfferId()!=""){
+                        _kn.oid=form_obj.getEFOfferId();
                        
                         if (getQueryStringByName('sub1') != '') {
                             _kn.sub1 = getQueryStringByName('sub1');
@@ -1827,15 +1867,16 @@
                    $("body").append("<input type='hidden' id='everflow_trans_id' value=''/>");
                 }
         
-                if(getQueryStringByName('transaction_id')!="" && (getQueryStringByName('affId') != '' || getQueryStringByName('affid') != '')){
+                if(form_obj.getEFTransactionIdFromUrl()!="" && (getQueryStringByName('affId') != '' || getQueryStringByName('affid') != '')){
                     sessionStorage.setItem("offer_" + getCurrentOffer(), JSON.stringify(form_obj.efClickData()));
-                    $("#everflow_trans_id").val(getQueryStringByName('transaction_id'));
+                    $("#everflow_trans_id").val(form_obj.getEFTransactionIdFromUrl());
                     return;
                 }
-        
-                if (getQueryStringByName('affId') != '' || getQueryStringByName('affid') != '') {                    
-                    
-                    if(form_obj.getDataPropertyValue("click_ef")!=true || getQueryStringByName("transaction_id")==""){
+
+                //direct link (no transaction id in the url): EF.click generates the transaction id
+                if (getQueryStringByName('affId') != '' || getQueryStringByName('affid') != '') {
+
+                    if(form_obj.getDataPropertyValue("click_ef")!=true || form_obj.getEFTransactionIdFromUrl()==""){
                         form_obj.triggerEFClick(form_obj.efClickData());//trigger everflow click event
                         sessionStorage.setItem("offer_" + getCurrentOffer(), JSON.stringify(form_obj.efClickData()));
                     }        
@@ -2226,10 +2267,6 @@
                             var items=form_obj.getCartItems(cartData, model);
                             form_obj.getResponse(items.model, function (data) {
                                 //success callback
-                                for (var i in data.message.items) {
-                                    var totalAmount = parseFloat(data.message.items[i].shipping) + parseFloat(data.message.items[i].price);
-                                    form_obj.conversionEverflowPerEvent(totalAmount.toFixed(2), data.message.items[i].name, data.paySource);
-                                }
                                 form_obj.nextPage(data, items.addOnAmount); //redirect to next page
                             }, function (data) {
                                 //failure callback   
@@ -2271,8 +2308,107 @@
             // intentionally blank function
         }
 
+        //Everflow conversion promises still running; nextPage() waits for all of them before redirecting
+        form_obj.pendingConversions=[];
+        form_obj.currentOrderId="";
+
+        //fires conversionEverflowPerEvent for every item of a successful purchase
+        form_obj.firePerEventConversions=function (data) {
+            if (!data || !data.message || !data.message.items) {
+                return;
+            }
+            if (data.message.hasOwnProperty("duplicateOrder") && data.message.duplicateOrder) {
+                return;
+            }
+            form_obj.currentOrderId = data.message.orderId;
+            for (var i in data.message.items) {
+                try {
+                    var totalAmount = parseFloat(data.message.items[i].shipping) + parseFloat(data.message.items[i].price);
+                    form_obj.conversionEverflowPerEvent(totalAmount.toFixed(2), data.message.items[i].name, data.paySource);
+                } catch (err) {
+                    //never block the redirect because of a per event conversion error
+                    console.warn(err && err.message ? err.message : err);
+                }
+            }
+        }
+
+        //max wait (ms) for the conversion API call before redirecting anyway, so the redirect is never blocked forever
+        form_obj.efConversionTimeout=5000;
+
+        form_obj.efPromiseTimeout=function(promise, ms, label){
+            return new Promise(function (resolve, reject) {
+                var timer=setTimeout(function(){
+                    reject(new Error(label+" timed out after "+ms+"ms"));
+                }, ms);
+                promise.then(function (value) {
+                    clearTimeout(timer);
+                    resolve(value);
+                }, function (err) {
+                    clearTimeout(timer);
+                    reject(err);
+                });
+            });
+        }
+
+        //Creates the Everflow conversion server side through the Everflow Network API
+        //(Create Conversions with Transaction IDs) instead of the EF.conversion() JS SDK.
+        //Resolves with the transaction_id, rejects if the conversion could not be created.
+        form_obj.fireEverflowConversion=function(params, sessionOrderId){
+            return form_obj.waitEFTransactionId(params.transaction_id).then(function (transaction_id) {
+                if (!transaction_id) {
+                    throw new Error("Everflow conversion skipped: no transaction_id");
+                }
+                params.transaction_id = transaction_id;
+                return form_obj.createEverflowConversion(params, sessionOrderId);
+            });
+        }
+
+        //resolves with the given transaction id, or when it's empty, with the one from the EF.click
+        //still running on this page (direct affiliate link), waiting at most efConversionTimeout
+        form_obj.waitEFTransactionId=function(transaction_id){
+            if (transaction_id || !form_obj.efClickPromise) {
+                return Promise.resolve(transaction_id || form_obj.getDataPropertyValue("transaction_id") || "");
+            }
+            return form_obj.efPromiseTimeout(form_obj.efClickPromise, form_obj.efConversionTimeout, "EF.click").catch(function (err) {
+                console.warn(err && err.message ? err.message : err);
+                return form_obj.getDataPropertyValue("transaction_id") || "";
+            });
+        }
+
+        form_obj.createEverflowConversion=function(params, sessionOrderId){
+            var request = fetch(url, {
+                method: 'POST',
+                keepalive: true, //let the request finish even if the page navigates away
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    call_type: "ef_create_conversion",
+                    token_: $("#token").attr("token"),
+                    orderId: sessionOrderId,
+                    offer_id: params.offer_id,
+                    event_id: params.event_id || 0,
+                    amount: params.amount,
+                    order_id: params.order_id,
+                    transaction_id: params.transaction_id
+                })
+            }).then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(function (resp) {
+                if (!resp || resp.result != "SUCCESS") {
+                    throw new Error("Everflow conversion failed: " + (resp && resp.message ? resp.message : "unknown error"));
+                }
+                return params.transaction_id;
+            });
+
+            return form_obj.efPromiseTimeout(request, form_obj.efConversionTimeout, "Everflow conversion");
+        }
+
         form_obj.conversionEverflow3ds=function(){
-             if (typeof EF != "undefined" && (getQueryStringByName("main")=="true" || getQueryStringByName("upsell")=="true")) {
+             if (getQueryStringByName("main")=="true" || getQueryStringByName("upsell")=="true") {
                  var amount=0, params={};
                  if(getQueryStringByName("main")=="true"){
                     amount=(parseFloat(getQueryStringByName("amount"))).toFixed(2);
@@ -2281,7 +2417,6 @@
                         amount: amount,
                         order_id: getQueryStringByName("orderId"),
                         transaction_id: form_obj.getDataPropertyValue("transaction_id"),
-                        tracking_domain: "https://www.b04jdmd.com",
                     };
                  }else if(getQueryStringByName("upsell")=="true"){
                     amount= parseFloat(getQueryStringByName("amount")).toFixed(2);
@@ -2290,31 +2425,33 @@
                         amount: amount,
                         order_id: getQueryStringByName("oid"),
                         transaction_id: form_obj.getDataPropertyValue("transaction_id"),
-                        tracking_domain: "https://www.b04jdmd.com",
                         event_id: getQueryStringByName("event_id")
                     };
                  }
 
-                EF.conversion(params); 
-                form_obj.execAdditionalBaseConversion(amount);                
+                form_obj.fireEverflowConversion(params, getQueryStringByName("orderId")).catch(function (err) {
+                    console.warn(err && err.message ? err.message : err);
+                });
+                form_obj.execAdditionalBaseConversion(amount);
              }
         }
 
         form_obj.conversionEverflow=function(data, event_id){
 
-            if (typeof EF != "undefined" && !data.duplicateOrder) {
-                var ef_offer_id = (getQueryStringByName("oid")!="")? getQueryStringByName("oid") : form_obj.getDataPropertyValue("oid"); 
+            if (!data.duplicateOrder) {
+                var ef_offer_id = (getQueryStringByName("oid")!="")? getQueryStringByName("oid") : form_obj.getDataPropertyValue("oid");
                 var ef_affId    = (getQueryStringByName("affId")!="")? getQueryStringByName("affId") :form_obj.getDataPropertyValue("affId"); 
                 var ef_transaction_id = (getQueryStringByName("transaction_id")!="")? getQueryStringByName("transaction_id") :form_obj.getDataPropertyValue("transaction_id");
                     ef_transaction_id = (ef_transaction_id=="")? $("#everflow_trans_id").val() : ef_transaction_id;
                 var ef_currency = ($("#prodCurrency").length!=0)? $("#prodCurrency").val(): "USD";
+                //per event conversions (e.g. secureship) only pass totalAmount, so fallback to the current order id
+                var orderId = data.orderId || form_obj.currentOrderId;
                 if (ef_offer_id !="" && ef_affId !="") {
-                    var params = { 
+                    var params = {
                         offer_id: ef_offer_id,
                         amount: parseFloat(data.totalAmount),
-                        order_id: data.orderId,
+                        order_id: orderId,
                         transaction_id: ef_transaction_id,
-                        tracking_domain: "https://www.b04jdmd.com",
                     };
 
                     if (typeof event_id != 'undefined') {
@@ -2325,19 +2462,18 @@
                         params.event_id = $('#everFlowEventId').val();
                     }
 
-                    return new Promise(function (resolve, reject) {                       
-                            EF.conversion(params).then(function (conversion) {
-                                if (typeof conversion.transaction_id == "undefined") {
-                                    reject();
-                                } else {
-                                if(typeof params.event_id == "undefined") {
-                                        form_obj.execAdditionalBaseConversion(params.amount);  
-                                        form_obj.purchaseExec(data.purchaseData); // for purchase event  
-                                    }                
-                                    resolve(conversion.transaction_id);
-                                }
-                            });
+                    var conversion = form_obj.fireEverflowConversion(params, orderId).then(function (transaction_id) {
+                        if(typeof params.event_id == "undefined") {
+                            form_obj.execAdditionalBaseConversion(params.amount);
+                            form_obj.purchaseExec(data.purchaseData); // for purchase event
+                        }
+                        return transaction_id;
                     });
+                    //track it para hulaton sa nextPage() before mo-redirect
+                    form_obj.pendingConversions.push(conversion.catch(function (err) {
+                        console.warn(err && err.message ? err.message : err);
+                    }));
+                    return conversion;
                 } else {
                     return new Promise(function (resolve, reject) {
                         reject();
@@ -2418,11 +2554,14 @@
                     });                     
                 }
             }
-            form_obj.EFConversionInit(data, addAmount, pageType).then(function (resolve) {
-                
-                redirect(data);
-            }).catch(function (reject) {
-                
+            form_obj.pendingConversions=[];
+            var mainConversion = form_obj.EFConversionInit(data, addAmount, pageType).catch(function () {});
+            if (data.result.toLowerCase() == "success") {
+                form_obj.firePerEventConversions(data); //per event conversions (e.g. secureship)
+            }
+
+            //wait for the main and all per event conversions (each one is capped by efConversionTimeout)
+            Promise.all([mainConversion].concat(form_obj.pendingConversions)).then(function () {
                 redirect(data);
             });//EF conversion
         }
@@ -2553,10 +2692,6 @@
                  form_obj.progressModal(window.i18nData['processing'] || 'Processing request...');
                  form_obj.getResponse(model, function (data) {
                                 //success callback
-                                for (var i in data.message.items) {
-                                    var totalAmount = parseFloat(data.message.items[i].shipping) + parseFloat(data.message.items[i].price);
-                                    form_obj.conversionEverflowPerEvent(totalAmount.toFixed(2), data.message.items[i].name, data.paySource);
-                                }
                                 form_obj.nextPage(data, parseFloat(data.message.addOnTotal)); //redirect to next page
                 }, function (data) {
                                 //failure callback 
@@ -2928,10 +3063,6 @@
                             el.removeClass("hasClicked_");
 
                             //success callback credit card and paypal enabled reference transaction
-                            for (var i in data.message.items) {
-                                    var totalAmount = parseFloat(data.message.items[i].shipping) + parseFloat(data.message.items[i].price);
-                                    form_obj.conversionEverflowPerEvent(totalAmount.toFixed(2), data.message.items[i].name, data.paySource);
-                            }
                             var price=parseFloat($("#prod_id").attr("unitprice")) * parseInt($("#prod_id").attr("quantity"));
                             var shipping=parseFloat($("#prod_id").attr("shipping")) * parseInt($("#prod_id").attr("quantity"));
                             var upsaleAmount = (price + shipping).toFixed(2); 
@@ -3421,10 +3552,6 @@
                                                 form_obj.progressModal(window.i18nData['processing'] || "Processing request...");
                                                 form_obj.getResponse(items.model, function (data) {
                                                     //success callback
-                                                    for (var i in data.message.items) {
-                                                        var totalAmount = parseFloat(data.message.items[i].shipping) + parseFloat(data.message.items[i].price);
-                                                        form_obj.conversionEverflowPerEvent(totalAmount.toFixed(2), data.message.items[i].name, data.paySource);
-                                                    }
                                                     form_obj.nextPage(data, items.addOnAmount); //redirect to next page
                                                 }, function (data) {
                                                     //failure callback   
@@ -3443,10 +3570,6 @@
                                         form_obj.progressModal(window.i18nData['processing'] || "Processing request...");          
                                         form_obj.getResponse(items, function (data) {                                           
                                                 //success callback credit card and paypal enabled reference transaction
-                                                for (var i in data.message.items) {
-                                                        var totalAmount = parseFloat(data.message.items[i].shipping) + parseFloat(data.message.items[i].price);
-                                                        form_obj.conversionEverflowPerEvent(totalAmount.toFixed(2), data.message.items[i].name, data.paySource);
-                                                }
                                                 var price=parseFloat($("#prod_id").attr("unitprice")) * parseInt($("#prod_id").attr("quantity"));
                                                 var shipping=parseFloat($("#prod_id").attr("shipping")) * parseInt($("#prod_id").attr("quantity"));
                                                 var upsaleAmount = (price + shipping).toFixed(2); 

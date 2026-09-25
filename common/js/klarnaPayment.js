@@ -304,10 +304,6 @@
                             var items=CRMIntegrated.getCartItems(cartData, model);
                             CRMIntegrated.getResponse(items.model, function (data) {
                                 //success callback
-                                for (var i in data.message.items) {
-                                    var totalAmount = parseFloat(data.message.items[i].shipping) + parseFloat(data.message.items[i].price);
-                                    CRMIntegrated.conversionEverflowPerEvent(totalAmount.toFixed(2), data.message.items[i].name, data.paySource);
-                                }
                                 CRMIntegrated.nextPage(data, items.addOnAmount); //redirect to next page
                             }, function (data) {
                                 //failure callback   

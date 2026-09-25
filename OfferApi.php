@@ -539,6 +539,8 @@ class OfferApi extends KonnektiveApi {
                 $element.='<input type="hidden" id="token" name="token" token="'. $_SESSION['token'].'"/>'; // add token             
                 $element.='<input type="hidden" id="prodCurrency" name="prodCurrency" currencySymbol="'.$this->currencySymbol.'" value="'.$this->currency.'"/>';
                 $element.='<input type="hidden" id="merchantName" name="merchantName"  value="'.$this->corporateName.'"/>';
+                //fallback Everflow offer id for EF.click on direct links without oid in the url
+                $element.='<input type="hidden" id="everFlowOfferId" name="everFlowOfferId" value="'.$this->everflowOfferId.'"/>';
                 
 
                  if(count($this->stripeKeys) > 0){
@@ -1394,10 +1396,16 @@ class OfferApi extends KonnektiveApi {
 			);
 
             
+            //refresh track url kun naay bag-ong tracking params sa lead/checkout page bisan naa nay existing session_id
+            $hasTrackingParams = $queryString && (isset($_GET['affId']) || isset($_GET['affid']) || isset($_GET['c1']));
+            $isEntryPage = in_array($pageType, ["leadPage", "checkoutPage"]);
+
             if(!isset($_SESSION['session_id_'.$this->campaignId])){
                 unset($params['sessionId']);
                 $_SESSION['first_landpage_'.$this->campaignId]=preg_replace('#/$#', '', $this->requestURI().$urlPath);
-            } 
+            }else if($hasTrackingParams && $isEntryPage){
+                $_SESSION['first_landpage_'.$this->campaignId]=preg_replace('#/$#', '', $this->requestURI().$urlPath);
+            }
 
             if($pageType!=="thankyouPage"){
                 $resp=$this->import_click($params);
@@ -2731,6 +2739,132 @@ class OfferApi extends KonnektiveApi {
 
     }
 
+    /* Looks up the Everflow timezone_id for EVERFLOW_TIMEZONE (e.g. "America/New_York", default "UTC")
+     * via GET /v1/meta/timezones. Cached in a temp file for a day since the list rarely changes;
+     * falls back to 67 (Everflow's UTC id) if the lookup fails.
+     *----------------------------------------------------------------------------------------------------
+     */
+    private function getEverflowTimezoneId($apiKey) {
+        $defaultTimezoneId = 67;
+        $timezone = getenv('EVERFLOW_TIMEZONE') ?: 'UTC';
+        $cacheFile = sys_get_temp_dir().'/everflow_timezones_'.md5($apiKey).'.json';
+
+        $timezones = null;
+        if (is_file($cacheFile) && (time() - filemtime($cacheFile)) < 86400) {
+            $timezones = json_decode(file_get_contents($cacheFile), true);
+        }
+
+        if (!is_array($timezones)) {
+            $ch = curl_init("https://api.eflow.team/v1/meta/timezones");
+            curl_setopt_array($ch, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HTTPGET        => true,
+                CURLOPT_TIMEOUT        => 5,
+                CURLOPT_HTTPHEADER     => [
+                    'Accept: application/json',
+                    'X-Eflow-Api-Key: '.$apiKey
+                ],
+            ]);
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            $resp = json_decode($response, true);
+            if ($httpCode == 200 && isset($resp['timezones']) && is_array($resp['timezones'])) {
+                $timezones = $resp['timezones'];
+                @file_put_contents($cacheFile, json_encode($timezones));
+            } else {
+                error_log("Everflow timezones lookup failed (HTTP ".$httpCode."), using timezone_id ".$defaultTimezoneId);
+                return $defaultTimezoneId;
+            }
+        }
+
+        foreach ($timezones as $tz) {
+            if (strcasecmp($tz['timezone'] ?? '', $timezone) === 0 || strcasecmp($tz['timezone_name'] ?? '', $timezone) === 0) {
+                return (int)$tz['timezone_id'];
+            }
+        }
+
+        error_log("Everflow timezone '".$timezone."' not found, using timezone_id ".$defaultTimezoneId);
+        return $defaultTimezoneId;
+    }
+
+    /* Creates the Everflow conversion server side (replaces the browser EF.conversion() SDK call)
+     * through the Everflow Network API "Create Conversions with Transaction IDs"
+     * (POST /v1/networks/conversions/reporting/transaction_ids). Needs EVERFLOW_API_KEY in .env,
+     * optional EVERFLOW_TIMEZONE (IANA name, default UTC) to pick the timezone_id.
+     *----------------------------------------------------------------------------------------------------
+     */
+    private function everflowCreateConversion($data) {
+        $sessionOrder = $_SESSION['order_data_'.$this->campaignId] ?? null;
+        $transactionId = trim($data['transaction_id'] ?? '');
+        $eventId = (int)($data['event_id'] ?? 0);
+        $offerId = (int)(($data['offer_id'] ?? '') !== '' ? $data['offer_id'] : $this->everflowOfferId);
+
+        // only allow conversions for the order placed in this session
+        if (empty($sessionOrder['orderId']) || (string)$sessionOrder['orderId'] !== (string)($data['orderId'] ?? '')) {
+            echo json_encode(["result" => "ERROR", "message" => "Order not found in session"]);
+            return;
+        }
+
+        if ($transactionId === '' || $offerId <= 0) {
+            echo json_encode(["result" => "ERROR", "message" => "Missing transaction_id or offer_id"]);
+            return;
+        }
+
+        // one conversion per order/event, so retries or reloads do not double count
+        $sentKey = $sessionOrder['orderId'].'_'.$eventId;
+        if (!empty($_SESSION['ef_conversion_sent_'.$this->campaignId][$sentKey])) {
+            echo json_encode(["result" => "SUCCESS", "message" => "Already sent"]);
+            return;
+        }
+
+        $apiKey = getenv('EVERFLOW_API_KEY');
+        if (!$apiKey) {
+            echo json_encode(["result" => "ERROR", "message" => "Everflow API key is not configured"]);
+            return;
+        }
+
+        $payload = [
+            "is_now"          => true,
+            "offer_id"        => $offerId,
+            "event_id"        => $eventId,
+            "timezone_id"     => $this->getEverflowTimezoneId($apiKey),
+            "transaction_ids" => [$transactionId],
+            "order_id"        => (string)($data['order_id'] ?? $sessionOrder['orderId']),
+            "internal_notes"  => "Created via Network API (Create Conversions with Transaction IDs)",
+        ];
+
+        if (isset($data['amount']) && is_numeric($data['amount'])) {
+            $payload["sale_amount"] = (float)$data['amount'];
+        }
+
+        $ch = curl_init("https://api.eflow.team/v1/networks/conversions/reporting/transaction_ids");
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => json_encode($payload),
+            CURLOPT_TIMEOUT        => 10,
+            CURLOPT_HTTPHEADER     => [
+                'Content-Type: application/json',
+                'X-Eflow-Api-Key: '.$apiKey
+            ],
+        ]);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curlError = curl_error($ch);
+        curl_close($ch);
+
+        $resp = json_decode($response, true);
+        if ($httpCode == 200 && !empty($resp['result'])) {
+            $_SESSION['ef_conversion_sent_'.$this->campaignId][$sentKey] = true;
+            echo json_encode(["result" => "SUCCESS", "message" => "Conversion created"]);
+        } else {
+            error_log("Everflow create conversion failed (HTTP ".$httpCode."): ".($curlError ?: $response));
+            echo json_encode(["result" => "ERROR", "message" => "Everflow API request failed"]);
+        }
+    }
+
     private function handlePOST() {
         // Check if required form fields are set
         $data = json_decode(file_get_contents("php://input"), true);
@@ -2890,6 +3024,12 @@ class OfferApi extends KonnektiveApi {
                 }else{
                    $this->importOrderPrepaid($data);
                 }
+                break;
+
+            case 'ef_create_conversion':
+                // no token check: the token is cleared on every successful purchase, and this call
+                // always fires after one. everflowCreateConversion only accepts the session's own order.
+                $this->everflowCreateConversion($data);
                 break;
 
             case 'ef_direct_link':
