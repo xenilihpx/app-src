@@ -2331,6 +2331,8 @@ class OfferApi extends KonnektiveApi {
                 $data['paySource']= 'GOOGLEPAY';
             }else if($data['paymentType'] == "apple_pay" ){
                 $data['paySource']= 'APPLEPAY';
+            }else if($data['paymentType'] == "link" ){
+                $data['paySource']= 'LINK';
             }else{
                 echo json_encode([
                         "result" => "ERROR",
@@ -2392,7 +2394,7 @@ class OfferApi extends KonnektiveApi {
                         ]
                     ]);          
 
-                    $paymentIntent = \Stripe\PaymentIntent::create([
+                    $intentParams = [
                             'amount' => $this->to_cents($data['amount'], $data['currency']), // $49.99
                             'currency' => $data['currency'],
                             //'confirmation_token' => $data['confirmationTokenId'],
@@ -2403,7 +2405,20 @@ class OfferApi extends KonnektiveApi {
                             'description' => 'Main Product Order',
                             'confirm' => true,
                             'customer' =>  $customer->id
-                    ]);  
+                    ];
+                    if($data['paySource'] == 'LINK'){
+                        // Link needs a customer mandate to save the payment method for the upsell charges
+                        $intentParams['mandate_data'] = [
+                            'customer_acceptance' => [
+                                'type' => 'online',
+                                'online' => [
+                                    'ip_address' => $this->getClientIp(),
+                                    'user_agent' => $_SERVER['HTTP_USER_AGENT']
+                                ]
+                            ]
+                        ];
+                    }
+                    $paymentIntent = \Stripe\PaymentIntent::create($intentParams);
                     
                     if ($paymentIntent->status === 'succeeded') {
                     
@@ -2443,13 +2458,18 @@ class OfferApi extends KonnektiveApi {
                                unset($data["billingInfo"]);
                                unset($data["products"]);
                                unset($data["shippingInfo"]);
-                                
-                              
-                               $resp=$this->import_order($data);
+
+                               // Checkout Champ has no Link pay source; the charge is already captured in Stripe,
+                               // so import it as PREPAID while the session keeps LINK for the upsell pages
+                               $importData = $data;
+                               if($data['paySource'] == 'LINK'){
+                                   $importData['paySource'] = 'PREPAID';
+                               }
+                               $resp=$this->import_order($importData);
                                $resp_decode = json_decode($resp);
                                $checkDup_order = $this->check_duplicate_order($resp_decode->message->customerId); //check previous
 
-                                if($resp_decode->result=="SUCCESS"){ 
+                                if($resp_decode->result=="SUCCESS"){
                                     unset($_SESSION['order_data_'.$this->campaignId]); //clear order data first
 
                                     //add note to customer
@@ -2526,6 +2546,9 @@ class OfferApi extends KonnektiveApi {
                             unset($data["billingInfo"]);
                             unset($data["products"]);
                             unset($data["shippingInfo"]);
+                            if($data['paySource'] == 'LINK'){
+                                $data['paySource'] = 'PREPAID'; // Checkout Champ has no Link pay source
+                            }
 
                             $importDec=$this->import_order($data);
                             if($importDec->result=="SUCCESS"){ 

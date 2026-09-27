@@ -2997,9 +2997,14 @@
 
         form_obj.createStripeBtn=function(){
             var paySource=$("#paySource").attr("paySource");
-            if(paySource=="GOOGLEPAY" || paySource=="APPLEPAY" || paySource=="STRIPE_KLARNA"){
-               
-                $(".yes-upsell-link").each(function() {  
+            if(paySource=="LINK"){
+                // Stripe Link has no badge image; render its wordmark on the Link brand color
+                $(".yes-upsell-link").each(function() {
+                        $(this).html('<span id="stripeBtnIcon" style="color:#011E0F;font-size:20px;">Pay with <b>link</b></span>').addClass("replacedBtn").attr("style","min-width:261px;padding:12px 5px!important;background:#00D66F!important;border-radius:4px!important;border-bottom:none!important;box-shadow: none!important;display:flex;justify-content:center;");
+                });
+            }else if(paySource=="GOOGLEPAY" || paySource=="APPLEPAY" || paySource=="STRIPE_KLARNA"){
+
+                $(".yes-upsell-link").each(function() {
                         var image='<img id="stripeBtnIcon" src="'+commonFilesPath()+'src/common/images/'+paySource.toLowerCase()+'.png" style="width:136px!important; height: auto;"/>';
                         $(this).html(image).addClass("replacedBtn").attr("style","min-width:261px;padding:15px 5px!important;background:black!important;border-radius:4px!important;border-bottom:none!important;box-shadow: none!important;display:flex;justify-content:center;");
                 });
@@ -3026,7 +3031,7 @@
                     } 
                     
                 
-                    if($("#paySource").attr("paySource")=="GOOGLEPAY" || $("#paySource").attr("paySource")=="APPLEPAY"){                                
+                    if($("#paySource").attr("paySource")=="GOOGLEPAY" || $("#paySource").attr("paySource")=="APPLEPAY" || $("#paySource").attr("paySource")=="LINK"){
                         model.call_type= "stripe_express_order_import_upsell";
                         model.amount=form_obj.cartItemTotalUpsell();
                         model.withDecimal=form_obj.checkWithDecimal(parseFloat(form_obj.cartItemTotalUpsell()));
@@ -3736,7 +3741,7 @@
                     link: 'never',
                     naverPay:'never',
                     },
-                    paymentMethodOrder: ['apple_pay','google_pay'],
+                    paymentMethodOrder: ['apple_pay','google_pay','link'],
                     buttonHeight: 47
                 };
 
@@ -3746,7 +3751,11 @@
                 }
                 if (walletPayments.includes('apple_pay')) {
                     expressCheckoutOptions.paymentMethods.applePay = 'always';
-                    
+
+                }
+                if (walletPayments.includes('link')) {
+                    // Link only accepts 'auto' | 'never'; Stripe hides it where Link is unavailable
+                    expressCheckoutOptions.paymentMethods.link = 'auto';
                 }
               
                 const expressCheckoutElement = elements.create("expressCheckout", expressCheckoutOptions);
