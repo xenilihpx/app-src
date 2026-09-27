@@ -3742,7 +3742,14 @@
                     naverPay:'never',
                     },
                     paymentMethodOrder: ['apple_pay','google_pay','link'],
-                    buttonHeight: 47
+                    buttonHeight: 47,
+                    // Show every supported wallet side by side; wrap onto new rows when narrow
+                    // instead of collapsing extras into a "More" button
+                    layout: {
+                        maxColumns: 3,
+                        maxRows: 0,
+                        overflow: 'never'
+                    }
                 };
 
                 const walletPayments = $("#stripePaymentWallet").val().toLowerCase();
