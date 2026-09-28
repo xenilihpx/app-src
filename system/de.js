@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'Bitte geben Sie die Adresse ein',
         'unable_to_load_suggestions': 'Vorschläge konnten nicht geladen werden',
         'searching': 'Suche...',
-        "record_not_found": "Datensatz nicht gefunden"
+        "record_not_found": "Datensatz nicht gefunden",
+        "invalid_zip_no": "4 Ziffern.",
+        "invalid_city_no": "Geben Sie zuerst die Postleitzahl ein.",
+        "invalid_address_1_no": "Geben Sie die Straße und die Hausnummer ein.",
+        "invalid_zip_lu": "4 Ziffern.",
+        "invalid_city_lu": "Geben Sie zuerst die Postleitzahl ein.",
+        "invalid_address_1_lu": "Geben Sie die Hausnummer und die Straße ein."
 }

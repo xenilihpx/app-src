@@ -78,5 +78,11 @@ window.i18nData = {
     'invalid_address1': '주소를 입력해 주세요',
     'unable_to_load_suggestions': '추천 항목을 불러올 수 없습니다',
     'searching': '검색 중...',
-    "record_not_found": "해당 기록을 찾을 수 없습니다."
+    "record_not_found": "해당 기록을 찾을 수 없습니다.",
+    "invalid_zip_no": "4자리.",
+    "invalid_city_no": "먼저 우편번호를 입력하세요.",
+    "invalid_address_1_no": "도로명과 번호를 입력하세요.",
+    "invalid_zip_lu": "4자리.",
+    "invalid_city_lu": "먼저 우편번호를 입력하세요.",
+    "invalid_address_1_lu": "번호와 도로명을 입력하세요."
 };

@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'Vui lòng nhập địa chỉ',
         'unable_to_load_suggestions': 'Không thể tải các đề xuất',
         'searching': 'Đang tìm kiếm...',
-        "record_not_found": "Không tìm thấy bản ghi"
+        "record_not_found": "Không tìm thấy bản ghi",
+        "invalid_zip_no": "4 chữ số.",
+        "invalid_city_no": "Hãy nhập mã bưu chính trước.",
+        "invalid_address_1_no": "Nhập địa chỉ và số nhà.",
+        "invalid_zip_lu": "4 chữ số.",
+        "invalid_city_lu": "Hãy nhập mã bưu chính trước.",
+        "invalid_address_1_lu": "Nhập số nhà và tên đường."
 }

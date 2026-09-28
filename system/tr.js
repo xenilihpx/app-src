@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'Lütfen adres girin',
         'unable_to_load_suggestions': 'Öneriler yüklenemedi',
         'searching': 'Aranıyor...',
-        "record_not_found": "Kayıt bulunamadı"
+        "record_not_found": "Kayıt bulunamadı",
+        "invalid_zip_no": "4 basamak.",
+        "invalid_city_no": "Önce posta kodunu girin.",
+        "invalid_address_1_no": "Sokak adresini ve numarasını girin.",
+        "invalid_zip_lu": "4 basamak.",
+        "invalid_city_lu": "Önce posta kodunu girin.",
+        "invalid_address_1_lu": "Numarayı ve cadde adını girin."
 }

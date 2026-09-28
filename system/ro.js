@@ -82,5 +82,11 @@ window.i18nData={
         'invalid_city_ro': 'Selectează localitatea.',
         'invalid_zip_ro': '6 cifre.',
         'invalid_address1_ro': 'Introdu strada și numărul.',
-        "record_not_found": "Înregistrarea nu a fost găsită"
+        "record_not_found": "Înregistrarea nu a fost găsită",
+        "invalid_zip_no": "4 cifre.",
+        "invalid_city_no": "Introduceți mai întâi codul poștal.",
+        "invalid_address_1_no": "Introduceți adresa și numărul casei.",
+        "invalid_zip_lu": "4 cifre.",
+        "invalid_city_lu": "Introduceți mai întâi codul poștal.",
+        "invalid_address_1_lu": "Introduceți numărul și numele străzii."
 }

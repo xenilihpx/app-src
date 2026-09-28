@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'W.e.g. gitt d\'Adress an',
         'unable_to_load_suggestions': 'Virschléi konnte net geluede ginn',
         'searching': 'Sichen...',
-        "record_not_found": "Opzeechnung net fonnt"
+        "record_not_found": "Opzeechnung net fonnt",
+        "invalid_zip_no": "4 Zifferen.",
+        "invalid_city_no": "Gitt als éischt d'Postleitzuel an.",
+        "invalid_address_1_no": "Gitt d'Stroossadres an d'Hausnummer an.",
+        "invalid_zip_lu": "4 Zifferen",
+        "invalid_city_lu": "Gitt als éischt de Postleitzuel an.",
+        "invalid_address_1_lu": "Gitt d'Zuel an d'Strooss an."
 }

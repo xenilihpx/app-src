@@ -78,5 +78,11 @@ window.i18nData={
         "invalid_address1": "Ange adress",
         "unable_to_load_suggestions": "Kunde inte läsa in förslag",
         "searching": "Söker...",
-        "record_not_found": "Posten hittades inte"
+        "record_not_found": "Posten hittades inte",
+        "invalid_zip_no": "4 siffror.",
+        "invalid_city_no": "Ange postnummer först.",
+        "invalid_address_1_no": "Ange gatuadress och husnummer.",
+        "invalid_zip_lu": "4 siffror.",
+        "invalid_city_lu": "Ange postnumret först.",
+        "invalid_address_1_lu": "Ange nummer och gatuadress."
 }

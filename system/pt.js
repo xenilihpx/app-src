@@ -77,7 +77,13 @@ window.i18nData={
         'invalid_ward': 'Introduza a freguesia',
         'invalid_address1': 'Introduza a morada',
         'unable_to_load_suggestions': 'Não foi possível carregar as sugestões',
-        'searching': 'A pesquisar...'
+        'searching': 'A pesquisar...',
+        "invalid_zip_no": "4 dígitos.",
+        "invalid_city_no": "Introduza primeiro o código postal.",
+        "invalid_address_1_no": "Introduza a rua e o número.",
+        "invalid_zip_lu": "4 dígitos.",
+        "invalid_city_lu": "Introduza primeiro o código postal.",
+        "invalid_address_1_lu": "Introduza o número e o nome da rua."
 
 
 }
