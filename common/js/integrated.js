@@ -2159,6 +2159,8 @@
 
                         if ($("input[name='cf-turnstile-response']").length!=0) {
                             model.cf_turnstile_token=$("input[name='cf-turnstile-response']").val();
+                        }else{
+                            model.cf_turnstile_token="no-captcha";
                         }
 
                         if ($(formField.cpf).length!=0) {

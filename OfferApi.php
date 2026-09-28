@@ -790,10 +790,6 @@ class OfferApi extends KonnektiveApi {
                                 $folders['fi'] = 'Suomi' ;
                                 break;
 
-                            case 'nl':
-                                $folders['nl'] = 'Nederlands' ;
-                                break;
-
                             case 'mx':
                                 $folders['mx'] = 'Español (MX)' ;
                                 break;
@@ -804,11 +800,20 @@ class OfferApi extends KonnektiveApi {
 
                             case 'ca':
                                 $folders['ca'] = 'Catalan' ;
+                                break;   
+
+                            case 'el':
+                                $folders['el'] = 'Greek';
                                 break;
 
                             case 'id':
                                 $folders['id'] = 'Bahasa Indonesia' ;
                                 break;
+
+                            case 'nl':
+                                $folders['nl'] = 'Dutch';
+                                break;
+
 
                             case 'pt-pt':
                                 $folders['pt-pt'] = 'Português' ;
@@ -828,6 +833,14 @@ class OfferApi extends KonnektiveApi {
 
                             case 'lb':
                                 $folders['lb'] = 'Luxembourgish' ;
+                                break;
+
+                            case 'ru':
+                                $folders['ru'] = 'русский язык';
+                                break;
+
+                            case 'nb':
+                                $folders['nb'] = 'Norwegian Bokmål';
                                 break;
 
                             case 'ur':
@@ -1225,6 +1238,10 @@ class OfferApi extends KonnektiveApi {
                 $this->countryName= "Italy";
                 break;
 
+            case "GR":
+                $this->countryName= "Greece";
+                break;
+
             case "FI":
                 $this->countryName= "Finland";
                 break;
@@ -1236,6 +1253,15 @@ class OfferApi extends KonnektiveApi {
             case "ID":
                 $this->countryName= "Indonesia";
                 break;
+
+            case "IT":
+                $this->countryName= "Italy";
+                break;
+
+            case "NO":
+                $this->countryName= "Norway";
+                break;
+
             case "QA":
                 $this->countryName= "Qatar";
                 break;
@@ -1955,7 +1981,17 @@ class OfferApi extends KonnektiveApi {
     }
 
     private function importOrder($data){
- 
+        
+        $turnstileCaptcha=$this->turnstileCaptcha($data);
+        if($turnstileCaptcha !=""){
+            http_response_code(200);
+            echo json_encode([
+                "result" => "ERROR",
+                "message" => $this->deepLTranslate($turnstileCaptcha)
+            ]);            
+            exit;
+        }
+
         if ($data["testmode"]=="true" || $data["testmode"]==true){
             $data["forceMerchantId"] = $this->stripeSandboxId;
         }
@@ -2886,6 +2922,61 @@ class OfferApi extends KonnektiveApi {
             error_log("Everflow create conversion failed (HTTP ".$httpCode."): ".($curlError ?: $response));
             echo json_encode(["result" => "ERROR", "message" => "Everflow API request failed"]);
         }
+    }
+    
+    public function turnstileSiteKey(){
+        if(isset($_GET['turnstile']) && $_GET['turnstile']=="passed"){
+            return '<div id="cf_turnstile_token" style="margin-top:10px;" class="cf-turnstile" data-size="flexible" data-sitekey="1x00000000000000000000AA" data-language="'.$this->targetLanguage.'"></div>';
+        }else if(isset($_GET['turnstile']) && $_GET['turnstile']=="blocked"){
+            return '<div id="cf_turnstile_token" style="margin-top:10px;" class="cf-turnstile" data-size="flexible" data-sitekey="2x00000000000000000000AB" data-language="'.$this->targetLanguage.'"></div>';            
+        }else{
+            return '<div id="cf_turnstile_token" style="margin-top:10px;" class="cf-turnstile" data-size="flexible" data-sitekey="0x4AAAAAADTT7cQJOJouNsQK" data-language="'.$this->targetLanguage.'"></div>';
+        }
+       
+    }
+
+    private function turnstileCaptcha($data){
+
+        //start CF turnstile
+        $turnstile_secret = "0x4AAAAAADTT7UBsR82Cqcy1iCTef4_8lmQ";
+        if(isset($data['turnstile']) && $data['turnstile']=="passed"){
+           $turnstile_secret = "1x0000000000000000000000000000000AA";
+        }else if(isset($data['turnstile']) && $data['turnstile']=="blocked"){
+           $turnstile_secret = "2x0000000000000000000000000000000AA";     
+        }
+
+        $turnstile_token  = $data['cf_turnstile_token'] ?? '';
+        $user_ip          = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'];
+
+        if (empty($turnstile_token)) {                    
+            return "Verification required.";
+        }else if($turnstile_token=="no-captcha"){
+            return ""; //meaning to captcha applied or no turnstile applied
+        }
+
+        $ch = curl_init('https://challenges.cloudflare.com/turnstile/v0/siteverify');
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => http_build_query([
+                'secret'   => $turnstile_secret,
+                'response' => $turnstile_token,
+                'remoteip' => $user_ip,
+            ]),
+            CURLOPT_TIMEOUT        => 5,
+        ]);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($response, true);
+        
+        if (empty($result['success'])) {            
+            error_log('Turnstile failed: ' . print_r($result, true));
+            return "Verification failed. Please try again.";
+        }
+        
+        return "";
+        //end CF turnstile
     }
 
     private function handlePOST() {
