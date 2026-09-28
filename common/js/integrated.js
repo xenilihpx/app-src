@@ -3743,15 +3743,15 @@
                     },
                     paymentMethodOrder: ['apple_pay','google_pay','link'],
                     buttonHeight: 47,
-                    // Show every supported wallet side by side; wrap onto new rows when narrow
-                    // instead of collapsing extras into a "More" button
+                    // Two wallets sit side by side; switched to one full-width column on "ready"
+                    // when all three are available. overflow 'never' avoids a "More" button
                     layout: {
-                        maxColumns: 3,
+                        maxColumns: 2,
                         maxRows: 0,
                         overflow: 'never'
                     }
                 };
-
+                
                 const walletPayments = $("#stripePaymentWallet").val().toLowerCase();
                 if (walletPayments.includes('google_pay')) {
                     expressCheckoutOptions.paymentMethods.googlePay = 'always';
@@ -3769,6 +3769,22 @@
 
                 // Attach shared events
                 form_obj.attachSharedWalletEvents(expressCheckoutElement, elements, stripe);
+
+                // Stack wallets full width when all three (Apple Pay, Google Pay, Link) are available;
+                // with two or fewer keep the side-by-side layout. Hidden until ready to avoid a layout jump
+                $(mountSelector).css("visibility", "hidden");
+                expressCheckoutElement.on("ready", function(event){
+                    var available = event.availablePaymentMethods || {};
+                    var walletCount = ["applePay", "googlePay", "link"].filter(function(method){
+                        return available[method];
+                    }).length;
+                    if (walletCount >= 3) {
+                        expressCheckoutElement.update({
+                            layout: { maxColumns: 1, maxRows: 0, overflow: 'never' }
+                        });
+                    }
+                    $(mountSelector).css("visibility", "");
+                });
 
                 // Mount into the provided container
                 expressCheckoutElement.mount(mountSelector);
