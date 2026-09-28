@@ -352,7 +352,7 @@
             $(formField.city).val("");
             $(formField.zip).val("");
 
-            if(countrySel=="MO" || countrySel=="PK" || countrySel=="HK" || countrySel=="TR"){
+            if(countrySel=="MO" || countrySel=="PK" || countrySel=="QA" || countrySel=="HK" || countrySel=="TR"){
                 $(".ddp").hide();
             }else {
                 $(".ddp").show();
@@ -452,6 +452,7 @@
                 case 'nz':
                 case 'hu':
                 case 'dk':
+                case 'no':
                     zipMaxField = 4;
                     $(formField.zip).mask("0000");
                     break; 
@@ -2140,6 +2141,10 @@
                              model.testmode=getQueryStringByName("testmode");
                         }
 
+                        if(getQueryStringByName("turnstile")!=""){
+                             model.turnstile=getQueryStringByName("turnstile");
+                        }
+
                         if($(formField.country).val()=="RO" && $(formField.city).is('[siruta_id]')){
                             model.shippingInfo.shipCity=$(formField.city).attr("siruta_id");
                         }
@@ -2150,6 +2155,10 @@
 
                         if($(formField.country).val()=="TW" && $(formField.zip).val()==""){
                             model.shippingInfo.shipPostalCode = "000000";
+                        }
+
+                        if ($("input[name='cf-turnstile-response']").length!=0) {
+                            model.cf_turnstile_token=$("input[name='cf-turnstile-response']").val();
                         }
 
                         if ($(formField.cpf).length!=0) {
