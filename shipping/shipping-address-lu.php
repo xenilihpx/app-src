@@ -106,13 +106,17 @@ $autoCityPlaceholder = $collector_sh->translate("p_town_city_" . $country, "Fill
         fetch('integrated/?search_data=true&q=' + encodeURIComponent(cp) +'&country='+document.getElementById('fields_country_select').value.toLowerCase())
             .then(function (r) { return r.json(); })
             .then(function (data) {
+                
                 if (zip.value.trim() !== cp) return; // code changed while the request was in flight
                 if (data && data.valid && data.localite) {
                     lockAuto();
                     city.value = data.localite;
                     city.placeholder = autoPlaceholder;
                     city.classList.remove('error');
-                    city.nextElementSibling.remove();
+                    if (city.nextElementSibling) {
+                        city.nextElementSibling.remove();
+                    }
+                 
                 } else {
                     unlockManual(true);
                 }

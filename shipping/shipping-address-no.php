@@ -87,7 +87,9 @@ $autoCityPlaceholder = $collector_sh->translate("p_town_city_" . $country, "Fill
                     lockAuto();
                     city.value = data.poststed;
                     city.classList.remove('error');
-                    city.nextElementSibling.remove();
+                    if (city.nextElementSibling) {
+                        city.nextElementSibling.remove();
+                    }
                 } else {
                     unlockManual(true);
                 }
