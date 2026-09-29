@@ -434,5 +434,13 @@
     "state_ph": "Provinz \/ Region",
     "p_stateph": "Provinz",
     "zipph": "Postleitzahl",
-    "p_zipph": "Postleitzahl"
+    "p_zipph": "Postleitzahl",
+    "address_ch": "Adresse",
+    "p_address_ch": "z. B. Bahnhofstrasse 12",
+    "address2_ch": "Adresszusatz (optional)",
+    "p_address2_ch": "z. B. 3. Stock, c\/o Muster",
+    "zip_ch": "PLZ",
+    "p_zip_ch": "z. B. 8001",
+    "town_city_ch": "Ort",
+    "p_town_city_ch": "z. B. Z\u00fcrich"
 }

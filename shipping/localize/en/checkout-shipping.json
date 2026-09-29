@@ -437,5 +437,13 @@
     "state_sg": "State\/Province",
     "p_state_sg": "Select State \/ Province",
     "zip_sg": "Postal Code",
-    "p_zip_sg": "Postal Code"
+    "p_zip_sg": "Postal Code",
+    "address_ch": "Address",
+    "p_address_ch": "E.g. Bahnhofstrasse 12",
+    "address2_ch": "Additional address info (optional)",
+    "p_address2_ch": "E.g. 3rd floor, c\/o Muster",
+    "zip_ch": "Postal code",
+    "p_zip_ch": "E.g. 8001",
+    "town_city_ch": "Town \/ city",
+    "p_town_city_ch": "E.g. Z\u00fcrich"
 }
