@@ -352,7 +352,7 @@
             $(formField.city).val("");
             $(formField.zip).val("");
 
-            if(countrySel=="MO" || countrySel=="PK" || countrySel=="HK" || countrySel=="TR"){
+            if(countrySel=="MO" || countrySel=="PK" || countrySel=="QA" || countrySel=="HK" || countrySel=="TR"){
                 $(".ddp").hide();
             }else {
                 $(".ddp").show();
@@ -452,6 +452,7 @@
                 case 'nz':
                 case 'hu':
                 case 'dk':
+                case 'no':
                     zipMaxField = 4;
                     $(formField.zip).mask("0000");
                     break; 
@@ -2140,6 +2141,10 @@
                              model.testmode=getQueryStringByName("testmode");
                         }
 
+                        if(getQueryStringByName("turnstile")!=""){
+                             model.turnstile=getQueryStringByName("turnstile");
+                        }
+
                         if($(formField.country).val()=="RO" && $(formField.city).is('[siruta_id]')){
                             model.shippingInfo.shipCity=$(formField.city).attr("siruta_id");
                         }
@@ -2150,6 +2155,12 @@
 
                         if($(formField.country).val()=="TW" && $(formField.zip).val()==""){
                             model.shippingInfo.shipPostalCode = "000000";
+                        }
+
+                        if ($("input[name='cf-turnstile-response']").length!=0) {
+                            model.cf_turnstile_token=$("input[name='cf-turnstile-response']").val();
+                        }else{
+                            model.cf_turnstile_token="no-captcha";
                         }
 
                         if ($(formField.cpf).length!=0) {
@@ -2997,9 +3008,14 @@
 
         form_obj.createStripeBtn=function(){
             var paySource=$("#paySource").attr("paySource");
-            if(paySource=="GOOGLEPAY" || paySource=="APPLEPAY" || paySource=="STRIPE_KLARNA"){
-               
-                $(".yes-upsell-link").each(function() {  
+            if(paySource=="LINK"){
+                // Stripe Link has no badge image; render its wordmark on the Link brand color
+                $(".yes-upsell-link").each(function() {
+                        $(this).html('<span id="stripeBtnIcon" style="color:#011E0F;font-size:20px;">Pay with <b>link</b></span>').addClass("replacedBtn").attr("style","min-width:261px;padding:12px 5px!important;background:#00D66F!important;border-radius:4px!important;border-bottom:none!important;box-shadow: none!important;display:flex;justify-content:center;");
+                });
+            }else if(paySource=="GOOGLEPAY" || paySource=="APPLEPAY" || paySource=="STRIPE_KLARNA"){
+
+                $(".yes-upsell-link").each(function() {
                         var image='<img id="stripeBtnIcon" src="'+commonFilesPath()+'src/common/images/'+paySource.toLowerCase()+'.png" style="width:136px!important; height: auto;"/>';
                         $(this).html(image).addClass("replacedBtn").attr("style","min-width:261px;padding:15px 5px!important;background:black!important;border-radius:4px!important;border-bottom:none!important;box-shadow: none!important;display:flex;justify-content:center;");
                 });
@@ -3026,7 +3042,7 @@
                     } 
                     
                 
-                    if($("#paySource").attr("paySource")=="GOOGLEPAY" || $("#paySource").attr("paySource")=="APPLEPAY"){                                
+                    if($("#paySource").attr("paySource")=="GOOGLEPAY" || $("#paySource").attr("paySource")=="APPLEPAY" || $("#paySource").attr("paySource")=="LINK"){
                         model.call_type= "stripe_express_order_import_upsell";
                         model.amount=form_obj.cartItemTotalUpsell();
                         model.withDecimal=form_obj.checkWithDecimal(parseFloat(form_obj.cartItemTotalUpsell()));
@@ -3736,23 +3752,50 @@
                     link: 'never',
                     naverPay:'never',
                     },
-                    paymentMethodOrder: ['apple_pay','google_pay'],
-                    buttonHeight: 47
+                    paymentMethodOrder: ['apple_pay','google_pay','link'],
+                    buttonHeight: 47,
+                    // Two wallets sit side by side; switched to one full-width column on "ready"
+                    // when all three are available. overflow 'never' avoids a "More" button
+                    layout: {
+                        maxColumns: 2,
+                        maxRows: 0,
+                        overflow: 'never'
+                    }
                 };
-
+                
                 const walletPayments = $("#stripePaymentWallet").val().toLowerCase();
                 if (walletPayments.includes('google_pay')) {
                     expressCheckoutOptions.paymentMethods.googlePay = 'always';
                 }
                 if (walletPayments.includes('apple_pay')) {
                     expressCheckoutOptions.paymentMethods.applePay = 'always';
-                    
+
+                }
+                if (walletPayments.includes('link')) {
+                    // Link only accepts 'auto' | 'never'; Stripe hides it where Link is unavailable
+                    expressCheckoutOptions.paymentMethods.link = 'auto';
                 }
               
                 const expressCheckoutElement = elements.create("expressCheckout", expressCheckoutOptions);
 
                 // Attach shared events
                 form_obj.attachSharedWalletEvents(expressCheckoutElement, elements, stripe);
+
+                // Stack wallets full width when all three (Apple Pay, Google Pay, Link) are available;
+                // with two or fewer keep the side-by-side layout. Hidden until ready to avoid a layout jump
+                $(mountSelector).css("visibility", "hidden");
+                expressCheckoutElement.on("ready", function(event){
+                    var available = event.availablePaymentMethods || {};
+                    var walletCount = ["applePay", "googlePay", "link"].filter(function(method){
+                        return available[method];
+                    }).length;
+                    if (walletCount >= 3) {
+                        expressCheckoutElement.update({
+                            layout: { maxColumns: 1, maxRows: 0, overflow: 'never' }
+                        });
+                    }
+                    $(mountSelector).css("visibility", "");
+                });
 
                 // Mount into the provided container
                 expressCheckoutElement.mount(mountSelector);

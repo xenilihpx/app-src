@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': '请输入地址',
         'unable_to_load_suggestions': '无法加载建议',
         'searching': '搜索中...',
-        "record_not_found": "未找到该记录"
+        "record_not_found": "未找到该记录",
+        "invalid_zip_no": "4位数。",
+        "invalid_city_no": "请先输入邮政编码。",
+        "invalid_address_1_no": "请输入街道地址和门牌号。",
+        "invalid_zip_lu": "4位数。",
+        "invalid_city_lu": "请先输入邮政编码。",
+        "invalid_address_1_lu": "请输入门牌号和街道名称。"
 }

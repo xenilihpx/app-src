@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'Zadejte adresu',
         'unable_to_load_suggestions': 'Návrhy se nepodařilo načíst',
         'searching': 'Vyhledávání...',
-        "record_not_found": "Záznam nebyl nalezen"
+        "record_not_found": "Záznam nebyl nalezen",
+        "invalid_zip_no": "4 číslice.",
+        "invalid_city_no": "Nejprve zadejte PSČ.",
+        "invalid_address_1_no": "Zadejte adresu a číslo domu.",
+        "invalid_zip_lu": "4 číslice.",
+        "invalid_city_lu": "Nejprve zadejte PSČ.",
+        "invalid_address_1_lu": "Zadejte číslo a název ulice."
 }

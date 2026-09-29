@@ -78,5 +78,11 @@ window.i18nData = {
     'invalid_address1': 'Pakilagay ang address',
     'unable_to_load_suggestions': 'Hindi ma-load ang mga mungkahi',
     'searching': 'Naghahanap...',
-    "record_not_found": "Hindi nahanap ang tala"
+    "record_not_found": "Hindi nahanap ang tala",
+    "invalid_zip_no": "Apat na digit.",
+    "invalid_city_no": "Ipasok muna ang postal code.",
+    "invalid_address_1_no": "Ipasok ang address ng kalye at numero.",
+    "invalid_zip_lu": "Apat na digit.",
+    "invalid_city_lu": "Ipasok muna ang postal code.",
+    "invalid_address_1_lu": "Ipasok ang numero at ang kalye."
 };

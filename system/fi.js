@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'Anna osoite',
         'unable_to_load_suggestions': 'Ehdotuksia ei voitu ladata',
         'searching': 'Haetaan...',
-        "record_not_found": "Tietuetta ei löytynyt"
+        "record_not_found": "Tietuetta ei löytynyt",
+        "invalid_zip_no": "4 numeroa.",
+        "invalid_city_no": "Syötä ensin postinumero.",
+        "invalid_address_1_no": "Kirjoita kadun nimi ja numero.",
+        "invalid_zip_lu": "4 numeroa.",
+        "invalid_city_lu": "Syötä ensin postinumero.",
+        "invalid_address_1_lu": "Syötä numero ja kadunnimi."
 }

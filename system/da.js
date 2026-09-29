@@ -78,5 +78,11 @@ window.i18nData = {
     'invalid_address1': 'Indtast adresse',
     'unable_to_load_suggestions': 'Kunne ikke indlæse forslag',
     'searching': 'Søger...',
-    "record_not_found": "Post fundet ikke"
+    "record_not_found": "Post fundet ikke",
+    "invalid_zip_no": "4 cifre.",
+    "invalid_city_no": "Indtast først postnummeret.",
+    "invalid_address_1_no": "Indtast gadenavn og husnummer.",
+    "invalid_zip_lu": "4 cifre.",
+    "invalid_city_lu": "Indtast først postnummeret.",
+    "invalid_address_1_lu": "Indtast nummer og gadenavn."
 };

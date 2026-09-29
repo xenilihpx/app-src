@@ -2,7 +2,6 @@
 use DeepL\Translator;
 
 class JsonCollector {
-    // edited
     // Each of these is keyed by namespace ('lang' or 'shipping') so a single
     // collector instance can save part of its keys under /lang and part under
     // /shipping/localize (see namespaceForKey()).

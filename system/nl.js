@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'Voer het adres in',
         'unable_to_load_suggestions': 'Suggesties konden niet worden geladen',
         'searching': 'Zoeken...',
-        "record_not_found": "Record niet gevonden"
+        "record_not_found": "Record niet gevonden",
+        "invalid_zip_no": "4 cijfers.",
+        "invalid_city_no": "Voer eerst de postcode in.",
+        "invalid_address_1_no": "Voer het adres en het huisnummer in.",
+        "invalid_zip_lu": "4 cijfers.",
+        "invalid_city_lu": "Voer eerst de postcode in.",
+        "invalid_address_1_lu": "Voer het huisnummer en de straatnaam in."
 }

@@ -78,5 +78,11 @@ window.i18nData = {
     'invalid_address1': 'Kérjük, adja meg a címet',
     'unable_to_load_suggestions': 'Nem sikerült betölteni a javaslatokat',
     'searching': 'Keresés...',
-    "record_not_found": "A rekord nem található"
+    "record_not_found": "A rekord nem található",
+    "invalid_zip_no": "4 számjegy.",
+    "invalid_city_no": "Először írja be az irányítószámot.",
+    "invalid_address_1_no": "Írja be az utca nevét és a házszámot.",
+    "invalid_zip_lu": "4 számjegy.",
+    "invalid_city_lu": "Először írja be az irányítószámot.",
+    "invalid_address_1_lu": "Írja be a házszámot és az utcanevet."
 };

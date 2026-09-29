@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'براہ کرم پتہ درج کریں',
         'unable_to_load_suggestions': 'تجاویز لوڈ نہیں ہو سکیں',
         'searching': 'تلاش جاری ہے...',
-        "record_not_found": "ریکارڈ نہیں ملا"
+        "record_not_found": "ریکارڈ نہیں ملا",
+        "invalid_zip_no": "چار ہندسے",
+        "invalid_city_no": "سب سے پہلے پوسٹل کوڈ درج کریں۔",
+        "invalid_address_1_no": "سڑک کا پتہ اور نمبر درج کریں۔",
+        "invalid_zip_lu": "چار ہندسے",
+        "invalid_city_lu": "سب سے پہلے پوسٹل کوڈ درج کریں۔",
+        "invalid_address_1_lu": "نمبر اور گلی درج کریں۔"
 }

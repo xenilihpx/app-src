@@ -78,5 +78,11 @@ window.i18nData={
     'invalid_address1': 'Introduïu l’adreça',
     'unable_to_load_suggestions': 'No s’han pogut carregar els suggeriments',
     'searching': 'Cercant...',
-    "record_not_found": "No s'ha trobat cap registre"
+    "record_not_found": "No s'ha trobat cap registre",
+    "invalid_zip_no": "4 dígits.",
+    "invalid_city_no": "Introdueix primer el codi postal.",
+    "invalid_address_1_no": "Introdueix l'adreça i el número de carrer.",
+    "invalid_zip_lu": "4 dígits.",
+    "invalid_city_lu": "Introdueix primer el codi postal.",
+    "invalid_address_1_lu": "Introdueix el número i el carrer."
 }

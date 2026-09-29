@@ -78,7 +78,11 @@ window.i18nData={
         'invalid_address1': 'Please enter address',
         'unable_to_load_suggestions': 'Could not load suggestions',
         'searching': 'Searching...',
-        'record_not_found': 'Record not found'
-
-
+        'record_not_found': 'Record not found',
+        "invalid_zip_no": "4 digits.",
+        "invalid_city_no": "Enter postal code first.",
+        "invalid_address_1_no": "Enter street address and number.",
+        "invalid_zip_lu": "4 digits.",
+        "invalid_city_lu": "Enter the postal code first.",
+        "invalid_address_1_lu": "Enter the number and street."
 }

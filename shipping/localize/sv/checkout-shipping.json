@@ -1,0 +1,20 @@
+{
+    "address_gr": "Adress",
+    "p_address_gr": "T.ex. Ermou 15",
+    "zip_gr": "Postnummer",
+    "p_zip_gr": "T.ex. 105 51",
+    "town_city_gr": "Stad",
+    "p_town_city_gr": "T.ex. Aten",
+    "address2_gr": "V\u00e5ning \/ l\u00e4genhet (valfritt)",
+    "p_address2_gr": "T.ex. 3:e v\u00e5ningen, l\u00e4genhet 5",
+    "address_1": "Adress 1",
+    "p_address_1": "Gatuadress",
+    "address_2": "Adress 2 (valfritt)",
+    "p_address_2": "L\u00e4genhet, svit, bostad etc.",
+    "town_city": "Stad",
+    "p_town_city": "Stad",
+    "state": "Delstat\/Provins",
+    "p_state": "V\u00e4lj delstat\/provins",
+    "zip": "Postnummer",
+    "p_zip": "Postnummer"
+}

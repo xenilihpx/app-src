@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': '住所を入力してください',
         'unable_to_load_suggestions': '候補を読み込めませんでした',
         'searching': '検索中...',
-        "record_not_found": "記録が見つかりません"
+        "record_not_found": "記録が見つかりません",
+        "invalid_zip_no": "4桁。",
+        "invalid_city_no": "まず郵便番号を入力してください。",
+        "invalid_address_1_no": "通り名と番地を入力してください。",
+        "invalid_zip_lu": "4桁。",
+        "invalid_city_lu": "まず郵便番号を入力してください。",
+        "invalid_address_1_lu": "番地と通り名を入力してください。"
 }

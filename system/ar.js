@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'يرجى إدخال العنوان',
         'unable_to_load_suggestions': 'تعذر تحميل الاقتراحات',
         'searching': 'جارٍ البحث...',
-        "record_not_found": "لم يتم العثور على السجل"
+        "record_not_found": "لم يتم العثور على السجل",
+        "invalid_zip_no": "4 أرقام.",
+        "invalid_city_no": "أدخل الرمز البريدي أولاً.",
+        "invalid_address_1_no": "أدخل عنوان الشارع ورقم المنزل.",
+        "invalid_zip_lu": "4 أرقام.",
+        "invalid_city_lu": "أدخل الرمز البريدي أولاً.",
+        "invalid_address_1_lu": "أدخل الرقم واسم الشارع."
 }

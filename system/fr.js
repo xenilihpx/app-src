@@ -78,5 +78,11 @@ window.i18nData = {
     'invalid_address1': 'Veuillez saisir l’adresse',
     'unable_to_load_suggestions': 'Impossible de charger les suggestions',
     'searching': 'Recherche en cours...',
-    "record_not_found": "Enregistrement introuvable"
+    "record_not_found": "Enregistrement introuvable",
+    "invalid_zip_no": "4 chiffres.",
+    "invalid_city_no": "Entrez d'abord le code postal.",
+    "invalid_address_1_no": "Saisissez le nom de la rue et le numéro.",
+    "invalid_zip_lu": "4 chiffres.",
+    "invalid_city_lu": "Commencez par saisir le code postal.",
+    "invalid_address_1_lu": "Indiquez le numéro et le nom de la rue."
 };

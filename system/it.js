@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'Inserisci l’indirizzo',
         'unable_to_load_suggestions': 'Impossibile caricare i suggerimenti',
         'searching': 'Ricerca in corso...',
-        "record_not_found": "Record non trovato"
+        "record_not_found": "Record non trovato",
+        "invalid_zip_no": "4 cifre.",
+        "invalid_city_no": "Inserisci prima il codice postale.",
+        "invalid_address_1_no": "Inserisci via e numero civico.",
+        "invalid_zip_lu": "4 cifre.",
+        "invalid_city_lu": "Inserisci prima il codice postale.",
+        "invalid_address_1_lu": "Inserisci il numero civico e il nome della via."
 }

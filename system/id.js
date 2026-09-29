@@ -78,5 +78,11 @@ window.i18nData={
         'invalid_address1': 'Silakan masukkan alamat',
         'unable_to_load_suggestions': 'Tidak dapat memuat saran',
         'searching': 'Mencari...',
-        "record_not_found": "Catatan tidak ditemukan"
+        "record_not_found": "Catatan tidak ditemukan",
+        "invalid_zip_no": "4 digit.",
+        "invalid_city_no": "Masukkan kode pos terlebih dahulu.",
+        "invalid_address_1_no": "Masukkan alamat jalan dan nomor rumah.",
+        "invalid_zip_lu": "4 digit.",
+        "invalid_city_lu": "Masukkan kode pos terlebih dahulu.",
+        "invalid_address_1_lu": "Masukkan nomor dan nama jalan."
 }
