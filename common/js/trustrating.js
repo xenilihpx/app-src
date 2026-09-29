@@ -1,6 +1,7 @@
 (function () {
     var TrustRating = function (config) {  
         var trust_obj = {}; 
+            trust_obj.logoPath ="";
         var currentRating = 5;
             trust_obj.headerText= window.i18nData["trust_rating_popup_headertext"] || "How would you rate your shopping experience?";
             trust_obj.subText = window.i18nData["trust_rating_popup_subtext"] || "Your feedback means a lot";
@@ -84,12 +85,16 @@
             });
         }
 
+        trust_obj.updateLogoSrc=function(path){
+            trust_obj.logoPath="/"+path;
+        }
+
         trust_obj.createTrustDialog=function(){            
           
             var html =    '<div class="trust_handler_body">';
                 html +=    '        <a href="javascript:void(0);" id="trust_handler_overlay_close">X</a>';
                 html +=    '        <div id="trust_header">';
-                html +=    '            <img src="'+commonFilesPath()+'src/common/images/logo.png" alt="logo" class="corp-logo" width="150" height="56">';
+                html +=    '            <img src="'+commonFilesPath()+trust_obj.logoPath+'" alt="logo" class="corp-logo" width="150" height="56">';
                 html +=    '        </div>';
                 html +=    '        <hr/>';
                 html +=    '        <div id="trust_body">';
