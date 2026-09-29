@@ -2951,8 +2951,9 @@ class OfferApi extends KonnektiveApi {
 
         $turnstile_token  = $data['cf_turnstile_token'] ?? '';
         $user_ip          = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'];
-
-        if (empty($turnstile_token)) {                    
+        if(!isset($data['cf_turnstile_token'])){
+            return ""; //meaning to captcha applied or no turnstile applied
+        }else if (empty($turnstile_token)) {                    
             return "Verification required.";
         }else if($turnstile_token=="no-captcha"){
             return ""; //meaning to captcha applied or no turnstile applied
