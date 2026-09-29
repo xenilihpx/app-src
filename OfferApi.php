@@ -1241,7 +1241,7 @@ class OfferApi extends KonnektiveApi {
             case "GR":
                 $this->countryName= "Greece";
                 break;
-//test
+                
             case "RS":
                 $this->countryName= "Serbia";
                 break;
