@@ -577,7 +577,7 @@ class OfferApi extends KonnektiveApi {
             }                
     }
 
-    public function formatNumber($amount){
+    public function formatNumber($amount, $forceDecimals=false){
           $forceToZeroDecimal=number_format($amount, 2);
           $decimal= (is_numeric($amount) && floor($amount) != $amount) ? 2 : 0 ;
 
@@ -616,6 +616,10 @@ class OfferApi extends KonnektiveApi {
                 return number_format($amount,$decimal, ',', ' ') . ' '.$this->currencySymbol;
             }
 
+          }
+
+          if($this->currencySymbol=="CHF" || $this->currencySymbol=="Fr." || $this->currencySymbol=="Fr" || strtoupper($this->currency)=="CHF"){
+            return "CHF ".number_format($amount, ($forceDecimals ? 2 : $decimal), '.', "'");
           }
 
           if($this->currencySymbol=="QR"){

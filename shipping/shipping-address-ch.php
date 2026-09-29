@@ -47,4 +47,48 @@ $country="ch";
         <option value=""></option>
     </select>
 </div>
+
+<script>
+(function () {
+    // Inline error messages, shown on blur. Self-contained (doesn't depend on the shared
+    // form_obj instance, which isn't reliably reachable from this dynamically-loaded partial) -
+    // matches the same "<span class='error-message'>" markup the rest of the checkout uses.
+    function inlineError(field, valid, msg) {
+        var next = field.nextElementSibling;
+        if (next && next.classList && next.classList.contains('error-message')) next.parentNode.removeChild(next);
+        field.classList.toggle('error', !valid);
+        field.classList.toggle('valid', valid);
+        if (!valid) {
+            var span = document.createElement('span');
+            span.className = 'error-message';
+            span.style.color = 'red';
+            span.style.fontSize = '14px';
+            span.textContent = msg;
+            field.parentNode.insertBefore(span, field.nextSibling);
+        }
+    }
+
+    document.getElementById('fields_address1').addEventListener('blur', function () {
+        var valid = this.value.trim() !== '';
+        inlineError(this, valid, (window.i18nData && window.i18nData['invalid_address_ch']) || 'Enter street and house number.');
+    });
+
+    // Postal code accepts digits only, capped at 4 - strip anything else as the shopper types
+    // (maxlength alone only limits length, it doesn't block non-digit characters).
+    document.getElementById('fields_zip').addEventListener('input', function () {
+        var digits = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+        if (digits !== this.value) this.value = digits;
+    });
+
+    document.getElementById('fields_zip').addEventListener('blur', function () {
+        var valid = /^[0-9]{4}$/.test(this.value.trim());
+        inlineError(this, valid, (window.i18nData && window.i18nData['invalid_zip_ch']) || '4 digits.');
+    });
+
+    document.getElementById('fields_city').addEventListener('blur', function () {
+        var valid = this.value.trim() !== '';
+        inlineError(this, valid, (window.i18nData && window.i18nData['invalid_city_ch']) || 'Enter the town or city.');
+    });
+})();
+</script>
 <?php $collector_sh->saveTranslation(); ?>

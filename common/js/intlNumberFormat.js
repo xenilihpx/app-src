@@ -1,9 +1,17 @@
 function formatNumber(amount, currencySymbol) {
-   
+
+        if(currencySymbol === "CHF" || currencySymbol === "Fr." || currencySymbol === "Fr"){
+            var chfDecimal = (amount % 1 !== 0) ? 2 : 0;
+            var chfRounded = (chfDecimal === 0) ? Math.round(amount) : Number(amount).toFixed(2);
+            var chfParts = String(chfRounded).split(".");
+            chfParts[0] = chfParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+            return "CHF " + chfParts.join(".");
+        }
+
         var code = undefined;
         var symbolPrefix = false;
         var decimal = (amount % 1 !== 0) ? 2 : 0;
-       
+
         if(currencySymbol === "€"){
             if($("#userCountry").val() === "NL"){
                 symbolPrefix = true;
