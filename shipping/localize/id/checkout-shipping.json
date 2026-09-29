@@ -1,4 +1,12 @@
 {
+    "address_gr": "Alamat",
+    "p_address_gr": "Misalnya, Ermou 15",
+    "zip_gr": "Kode pos",
+    "p_zip_gr": "Misalnya, 105 51",
+    "town_city_gr": "Kota",
+    "p_town_city_gr": "Misalnya, Athena",
+    "address2_gr": "Lantai \/ apartemen (opsional)",
+    "p_address2_gr": "Misalnya: Lantai 3, apartemen 5",
     "p_town_city_no": "Diisi secara otomatis",
     "zip_no": "Kode pos",
     "p_zip_no": "Misalnya 0161",

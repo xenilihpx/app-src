@@ -1,0 +1,20 @@
+{
+    "address_gr": "Adresse",
+    "p_address_gr": "F.eks. Ermou 15",
+    "zip_gr": "Postnummer",
+    "p_zip_gr": "F.eks. 105 51",
+    "town_city_gr": "By",
+    "p_town_city_gr": "F.eks. Athen",
+    "address2_gr": "Etasje \/ leilighet (valgfritt)",
+    "p_address2_gr": "F.eks. 3. etasje, leilighet 5",
+    "address_1": "Adresse 1",
+    "p_address_1": "Gateadresse",
+    "address_2": "Adresse 2 (valgfritt)",
+    "p_address_2": "Leilighet, suite, bolig enhet osv.",
+    "town_city": "By",
+    "p_town_city": "By",
+    "state": "Delstat\/Provins",
+    "p_state": "Velg delstat \/ provins",
+    "zip": "Postnummer",
+    "p_zip": "Postnummer"
+}

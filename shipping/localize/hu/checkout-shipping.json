@@ -1,4 +1,12 @@
 {
+    "address_gr": "C\u00edm",
+    "p_address_gr": "P\u00e9ld\u00e1ul: Ermou 15.",
+    "zip_gr": "Ir\u00e1ny\u00edt\u00f3sz\u00e1m",
+    "p_zip_gr": "P\u00e9ld\u00e1ul: 105 51",
+    "town_city_gr": "V\u00e1ros",
+    "p_town_city_gr": "P\u00e9ld\u00e1ul: Ath\u00e9n",
+    "address2_gr": "Emelet \/ lak\u00e1s (opcion\u00e1lis)",
+    "p_address2_gr": "P\u00e9ld\u00e1ul: 3. emelet, 5. lak\u00e1s",
     "p_town_city_no": "Automatikusan kit\u00f6ltve",
     "zip_no": "Ir\u00e1ny\u00edt\u00f3sz\u00e1m",
     "p_zip_no": "P\u00e9ld\u00e1ul: 0161",

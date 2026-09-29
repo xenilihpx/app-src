@@ -1,4 +1,12 @@
 {
+    "address_gr": "Adresse",
+    "p_address_gr": "Z. B. Ermou 15",
+    "zip_gr": "Postleitzahl",
+    "p_zip_gr": "Z. B. 105 51",
+    "town_city_gr": "Stadt",
+    "p_town_city_gr": "z. B. Athen",
+    "address2_gr": "Etage \/ Wohnung (optional)",
+    "p_address2_gr": "z. B. 3. Stock, Wohnung 5",
     "p_town_city_no": "Wird automatisch ausgef\u00fcllt",
     "zip_no": "Postleitzahl",
     "p_zip_no": "Z. B. 0161",

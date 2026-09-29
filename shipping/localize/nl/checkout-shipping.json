@@ -1,4 +1,12 @@
 {
+    "address_gr": "Adres",
+    "p_address_gr": "Bijvoorbeeld: Ermou 15",
+    "zip_gr": "Postcode",
+    "p_zip_gr": "Bijv. 105 51",
+    "town_city_gr": "Stad",
+    "p_town_city_gr": "Bijvoorbeeld Athene",
+    "address2_gr": "Verdieping \/ appartement (optioneel)",
+    "p_address2_gr": "Bijv. 3e verdieping, appartement 5",
     "p_town_city_no": "Wordt automatisch ingevuld",
     "zip_no": "Postcode",
     "p_zip_no": "Bijv. 0161",

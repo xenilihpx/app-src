@@ -1,4 +1,12 @@
 {
+    "address_gr": "Adresa",
+    "p_address_gr": "Nap\u0159. Ermou 15",
+    "zip_gr": "PS\u010c",
+    "p_zip_gr": "Nap\u0159. 105 51",
+    "town_city_gr": "M\u011bsto",
+    "p_town_city_gr": "Nap\u0159. At\u00e9ny",
+    "address2_gr": "Podla\u017e\u00ed \/ byt (voliteln\u00e9)",
+    "p_address2_gr": "Nap\u0159. 3. patro, byt \u010d. 5",
     "p_town_city_no": "Vypl\u0148uje se automaticky",
     "zip_no": "PS\u010c",
     "p_zip_no": "Nap\u0159. 0161",

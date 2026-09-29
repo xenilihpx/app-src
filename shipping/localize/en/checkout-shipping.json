@@ -1,4 +1,5 @@
 {
+    "address_gr": "Address",
     "p_town_city_no": "Filled in automatically",
     "zip_no": "Postal code",
     "p_zip_no": "E.g. 0161",
@@ -445,5 +446,15 @@
     "zip_ch": "Postal code",
     "p_zip_ch": "E.g. 8001",
     "town_city_ch": "Town \/ city",
-    "p_town_city_ch": "E.g. Z\u00fcrich"
+    "p_town_city_ch": "E.g. Z\u00fcrich",
+    "p_address_gr": "E.g. Ermou 15",
+    "zip_gr": "Postal code",
+    "p_zip_gr": "E.g. 105 51",
+    "town_city_gr": "City",
+    "p_town_city_gr": "E.g. Athens",
+    "address2_gr": "Floor \/ apartment (optional)",
+    "p_address2_gr": "E.g. 3rd floor, apt. 5",
+    "invalid_address_gr": "Enter your street address.",
+    "invalid_zip_gr": "5 digits.",
+    "invalid_city_gr": "Enter the city."
 }

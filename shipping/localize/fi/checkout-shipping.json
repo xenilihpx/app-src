@@ -1,4 +1,12 @@
 {
+    "address_gr": "Osoite",
+    "p_address_gr": "Esim. Ermou 15",
+    "zip_gr": "Postinumero",
+    "p_zip_gr": "Esim. 105 51",
+    "town_city_gr": "Kaupunki",
+    "p_town_city_gr": "Esim. Ateena",
+    "address2_gr": "Kerros \/ asunto (valinnainen)",
+    "p_address2_gr": "Esim. 3. kerros, huoneisto 5",
     "p_town_city_no": "T\u00e4ytet\u00e4\u00e4n automaattisesti",
     "zip_no": "Postinumero",
     "p_zip_no": "Esim. 0161",

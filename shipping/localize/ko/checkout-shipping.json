@@ -1,4 +1,12 @@
 {
+    "address_gr": "\uc8fc\uc18c",
+    "p_address_gr": "\uc608: \uc5d0\ub974\ubb34 15",
+    "zip_gr": "\uc6b0\ud3b8\ubc88\ud638",
+    "p_zip_gr": "\uc608: 105 51",
+    "town_city_gr": "\ub3c4\uc2dc",
+    "p_town_city_gr": "\uc608: \uc544\ud14c\ub124",
+    "address2_gr": "\uce35 \/ \uc544\ud30c\ud2b8 (\uc120\ud0dd \uc0ac\ud56d)",
+    "p_address2_gr": "\uc608: 3\uce35, 5\ud638",
     "p_town_city_no": "\uc790\ub3d9\uc73c\ub85c \ucc44\uc6cc\uc9d0",
     "zip_no": "\uc6b0\ud3b8\ubc88\ud638",
     "p_zip_no": "\uc608: 0161",

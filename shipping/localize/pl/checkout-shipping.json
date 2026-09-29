@@ -1,4 +1,12 @@
 {
+    "address_gr": "Adres",
+    "p_address_gr": "Np. Ermou 15",
+    "zip_gr": "Kod pocztowy",
+    "p_zip_gr": "Np. 105 51",
+    "town_city_gr": "Miasto",
+    "p_town_city_gr": "Np. Ateny",
+    "address2_gr": "Pi\u0119tro \/ mieszkanie (opcjonalnie)",
+    "p_address2_gr": "Np. 3. pi\u0119tro, mieszkanie nr 5",
     "p_town_city_no": "Wype\u0142niane automatycznie",
     "zip_no": "Kod pocztowy",
     "p_zip_no": "Np. 0161",

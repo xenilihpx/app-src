@@ -1,4 +1,12 @@
 {
+    "address_gr": "\u4f4f\u6240",
+    "p_address_gr": "\u4f8b\uff1a\u30a8\u30eb\u30e0\u901a\u308a15\u756a\u5730",
+    "zip_gr": "\u90f5\u4fbf\u756a\u53f7",
+    "p_zip_gr": "\u4f8b\uff1a105 51",
+    "town_city_gr": "\u90fd\u5e02",
+    "p_town_city_gr": "\u4f8b\uff1a\u30a2\u30c6\u30cd",
+    "address2_gr": "\u968e \/ \u90e8\u5c4b\uff08\u4efb\u610f\uff09",
+    "p_address2_gr": "\u4f8b\uff1a3\u968e\u30015\u53f7\u5ba4",
     "p_town_city_no": "\u81ea\u52d5\u7684\u306b\u5165\u529b\u3055\u308c\u307e\u3059",
     "zip_no": "\u90f5\u4fbf\u756a\u53f7",
     "p_zip_no": "\u4f8b\uff1a0161",

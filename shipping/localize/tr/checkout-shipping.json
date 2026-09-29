@@ -1,4 +1,12 @@
 {
+    "address_gr": "Adres",
+    "p_address_gr": "\u00d6rne\u011fin: Ermou 15",
+    "zip_gr": "Posta kodu",
+    "p_zip_gr": "\u00d6rne\u011fin: 105 51",
+    "town_city_gr": "\u015eehir",
+    "p_town_city_gr": "\u00d6rne\u011fin: Atina",
+    "address2_gr": "Kat \/ daire (iste\u011fe ba\u011fl\u0131)",
+    "p_address2_gr": "\u00d6rne\u011fin: 3. kat, daire 5",
     "p_town_city_no": "Otomatik olarak doldurulur",
     "zip_no": "Posta kodu",
     "p_zip_no": "\u00d6rne\u011fin: 0161",

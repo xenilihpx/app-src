@@ -1,4 +1,12 @@
 {
+    "address_gr": "Adres\u0103",
+    "p_address_gr": "De exemplu, Ermou nr. 15",
+    "zip_gr": "Cod po\u0219tal",
+    "p_zip_gr": "De exemplu, 105 51",
+    "town_city_gr": "Ora\u0219",
+    "p_town_city_gr": "De exemplu, Atena",
+    "address2_gr": "Etaj \/ apartament (op\u021bional)",
+    "p_address2_gr": "De exemplu: etajul 3, apartamentul 5",
     "p_town_city_no": "Se completeaz\u0103 automat",
     "zip_no": "Cod po\u0219tal",
     "p_zip_no": "De exemplu, 0161",

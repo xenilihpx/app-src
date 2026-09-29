@@ -1,4 +1,12 @@
 {
+    "address_gr": "Adresse",
+    "p_address_gr": "Par exemple : 15, rue Ermou",
+    "zip_gr": "Code postal",
+    "p_zip_gr": "Par exemple : 105 51",
+    "town_city_gr": "Ville",
+    "p_town_city_gr": "Par exemple : Ath\u00e8nes",
+    "address2_gr": "\u00c9tage \/ appartement (facultatif)",
+    "p_address2_gr": "Par exemple : 3e \u00e9tage, app. 5",
     "p_town_city_no": "Rempli automatiquement",
     "zip_no": "Code postal",
     "p_zip_no": "Par exemple : 0161",

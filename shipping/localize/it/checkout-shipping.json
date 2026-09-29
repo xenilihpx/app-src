@@ -1,4 +1,12 @@
 {
+    "address_gr": "Indirizzo",
+    "p_address_gr": "Ad esempio: Ermou 15",
+    "zip_gr": "Codice postale",
+    "p_zip_gr": "Ad es. 105 51",
+    "town_city_gr": "Citt\u00e0",
+    "p_town_city_gr": "Ad esempio: Atene",
+    "address2_gr": "Piano \/ appartamento (facoltativo)",
+    "p_address2_gr": "Ad es. 3\u00b0 piano, appart. 5",
     "p_town_city_no": "Compilato automaticamente",
     "zip_no": "Codice postale",
     "p_zip_no": "Ad es. 0161",

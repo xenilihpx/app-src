@@ -1,4 +1,12 @@
 {
+    "address_gr": "Adre\u00e7a",
+    "p_address_gr": "Ex. Ermou 15",
+    "zip_gr": "Codi postal",
+    "p_zip_gr": "Ex. 105 51",
+    "town_city_gr": "Ciutat",
+    "p_town_city_gr": "Ex. Atenes",
+    "address2_gr": "S\u00f2l \/ apartament (opcional)",
+    "p_address2_gr": "Ex. 3r pis, apartament 5",
     "p_town_city_no": "Omplert autom\u00e0ticament",
     "zip_no": "Codi postal",
     "p_zip_no": "Ex. 0161",

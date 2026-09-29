@@ -1,4 +1,12 @@
 {
+    "address_gr": "Morada",
+    "p_address_gr": "Por exemplo: Ermou, n.\u00ba 15",
+    "zip_gr": "C\u00f3digo postal",
+    "p_zip_gr": "Por exemplo, 105 51",
+    "town_city_gr": "Cidade",
+    "p_town_city_gr": "Por exemplo, Atenas",
+    "address2_gr": "Andar \/ apartamento (opcional)",
+    "p_address2_gr": "Por exemplo: 3.\u00ba andar, apartamento n.\u00ba 5",
     "p_town_city_no": "Preenchido automaticamente",
     "zip_no": "C\u00f3digo postal",
     "p_zip_no": "Por exemplo, 0161",
