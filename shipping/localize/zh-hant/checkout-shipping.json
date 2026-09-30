@@ -1,4 +1,12 @@
 {
+    "address_ch": "\u5730\u5740",
+    "p_address_ch": "\u4f8b\u5982\uff1a\u73ed\u970d\u592b\u8857 12 \u865f",
+    "address2_ch": "\u5176\u4ed6\u5730\u5740\u8cc7\u8a0a\uff08\u975e\u5fc5\u586b\uff09",
+    "p_address2_ch": "\u4f8b\u5982\uff1a3\u6a13\uff0c\u6536\u4ef6\u4eba\uff1aMuster",
+    "zip_ch": "\u90f5\u905e\u5340\u865f",
+    "p_zip_ch": "\u4f8b\u5982 8001",
+    "town_city_ch": "\u57ce\u93ae\uff0f\u57ce\u5e02",
+    "p_town_city_ch": "\u4f8b\u5982\uff1a\u8607\u9ece\u4e16",
     "address_gr": "\u5730\u5740",
     "p_address_gr": "\u4f8b\u5982\uff1a\u57c3\u723e\u7a46\u8857 15 \u865f",
     "zip_gr": "\u90f5\u905e\u5340\u865f",

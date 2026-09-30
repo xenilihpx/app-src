@@ -1,4 +1,12 @@
 {
+    "address_ch": "Adresse",
+    "p_address_ch": "F.eks. Bahnhofstrasse 12",
+    "address2_ch": "Yderligere adresseoplysninger (valgfrit)",
+    "p_address2_ch": "F.eks. 3. sal, c\/o Muster",
+    "zip_ch": "Postnummer",
+    "p_zip_ch": "F.eks. 8001",
+    "town_city_ch": "By",
+    "p_town_city_ch": "F.eks. Z\u00fcrich",
     "address_gr": "Adresse",
     "p_address_gr": "F.eks. Ermou 15",
     "zip_gr": "Postnummer",

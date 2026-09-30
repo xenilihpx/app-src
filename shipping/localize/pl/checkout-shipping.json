@@ -1,4 +1,12 @@
 {
+    "address_ch": "Adres",
+    "p_address_ch": "Np. Bahnhofstrasse 12",
+    "address2_ch": "Dodatkowe informacje dotycz\u0105ce adresu (opcjonalnie)",
+    "p_address2_ch": "Np. 3. pi\u0119tro, do r\u0105k w\u0142asnych: Muster",
+    "zip_ch": "Kod pocztowy",
+    "p_zip_ch": "Np. 8001",
+    "town_city_ch": "Miasto",
+    "p_town_city_ch": "Np. Zurych",
     "tax_id_sublabel_mx": "RFC (np. GODE561231GR8) lub CURP (np. GODE561231HDFRRN04)",
     "tax_id_hint_mx": "Urz\u0105d celny mo\u017ce o to poprosi\u0107 w razie kontroli.",
     "address_gr": "Adres",

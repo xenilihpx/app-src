@@ -1,4 +1,12 @@
 {
+    "address_ch": "\u0110\u1ecba ch\u1ec9",
+    "p_address_ch": "V\u00ed d\u1ee5: Bahnhofstrasse 12",
+    "address2_ch": "Th\u00f4ng tin \u0111\u1ecba ch\u1ec9 b\u1ed5 sung (kh\u00f4ng b\u1eaft bu\u1ed9c)",
+    "p_address2_ch": "V\u00ed d\u1ee5: T\u1ea7ng 3, qua Muster",
+    "zip_ch": "M\u00e3 b\u01b0u ch\u00ednh",
+    "p_zip_ch": "V\u00ed d\u1ee5: 8001",
+    "town_city_ch": "Th\u1ecb tr\u1ea5n \/ th\u00e0nh ph\u1ed1",
+    "p_town_city_ch": "V\u00ed d\u1ee5: Z\u00fcrich",
     "tax_id_sublabel_mx": "RFC (v\u00ed d\u1ee5: GODE561231GR8) ho\u1eb7c CURP (v\u00ed d\u1ee5: GODE561231HDFRRN04)",
     "tax_id_hint_mx": "C\u01a1 quan h\u1ea3i quan c\u00f3 th\u1ec3 y\u00eau c\u1ea7u cung c\u1ea5p t\u00e0i li\u1ec7u n\u00e0y trong tr\u01b0\u1eddng h\u1ee3p ti\u1ebfn h\u00e0nh ki\u1ec3m tra.",
     "town_city_hk": "Qu\u1eadn",

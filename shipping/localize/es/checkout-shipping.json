@@ -1,4 +1,12 @@
 {
+    "address_ch": "Direcci\u00f3n",
+    "p_address_ch": "Por ejemplo: Bahnhofstrasse 12",
+    "address2_ch": "Informaci\u00f3n adicional sobre la direcci\u00f3n (opcional)",
+    "p_address2_ch": "Por ejemplo: 3.\u00aa planta, a la atenci\u00f3n de Muster",
+    "zip_ch": "C\u00f3digo postal",
+    "p_zip_ch": "Por ejemplo: 8001",
+    "town_city_ch": "Pueblo \/ ciudad",
+    "p_town_city_ch": "Por ejemplo, Z\u00farich",
     "address_gr": "Direcci\u00f3n",
     "p_address_gr": "Por ejemplo: Ermou, 15",
     "zip_gr": "C\u00f3digo postal",

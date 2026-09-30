@@ -1,4 +1,12 @@
 {
+    "address_ch": "\uc8fc\uc18c",
+    "p_address_ch": "\uc608: \ubc18\ud638\ud504\uc288\ud2b8\ub77c\uc138 12",
+    "address2_ch": "\ucd94\uac00 \uc8fc\uc18c \uc815\ubcf4 (\uc120\ud0dd \uc0ac\ud56d)",
+    "p_address2_ch": "\uc608: 3\uce35, Muster \uc55e",
+    "zip_ch": "\uc6b0\ud3b8\ubc88\ud638",
+    "p_zip_ch": "\uc608: 8001",
+    "town_city_ch": "\ub9c8\uc744 \/ \ub3c4\uc2dc",
+    "p_town_city_ch": "\uc608: \ucde8\ub9ac\ud788",
     "address_gr": "\uc8fc\uc18c",
     "p_address_gr": "\uc608: \uc5d0\ub974\ubb34 15",
     "zip_gr": "\uc6b0\ud3b8\ubc88\ud638",

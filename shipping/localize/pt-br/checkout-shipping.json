@@ -1,4 +1,12 @@
 {
+    "address_ch": "Endere\u00e7o",
+    "p_address_ch": "Por exemplo: Bahnhofstrasse, 12",
+    "address2_ch": "Informa\u00e7\u00f5es adicionais sobre o endere\u00e7o (opcional)",
+    "p_address2_ch": "Por exemplo: 3\u00ba andar, a\/c Muster",
+    "zip_ch": "C\u00f3digo postal",
+    "p_zip_ch": "Por exemplo: 8001",
+    "town_city_ch": "Cidade",
+    "p_town_city_ch": "Por exemplo, Zurique",
     "address_gr": "Endere\u00e7o",
     "p_address_gr": "Por exemplo: Ermou, 15",
     "zip_gr": "C\u00f3digo postal",

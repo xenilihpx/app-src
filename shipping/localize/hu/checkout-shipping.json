@@ -1,4 +1,12 @@
 {
+    "address_ch": "C\u00edm",
+    "p_address_ch": "P\u00e9ld\u00e1ul: Bahnhofstrasse 12",
+    "address2_ch": "Tov\u00e1bbi c\u00edmadatok (opcion\u00e1lis)",
+    "p_address2_ch": "P\u00e9ld\u00e1ul: 3. emelet, c\/o Muster",
+    "zip_ch": "Ir\u00e1ny\u00edt\u00f3sz\u00e1m",
+    "p_zip_ch": "P\u00e9ld\u00e1ul: 8001",
+    "town_city_ch": "V\u00e1ros",
+    "p_town_city_ch": "P\u00e9ld\u00e1ul Z\u00fcrich",
     "tax_id_sublabel_mx": "RFC (pl. GODE561231GR8) vagy CURP (pl. GODE561231HDFRRN04)",
     "tax_id_hint_mx": "A v\u00e1mhat\u00f3s\u00e1g ellen\u0151rz\u00e9s eset\u00e9n k\u00e9rheti ezt.",
     "town_city_hk": "K\u00f6rzet",

@@ -1,4 +1,12 @@
 {
+    "address_ch": "Adres\u0103",
+    "p_address_ch": "De exemplu: Bahnhofstrasse 12",
+    "address2_ch": "Informa\u021bii suplimentare despre adres\u0103 (op\u021bional)",
+    "p_address2_ch": "De exemplu: etajul 3, \u00een aten\u021bia lui Muster",
+    "zip_ch": "Cod po\u0219tal",
+    "p_zip_ch": "De exemplu, 8001",
+    "town_city_ch": "Ora\u0219",
+    "p_town_city_ch": "De exemplu, Z\u00fcrich",
     "tax_id_sublabel_mx": "RFC (de ex. GODE561231GR8) sau CURP (de ex. GODE561231HDFRRN04)",
     "tax_id_hint_mx": "Vama poate solicita acest document \u00een cazul unei inspec\u021bii.",
     "town_city_hk": "District",

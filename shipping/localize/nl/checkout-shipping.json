@@ -1,4 +1,12 @@
 {
+    "address_ch": "Adres",
+    "p_address_ch": "Bijvoorbeeld: Bahnhofstra\u00dfe 12",
+    "address2_ch": "Aanvullende adresgegevens (optioneel)",
+    "p_address2_ch": "Bijv. 3e verdieping, t.a.v. Muster",
+    "zip_ch": "Postcode",
+    "p_zip_ch": "Bijv. 8001",
+    "town_city_ch": "Stad",
+    "p_town_city_ch": "Bijvoorbeeld Z\u00fcrich",
     "tax_id_sublabel_mx": "RFC (bijv. GODE561231GR8) of CURP (bijv. GODE561231HDFRRN04)",
     "tax_id_hint_mx": "De douane kan hierom vragen in geval van een controle.",
     "town_city_hk": "District",

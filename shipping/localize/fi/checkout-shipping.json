@@ -1,4 +1,12 @@
 {
+    "address_ch": "Osoite",
+    "p_address_ch": "Esim. Bahnhofstrasse 12",
+    "address2_ch": "Lis\u00e4tietoja osoitteesta (valinnainen)",
+    "p_address2_ch": "Esim. 3. kerros, c\/o Muster",
+    "zip_ch": "Postinumero",
+    "p_zip_ch": "Esim. 8001",
+    "town_city_ch": "Kaupunki",
+    "p_town_city_ch": "Esim. Z\u00fcrich",
     "tax_id_sublabel_mx": "RFC (esim. GODE561231GR8) tai CURP (esim. GODE561231HDFRRN04)",
     "tax_id_hint_mx": "Tulliviranomaiset voivat pyyt\u00e4\u00e4 sit\u00e4 tarkastuksen yhteydess\u00e4.",
     "town_city_hk": "Piiri",

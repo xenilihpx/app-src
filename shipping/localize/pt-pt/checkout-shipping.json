@@ -1,4 +1,12 @@
 {
+    "address_ch": "Morada",
+    "p_address_ch": "Por exemplo: Bahnhofstrasse 12",
+    "address2_ch": "Informa\u00e7\u00f5es adicionais sobre a morada (opcional)",
+    "p_address2_ch": "Por exemplo: 3.\u00ba andar, a\/c Muster",
+    "zip_ch": "C\u00f3digo postal",
+    "p_zip_ch": "Por exemplo, 8001",
+    "town_city_ch": "Vila \/ cidade",
+    "p_town_city_ch": "Por exemplo, Zurique",
     "zip_mx": "C\u00f3digo postal",
     "p_zip_mx": "C\u00f3digo postal",
     "address_1_mx": "Rua",

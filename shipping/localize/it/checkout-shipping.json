@@ -1,4 +1,12 @@
 {
+    "address_ch": "Indirizzo",
+    "p_address_ch": "Ad esempio: Bahnhofstrasse 12",
+    "address2_ch": "Ulteriori informazioni sull'indirizzo (facoltative)",
+    "p_address2_ch": "Ad es. 3\u00b0 piano, c\/o Muster",
+    "zip_ch": "Codice postale",
+    "p_zip_ch": "Ad es. 8001",
+    "town_city_ch": "Citt\u00e0",
+    "p_town_city_ch": "Ad es. Zurigo",
     "tax_id_sublabel_mx": "RFC (ad es. GODE561231GR8) o CURP (ad es. GODE561231HDFRRN04)",
     "tax_id_hint_mx": "La dogana pu\u00f2 richiederlo in caso di ispezione.",
     "town_city_hk": "Distretto",

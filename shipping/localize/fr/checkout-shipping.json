@@ -1,4 +1,12 @@
 {
+    "address_ch": "Adresse",
+    "p_address_ch": "Par exemple : 12, Bahnhofstrasse",
+    "address2_ch": "Informations compl\u00e9mentaires sur l'adresse (facultatif)",
+    "p_address2_ch": "Par exemple : 3e \u00e9tage, \u00e0 l'attention de Muster",
+    "zip_ch": "Code postal",
+    "p_zip_ch": "Par exemple : 8001",
+    "town_city_ch": "Ville",
+    "p_town_city_ch": "Par exemple : Zurich",
     "address_gr": "Adresse",
     "p_address_gr": "Par exemple : 15, rue Ermou",
     "zip_gr": "Code postal",

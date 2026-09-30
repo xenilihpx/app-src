@@ -1,4 +1,12 @@
 {
+    "address_ch": "Alamat",
+    "p_address_ch": "Misalnya: Bahnhofstrasse 12",
+    "address2_ch": "Informasi alamat tambahan (opsional)",
+    "p_address2_ch": "Misalnya: Lantai 3, c\/o Muster",
+    "zip_ch": "Kode pos",
+    "p_zip_ch": "Misalnya, 8001",
+    "town_city_ch": "Kota",
+    "p_town_city_ch": "Misalnya, Z\u00fcrich",
     "address_gr": "Alamat",
     "p_address_gr": "Misalnya, Ermou 15",
     "zip_gr": "Kode pos",

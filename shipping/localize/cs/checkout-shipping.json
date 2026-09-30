@@ -1,4 +1,12 @@
 {
+    "address_ch": "Adresa",
+    "p_address_ch": "Nap\u0159. Bahnhofstrasse 12",
+    "address2_ch": "Dal\u0161\u00ed \u00fadaje o adrese (voliteln\u00e9)",
+    "p_address2_ch": "Nap\u0159. 3. patro, k ruk\u00e1m pana Mustera",
+    "zip_ch": "PS\u010c",
+    "p_zip_ch": "Nap\u0159. 8001",
+    "town_city_ch": "M\u011bsto",
+    "p_town_city_ch": "Nap\u0159. Curych",
     "tax_id_sublabel_mx": "RFC (nap\u0159. GODE561231GR8) nebo CURP (nap\u0159. GODE561231HDFRRN04)",
     "tax_id_hint_mx": "Celn\u00ed \u00fa\u0159ad o to m\u016f\u017ee po\u017e\u00e1dat v p\u0159\u00edpad\u011b kontroly.",
     "town_city_hk": "Okres",
