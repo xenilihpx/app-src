@@ -14,9 +14,12 @@ $country="ch";
             </div>
 <?php } ?>
 
-<div class="mb-3">
+<div class="mb-1">
     <label class="p cart-input-label" for="fields_address1"><?= $collector_sh->translate("address_".$country, "Address") ?></label>
-    <input id="fields_address1" name="address 1" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_address_".$country, "E.g. Bahnhofstrasse 12") ?>" required="required">
+    <input id="fields_address1" name="address 1" class="cart-input p" value="" type="text" autocomplete="off" placeholder="<?= $collector_sh->translate("p_address_".$country, "E.g. Bahnhofstrasse 12") ?>" required="required">
+</div>
+<div class="mb-3">
+    <a href="javascript:void(0);" id="fields_ch_manual_toggle" class="p" style="font-size: 0.85em; color: #1a73e8;"><?= $collector_sh->translate("manual_link_".$country, "Address not found? Enter manually.") ?></a>
 </div>
 
 <div class="mb-3">
@@ -29,13 +32,13 @@ $country="ch";
     <div class="col-sm-4">
         <div class="mb-3">
             <label class="p cart-input-label" for="fields_zip"><?= $collector_sh->translate("zip_".$country, "Postal code") ?></label>
-            <input id="fields_zip" name="zip" class="cart-input p" value="" type="text" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="<?= $collector_sh->translate("p_zip_".$country, "E.g. 8001") ?>" required="required">
+            <input id="fields_zip" name="zip" class="cart-input p" value="" type="text" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" readonly data-example-placeholder="<?= $collector_sh->translate("p_zip_".$country, "E.g. 8001") ?>" placeholder="<?= $collector_sh->translate("p_zip_autofill_".$country, "Filled in automatically") ?>" required="required">
         </div>
     </div>
     <div class="col-sm-8">
         <div class="mb-3">
             <label class="p cart-input-label" for="fields_city"><?= $collector_sh->translate("town_city_".$country, "Town / city") ?></label>
-            <input id="fields_city" name="city" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_town_city_".$country, "E.g. Zürich") ?>" required="required">
+            <input id="fields_city" name="city" class="cart-input p" value="" type="text" readonly data-example-placeholder="<?= $collector_sh->translate("p_town_city_".$country, "E.g. Zürich") ?>" placeholder="<?= $collector_sh->translate("p_town_city_autofill_".$country, "Filled in automatically") ?>" required="required">
         </div>
     </div>
 </div>
@@ -88,6 +91,38 @@ $country="ch";
     document.getElementById('fields_city').addEventListener('blur', function () {
         var valid = this.value.trim() !== '';
         inlineError(this, valid, (window.i18nData && window.i18nData['invalid_city_ch']) || 'Enter the town or city.');
+    });
+
+    // --- Google Places Autocomplete on Adresse: the actual binding, restriction and PLZ/Ort
+    // fill-in live in src/common/js/address.google.autocomplete.js (a page-wide script that
+    // already binds to #fields_address1 for every country, gated by its own AUTOCOMPLETE_COUNTRIES
+    // list, which includes "ch"). This block only owns the two behaviors specific to this form's
+    // own markup:
+    var address1 = document.getElementById('fields_address1');
+    var zip = document.getElementById('fields_zip');
+    var city = document.getElementById('fields_city');
+    var manualLink = document.getElementById('fields_ch_manual_toggle');
+    var manualMode = false;
+
+    // Editing Adresse after a pick clears the read-back PLZ/Ort - they have to pick again.
+    // Setting .value programmatically (as the autocomplete fill does) does not fire 'input',
+    // so this only ever reacts to the shopper's own typing.
+    address1.addEventListener('input', function () {
+        if (manualMode) return;
+        zip.value = '';
+        city.value = '';
+    });
+
+    // "Adresse nicht gefunden?" unlocks PLZ/Ort for manual typing if Places is down or the
+    // address isn't found - keeps the order completable either way.
+    manualLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        manualMode = true;
+        zip.readOnly = false;
+        city.readOnly = false;
+        zip.placeholder = zip.getAttribute('data-example-placeholder');
+        city.placeholder = city.getAttribute('data-example-placeholder');
+        manualLink.style.display = 'none';
     });
 })();
 </script>

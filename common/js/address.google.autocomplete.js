@@ -7,7 +7,12 @@ let postalField;
 let fieldsCity;
 
 // Countries (ISO codes, lowercase) where address autocomplete is enabled
-const AUTOCOMPLETE_COUNTRIES = ["us", "gr"];
+const AUTOCOMPLETE_COUNTRIES = ["us", "gr", "ch"];
+
+// Countries whose street address reads "name then number" (e.g. "Bahnhofstrasse 12") instead of
+// this file's default "number then name" (e.g. "12 Main St") - only affects the order fillInAddress
+// builds address1Field.value in, nothing else.
+const STREET_NAME_FIRST_COUNTRIES = ["ch"];
 
 // Use the selected country's ISO code (e.g. "US", "CA") to restrict results
 function getSelectedCountry() {
@@ -85,6 +90,7 @@ function fillInAddress() {
   let postcode = "";
   let country ="";
   let state ="";
+  let routeName = "", streetNumber = ""; // tracked separately so STREET_NAME_FIRST_COUNTRIES can reorder below
 
   // Get each component of the address from the place details,
   // and then fill-in the corresponding field on the form.
@@ -97,11 +103,13 @@ function fillInAddress() {
     switch (componentType) {
       case "street_number": {
         address1 = `${component.long_name} ${address1}`;
+        streetNumber = component.long_name;
         break;
       }
 
       case "route": {
         address1 += component.short_name;
+        routeName = component.short_name;
         break;
       }
 
@@ -168,6 +176,9 @@ function fillInAddress() {
       }
   }  
 
+  if (STREET_NAME_FIRST_COUNTRIES.includes(getSelectedCountry())) {
+    address1 = (routeName + (streetNumber ? " " + streetNumber : "")).trim();
+  }
   address1Field.value = address1;
   if(postcode!=""){
         postalField.classList.remove("error")
