@@ -1,0 +1,22 @@
+{
+    "address_1_ph": "Street Address \/ House Number",
+    "p_address_1_ph": "Street Address \/ House Number",
+    "address_2ph": "Subdivision \/ Village",
+    "p_address_2ph": "Subdivision \/ Village (optional)",
+    "barangay_ph": "Barangay",
+    "p_barangay_ph": "Barangay",
+    "town_cityph": "City \/ Municipality",
+    "p_town_cityph": "City \/ Municipality",
+    "state_ph": "Province \/ Region",
+    "p_stateph": "Province",
+    "zipph": "Postal Code",
+    "p_zipph": "Postal Code",
+    "address_rs": "Street address",
+    "p_address_rs": "E.g. Bulevar kralja Aleksandra 45",
+    "address2_rs": "Floor \/ apartment (optional)",
+    "p_address2_rs": "E.g. 3rd floor, apt. 12",
+    "zip_rs": "Postal code",
+    "p_zip_rs": "E.g. 11000",
+    "town_city_rs": "Town \/ city",
+    "p_town_city_rs": "E.g. Beograd"
+}
