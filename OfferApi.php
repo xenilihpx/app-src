@@ -275,7 +275,8 @@ class OfferApi extends KonnektiveApi {
             $deepLLanguageMap = [
                 'pt-br' => 'pt-BR',    // Portuguese (Brazil)
                 'pt-pt' => 'pt-PT',    // Portuguese (Portugal)
-                'mx' => 'es'
+                'mx' => 'es',
+                'sr-latn' => 'sr'
             ];
 
             // Get the correct DeepL language code
