@@ -1,4 +1,6 @@
 {
+    "tax_id_sublabel_mx": "RFC (np. GODE561231GR8) lub CURP (np. GODE561231HDFRRN04)",
+    "tax_id_hint_mx": "Urz\u0105d celny mo\u017ce o to poprosi\u0107 w razie kontroli.",
     "address_gr": "Adres",
     "p_address_gr": "Np. Ermou 15",
     "zip_gr": "Kod pocztowy",
