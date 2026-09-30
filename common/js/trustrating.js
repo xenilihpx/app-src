@@ -1,7 +1,7 @@
 (function () {
     var TrustRating = function (config) {  
         var trust_obj = {}; 
-            trust_obj.logoPath ="";
+            trust_obj.logoPath ="src/common/images/logo.png";
         var currentRating = 5;
             trust_obj.headerText= window.i18nData["trust_rating_popup_headertext"] || "How would you rate your shopping experience?";
             trust_obj.subText = window.i18nData["trust_rating_popup_subtext"] || "Your feedback means a lot";
