@@ -6,33 +6,81 @@ let address2Field;
 let postalField;
 let fieldsCity;
 
-function initAutocomplete() {
-  address1Field = document.querySelector("#fields_address1");
+// Countries (ISO codes, lowercase) where address autocomplete is enabled
+const AUTOCOMPLETE_COUNTRIES = ["us", "gr"];
+
+// Use the selected country's ISO code (e.g. "US", "CA") to restrict results
+function getSelectedCountry() {
+  const countrySelect = document.querySelector("#fields_country_select");
+  return countrySelect && countrySelect.value ? countrySelect.value.toLowerCase() : "us";
+}
+
+function isAutocompleteCountry() {
+  return AUTOCOMPLETE_COUNTRIES.includes(getSelectedCountry());
+}
+
+// Restrict results to the selected country, or hide the suggestions entirely
+// when the country is not supported. Only the body-level .pac-container is
+// hidden so the Klarna popup's own autocomplete is not affected.
+function updateCountryRestriction() {
+  const enabled = isAutocompleteCountry();
+  document.body.classList.toggle("address-autocomplete-off", !enabled);
+  if (autocomplete && enabled) {
+    autocomplete.setComponentRestrictions({ country: [getSelectedCountry()] });
+  }
+}
+
+// Attach autocomplete to the current #fields_address1. The shipping fields are
+// reloaded via AJAX when the country changes (dynamic shipping fields), which
+// replaces the input, so re-bind whenever a new one appears.
+function bindAutocomplete() {
+  const input = document.querySelector("#fields_address1");
+  if (!input || input === address1Field) return;
+
+  if (autocomplete) {
+    google.maps.event.clearInstanceListeners(autocomplete);
+  }
+
+  address1Field = input;
   address2Field = document.querySelector("#fields_address2");
   postalField = document.querySelector("#fields_zip");
   fieldsCity = document.querySelector("#fields_city");
-  const countrySelect = document.querySelector("#fields_country_select");
-  
+
   autocomplete = new google.maps.places.Autocomplete(address1Field, {
-    componentRestrictions: { country: ["us"] },
+    componentRestrictions: { country: isAutocompleteCountry() ? [getSelectedCountry()] : AUTOCOMPLETE_COUNTRIES },
     fields: ["address_components", "geometry"],
     types: ["address"]
   });
-  
-  countrySelect.addEventListener("change", () => {
-    const selectedCountry = countrySelect.value.toLowerCase();
-    if (selectedCountry === "us") {
-        document.querySelector(".pac-container").classList.remove("hide-autocomplete");  
-    } else {    
-        document.querySelector(".pac-container").classList.add("hide-autocomplete"); 
-    }
-  });
   autocomplete.addListener("place_changed", fillInAddress);
+  updateCountryRestriction();
+}
+
+function initAutocomplete() {
+  const style = document.createElement("style");
+  style.textContent = "body.address-autocomplete-off > .pac-container { display: none !important; }";
+  document.head.appendChild(style);
+
+  bindAutocomplete();
+
+  // Delegated so it survives the country select being re-rendered; jQuery is
+  // used when present because .trigger("change") does not fire native listeners.
+  if (window.jQuery) {
+    window.jQuery(document).on("change", "#fields_country_select", updateCountryRestriction);
+  } else {
+    document.addEventListener("change", (e) => {
+      if (e.target && e.target.id === "fields_country_select") updateCountryRestriction();
+    });
+  }
+
+  new MutationObserver(bindAutocomplete).observe(document.body, { childList: true, subtree: true });
 }
 
 function fillInAddress() {
+  if (!isAutocompleteCountry()) return;
+
   // Get the place details from the autocomplete object.
   const place = autocomplete.getPlace();
+  if (!place || !place.address_components) return;
   let address1 = "";
   let postcode = "";
   let country ="";
