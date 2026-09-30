@@ -622,6 +622,10 @@ class OfferApi extends KonnektiveApi {
             return "CHF ".number_format($amount, ($forceDecimals ? 2 : $decimal), '.', "'");
           }
 
+          if($this->currencySymbol=="RSD" || $this->currencySymbol=="din." || $this->currencySymbol=="din" || strtoupper($this->currency)=="RSD"){
+            return number_format($amount, ($forceDecimals ? 2 : $decimal), ',', '.') . ' RSD';
+          }
+
           if($this->currencySymbol=="QR"){
             return $this->currencySymbol." ".(($amount == floor($amount)) ? number_format($amount, 0) : $forceToZeroDecimal);    
           }

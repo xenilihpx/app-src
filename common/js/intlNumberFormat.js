@@ -8,6 +8,14 @@ function formatNumber(amount, currencySymbol) {
             return "CHF " + chfParts.join(".");
         }
 
+        if(currencySymbol === "RSD" || currencySymbol === "din." || currencySymbol === "din"){
+            var rsdDecimal = (amount % 1 !== 0) ? 2 : 0;
+            var rsdRounded = (rsdDecimal === 0) ? Math.round(amount) : Number(amount).toFixed(2);
+            var rsdParts = String(rsdRounded).split(".");
+            rsdParts[0] = rsdParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return rsdParts.join(",") + " RSD";
+        }
+
         var code = undefined;
         var symbolPrefix = false;
         var decimal = (amount % 1 !== 0) ? 2 : 0;
