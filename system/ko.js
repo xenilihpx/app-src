@@ -87,5 +87,8 @@ window.i18nData = {
     "invalid_address_1_lu": "번호와 도로명을 입력하세요.",
     "invalid_address_gr": "주소를 입력해 주세요.",
     "invalid_zip_gr": "5자리.",
-    "invalid_city_gr": "도시로 들어가세요."
+    "invalid_city_gr": "도시로 들어가세요.",
+    "invalid_address_rs": "거리명과 집 번호를 입력하세요.",
+    "invalid_zip_rs": "5자리.",
+    "invalid_city_rs": "마을이나 도시 이름을 입력하세요."
 };

@@ -87,5 +87,8 @@ window.i18nData={
         "invalid_address_1_lu": "Ange nummer och gatuadress.",
         "invalid_address_gr": "Ange din gatuadress.",
         "invalid_zip_gr": "5 siffror.",
-        "invalid_city_gr": "Kör in i staden."
+        "invalid_city_gr": "Kör in i staden.",
+        "invalid_address_rs": "Ange gatuadress och husnummer.",
+        "invalid_zip_rs": "5 siffror.",
+        "invalid_city_rs": "Ange ort eller stad."
 }

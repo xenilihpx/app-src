@@ -87,5 +87,8 @@ window.i18nData={
         "invalid_address_1_lu": "Masukkan nomor dan nama jalan.",
         "invalid_address_gr": "Masukkan alamat jalan Anda.",
         "invalid_zip_gr": "5 digit.",
-        "invalid_city_gr": "Masuklah ke kota."
+        "invalid_city_gr": "Masuklah ke kota.",
+        "invalid_address_rs": "Masukkan nama jalan dan nomor rumah.",
+        "invalid_zip_rs": "5 digit.",
+        "invalid_city_rs": "Masuklah ke kota tersebut."
 }

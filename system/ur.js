@@ -87,5 +87,8 @@ window.i18nData={
         "invalid_address_1_lu": "نمبر اور گلی درج کریں۔",
         "invalid_address_gr": "اپنا گلی کا پتہ درج کریں۔",
         "invalid_zip_gr": "پانچ ہندسے",
-        "invalid_city_gr": "شہر میں داخل ہوں۔"
+        "invalid_city_gr": "شہر میں داخل ہوں۔",
+        "invalid_address_rs": "گلی اور گھر کا نمبر درج کریں۔",
+        "invalid_zip_rs": "پانچ ہندسے",
+        "invalid_city_rs": "قصبے یا شہر میں داخل ہوں۔"
 }

@@ -87,5 +87,8 @@ window.i18nData={
         "invalid_address_1_lu": "Geben Sie die Hausnummer und die Straße ein.",
         "invalid_address_gr": "Geben Sie Ihre Anschrift ein.",
         "invalid_zip_gr": "5 Ziffern.",
-        "invalid_city_gr": "Betreten Sie die Stadt."
+        "invalid_city_gr": "Betreten Sie die Stadt.",
+        "invalid_address_rs": "Geben Sie die Straße und die Hausnummer ein.",
+        "invalid_zip_rs": "5 Ziffern.",
+        "invalid_city_rs": "Geben Sie den Ort oder die Stadt ein."
 }

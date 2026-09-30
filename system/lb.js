@@ -87,5 +87,8 @@ window.i18nData={
         "invalid_address_1_lu": "Gitt d'Zuel an d'Strooss an.",
         "invalid_address_gr": "Gitt Är Stroossadres un.",
         "invalid_zip_gr": "5 Zifferen.",
-        "invalid_city_gr": "Gitt an d'Stad eran."
+        "invalid_city_gr": "Gitt an d'Stad eran.",
+        "invalid_address_rs": "Gitt d'Strooss an d'Hausnummer an.",
+        "invalid_zip_rs": "5 Zifferen.",
+        "invalid_city_rs": "Gitt an d'Stad oder an d'Gemeng."
 }

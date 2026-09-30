@@ -87,5 +87,8 @@ window.i18nData = {
     "invalid_address_1_lu": "Írja be a házszámot és az utcanevet.",
     "invalid_address_gr": "Írja be a lakcímét.",
     "invalid_zip_gr": "5 számjegy.",
-    "invalid_city_gr": "Lépj be a városba!"
+    "invalid_city_gr": "Lépj be a városba!",
+    "invalid_address_rs": "Írja be az utcanevet és a házszámot.",
+    "invalid_zip_rs": "5 számjegy.",
+    "invalid_city_rs": "Írja be a település nevét."
 };

@@ -89,6 +89,9 @@ function formatNumber(amount, currencySymbol) {
             currencySymbol ="PKR "; 
             decimal=0;    
 
+        }else if(currencySymbol === "kr"){            
+            currencySymbol =" kr";    
+            code = "no-No"; 
         }else{
             symbolPrefix = true;
             code = undefined; 

@@ -87,5 +87,8 @@ window.i18nData={
         "invalid_address_1_lu": "Introduza o número e o nome da rua.",
         "invalid_address_gr": "Introduza a sua morada.",
         "invalid_zip_gr": "5 dígitos.",
-        "invalid_city_gr": "Entra na cidade."
+        "invalid_city_gr": "Entra na cidade.",
+        "invalid_address_rs": "Introduza o nome da rua e o número da casa.",
+        "invalid_zip_rs": "5 dígitos.",
+        "invalid_city_rs": "Indique a localidade ou cidade."
 }

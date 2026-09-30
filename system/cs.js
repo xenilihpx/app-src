@@ -87,5 +87,8 @@ window.i18nData={
         "invalid_address_1_lu": "Zadejte číslo a název ulice.",
         "invalid_address_gr": "Zadejte svou adresu.",
         "invalid_zip_gr": "5 číslic.",
-        "invalid_city_gr": "Vstupte do města."
+        "invalid_city_gr": "Vstupte do města.",
+        "invalid_address_rs": "Zadejte název ulice a číslo domu.",
+        "invalid_zip_rs": "5 číslic.",
+        "invalid_city_rs": "Zadejte název města."
 }

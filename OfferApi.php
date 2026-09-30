@@ -605,6 +605,11 @@ class OfferApi extends KonnektiveApi {
             return number_format($amount, $decimal, ',', '.'). ' lei';
           }
 
+           if($this->currencySymbol=="kr"){
+            return number_format($amount, $decimal, ',', ' '). ' kr';
+          }
+
+
           if($this->currencySymbol=="PKRs"){
             return "PKR".' '.number_format($amount, 0);
           }
