@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "Gitt d'Stroossadres an d'Hausnummer an.",
         "invalid_zip_lu": "4 Zifferen",
         "invalid_city_lu": "Gitt als éischt de Postleitzuel an.",
-        "invalid_address_1_lu": "Gitt d'Zuel an d'Strooss an."
+        "invalid_address_1_lu": "Gitt d'Zuel an d'Strooss an.",
+        "invalid_address_gr": "Gitt Är Stroossadres un.",
+        "invalid_zip_gr": "5 Zifferen.",
+        "invalid_city_gr": "Gitt an d'Stad eran."
 }

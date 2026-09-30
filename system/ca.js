@@ -84,5 +84,8 @@ window.i18nData={
     "invalid_address_1_no": "Introdueix l'adreça i el número de carrer.",
     "invalid_zip_lu": "4 dígits.",
     "invalid_city_lu": "Introdueix primer el codi postal.",
-    "invalid_address_1_lu": "Introdueix el número i el carrer."
+    "invalid_address_1_lu": "Introdueix el número i el carrer.",
+    "invalid_address_gr": "Introdueix la teva adreça de carrer.",
+    "invalid_zip_gr": "5 dígits.",
+    "invalid_city_gr": "Entra a la ciutat."
 }

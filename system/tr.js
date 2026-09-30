@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "Sokak adresini ve numarasını girin.",
         "invalid_zip_lu": "4 basamak.",
         "invalid_city_lu": "Önce posta kodunu girin.",
-        "invalid_address_1_lu": "Numarayı ve cadde adını girin."
+        "invalid_address_1_lu": "Numarayı ve cadde adını girin.",
+        "invalid_address_gr": "Sokak adresinizi girin.",
+        "invalid_zip_gr": "5 basamak.",
+        "invalid_city_gr": "Şehre girin."
 }

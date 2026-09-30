@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "Wprowadź nazwę ulicy i numer domu.",
         "invalid_zip_lu": "4 cyfry.",
         "invalid_city_lu": "Najpierw wprowadź kod pocztowy.",
-        "invalid_address_1_lu": "Wpisz numer i nazwę ulicy."
+        "invalid_address_1_lu": "Wpisz numer i nazwę ulicy.",
+        "invalid_address_gr": "Wpisz swój adres.",
+        "invalid_zip_gr": "5 cyfr.",
+        "invalid_city_gr": "Wjedź do miasta."
 }

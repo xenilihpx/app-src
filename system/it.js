@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "Inserisci via e numero civico.",
         "invalid_zip_lu": "4 cifre.",
         "invalid_city_lu": "Inserisci prima il codice postale.",
-        "invalid_address_1_lu": "Inserisci il numero civico e il nome della via."
+        "invalid_address_1_lu": "Inserisci il numero civico e il nome della via.",
+        "invalid_address_gr": "Inserisci il tuo indirizzo.",
+        "invalid_zip_gr": "5 cifre.",
+        "invalid_city_gr": "Entra in città."
 }

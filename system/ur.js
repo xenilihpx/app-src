@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "سڑک کا پتہ اور نمبر درج کریں۔",
         "invalid_zip_lu": "چار ہندسے",
         "invalid_city_lu": "سب سے پہلے پوسٹل کوڈ درج کریں۔",
-        "invalid_address_1_lu": "نمبر اور گلی درج کریں۔"
+        "invalid_address_1_lu": "نمبر اور گلی درج کریں۔",
+        "invalid_address_gr": "اپنا گلی کا پتہ درج کریں۔",
+        "invalid_zip_gr": "پانچ ہندسے",
+        "invalid_city_gr": "شہر میں داخل ہوں۔"
 }

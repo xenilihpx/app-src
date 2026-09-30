@@ -84,5 +84,8 @@ window.i18nData = {
     "invalid_address_1_no": "Ipasok ang address ng kalye at numero.",
     "invalid_zip_lu": "Apat na digit.",
     "invalid_city_lu": "Ipasok muna ang postal code.",
-    "invalid_address_1_lu": "Ipasok ang numero at ang kalye."
+    "invalid_address_1_lu": "Ipasok ang numero at ang kalye.",
+    "invalid_address_gr": "Ipasok ang iyong address sa kalye.",
+    "invalid_zip_gr": "Limang digit.",
+    "invalid_city_gr": "Pasok sa lungsod."
 };

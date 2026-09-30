@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "Enter street address and number.",
         "invalid_zip_lu": "4 digits.",
         "invalid_city_lu": "Enter the postal code first.",
-        "invalid_address_1_lu": "Enter the number and street."
+        "invalid_address_1_lu": "Enter the number and street.",
+        "invalid_address_gr": "Enter your street address.",
+        "invalid_zip_gr": "5 digits.",
+        "invalid_city_gr":"Enter the city."
 }

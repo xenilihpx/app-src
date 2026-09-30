@@ -84,5 +84,8 @@ window.i18nData = {
     "invalid_address_1_no": "Indtast gadenavn og husnummer.",
     "invalid_zip_lu": "4 cifre.",
     "invalid_city_lu": "Indtast først postnummeret.",
-    "invalid_address_1_lu": "Indtast nummer og gadenavn."
+    "invalid_address_1_lu": "Indtast nummer og gadenavn.",
+    "invalid_address_gr": "Indtast din adresse.",
+    "invalid_zip_gr": "5 cifre.",
+    "invalid_city_gr": "Kør ind i byen."
 };

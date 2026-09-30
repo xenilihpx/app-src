@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "أدخل عنوان الشارع ورقم المنزل.",
         "invalid_zip_lu": "4 أرقام.",
         "invalid_city_lu": "أدخل الرمز البريدي أولاً.",
-        "invalid_address_1_lu": "أدخل الرقم واسم الشارع."
+        "invalid_address_1_lu": "أدخل الرقم واسم الشارع.",
+        "invalid_address_gr": "أدخل عنوان شارعك.",
+        "invalid_zip_gr": "5 أرقام.",
+        "invalid_city_gr": "ادخل المدينة."
 }

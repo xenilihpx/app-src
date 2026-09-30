@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "Nhập địa chỉ và số nhà.",
         "invalid_zip_lu": "4 chữ số.",
         "invalid_city_lu": "Hãy nhập mã bưu chính trước.",
-        "invalid_address_1_lu": "Nhập số nhà và tên đường."
+        "invalid_address_1_lu": "Nhập số nhà và tên đường.",
+        "invalid_address_gr": "Hãy nhập địa chỉ đường của bạn.",
+        "invalid_zip_gr": "5 chữ số.",
+        "invalid_city_gr": "Bước vào thành phố."
 }

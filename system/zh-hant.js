@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "請輸入街道名稱及門牌號碼。",
         "invalid_zip_lu": "4 位數。",
         "invalid_city_lu": "請先輸入郵遞區號。",
-        "invalid_address_1_lu": "請輸入門牌號碼和街道名稱。"
+        "invalid_address_1_lu": "請輸入門牌號碼和街道名稱。",
+        "invalid_address_gr": "請輸入您的街道地址。",
+        "invalid_zip_gr": "5 位數。",
+        "invalid_city_gr": "進入這座城市。"
 }

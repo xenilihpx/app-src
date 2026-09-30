@@ -84,5 +84,8 @@ window.i18nData = {
     "invalid_address_1_no": "Saisissez le nom de la rue et le numéro.",
     "invalid_zip_lu": "4 chiffres.",
     "invalid_city_lu": "Commencez par saisir le code postal.",
-    "invalid_address_1_lu": "Indiquez le numéro et le nom de la rue."
+    "invalid_address_1_lu": "Indiquez le numéro et le nom de la rue.",
+    "invalid_address_gr": "Saisissez votre adresse postale.",
+    "invalid_zip_gr": "5 chiffres.",
+    "invalid_city_gr": "Entrez dans la ville."
 };

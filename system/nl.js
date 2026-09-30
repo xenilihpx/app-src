@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "Voer het adres en het huisnummer in.",
         "invalid_zip_lu": "4 cijfers.",
         "invalid_city_lu": "Voer eerst de postcode in.",
-        "invalid_address_1_lu": "Voer het huisnummer en de straatnaam in."
+        "invalid_address_1_lu": "Voer het huisnummer en de straatnaam in.",
+        "invalid_address_gr": "Voer uw adres in.",
+        "invalid_zip_gr": "5 cijfers.",
+        "invalid_city_gr": "Ga de stad binnen."
 }

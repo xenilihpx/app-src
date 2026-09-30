@@ -84,5 +84,8 @@ window.i18nData={
         "invalid_address_1_no": "通り名と番地を入力してください。",
         "invalid_zip_lu": "4桁。",
         "invalid_city_lu": "まず郵便番号を入力してください。",
-        "invalid_address_1_lu": "番地と通り名を入力してください。"
+        "invalid_address_1_lu": "番地と通り名を入力してください。",
+        "invalid_address_gr": "住所を入力してください。",
+        "invalid_zip_gr": "5桁。",
+        "invalid_city_gr": "街へ入る。"
 }
