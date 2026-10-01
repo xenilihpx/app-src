@@ -8,6 +8,18 @@ $collector_sh = new JsonCollector(
 
 $country="ch";
 ?>
+<style>
+/* PLZ/Ort are readonly until a place is picked (or "manually" is unlocked) - the browser's
+   default text-edit (I-beam) cursor on a readonly field looks editable even though typing does
+   nothing, so override it to signal that up front. */
+#fields_zip[readonly], #fields_city[readonly] {
+    cursor: default;
+    /* readonly still lets the field be clicked/focused (unlike disabled) - block that
+       interaction cosmetically while keeping the field a normal, submittable form value
+       (disabled fields don't get submitted at all, which would drop a Places-filled value). */
+    pointer-events: none;
+}
+</style>
 <?php if($OfferApi->targetLanguage=="zh-hant" || $OfferApi->targetLanguage=="zh-hans"){ ?>
             <div class="tw-mb-2 tw-flex tw-gap-1 tw-text-[#4D4D4D]" style="font-size:0.75em; padding: 7px;border: 1px solid #f6ca79;background: #fef6e9;line-height: 1.3;" >
                 <span>&#x2139;</span><span><?= $collector_sh->translate("type_english_ch", "Please fill in the following shipping information in German.") ?></span>
@@ -73,7 +85,7 @@ $country="ch";
 
     document.getElementById('fields_address1').addEventListener('blur', function () {
         var valid = this.value.trim() !== '';
-        inlineError(this, valid, (window.i18nData && window.i18nData['invalid_address_ch']) || 'Enter street and house number.');
+        inlineError(this, valid, (window.i18nData && window.i18nData['invalid_address_ch']) || 'Bitte Strasse und Hausnummer eingeben.');
     });
 
     // Postal code accepts digits only, capped at 4 - strip anything else as the shopper types
@@ -85,12 +97,12 @@ $country="ch";
 
     document.getElementById('fields_zip').addEventListener('blur', function () {
         var valid = /^[0-9]{4}$/.test(this.value.trim());
-        inlineError(this, valid, (window.i18nData && window.i18nData['invalid_zip_ch']) || '4 digits.');
+        inlineError(this, valid, (window.i18nData && window.i18nData['invalid_zip_ch']) || '4 Ziffern.');
     });
 
     document.getElementById('fields_city').addEventListener('blur', function () {
         var valid = this.value.trim() !== '';
-        inlineError(this, valid, (window.i18nData && window.i18nData['invalid_city_ch']) || 'Enter the town or city.');
+        inlineError(this, valid, (window.i18nData && window.i18nData['invalid_city_ch']) || 'Bitte Ort eingeben.');
     });
 
     // --- Google Places Autocomplete on Adresse: the actual binding, restriction and PLZ/Ort

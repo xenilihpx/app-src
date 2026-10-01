@@ -452,6 +452,6 @@
     "town_city_ch": "Ort",
     "p_town_city_ch": "z. B. Z\u00fcrich",
     "manual_link_ch": "Adresse nicht gefunden? Manuell eingeben",
-    "p_zip_autofill_ch": "Wird automatisch ausgef\u00fcllt",
-    "p_town_city_autofill_ch": "Wird automatisch ausgef\u00fcllt"
+    "p_zip_autofill_ch": "Automatisch",
+    "p_town_city_autofill_ch": "Automatisch"
 }
