@@ -491,5 +491,5 @@
     "invalid_city_rs": "Enter the town or city.",
     "manual_link_ch": "Address not found? Enter manually.",
     "p_zip_autofill_ch": "Autofilled",
-    "p_town_city_autofill_ch": "Filled in automatically"
+    "p_town_city_autofill_ch": "Select address first"
 }

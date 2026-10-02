@@ -50,7 +50,7 @@ $country="ch";
     <div class="col-sm-8">
         <div class="mb-3">
             <label class="p cart-input-label" for="fields_city"><?= $collector_sh->translate("town_city_".$country, "Town / city") ?></label>
-            <input id="fields_city" name="city" class="cart-input p" value="" type="text" readonly data-example-placeholder="<?= $collector_sh->translate("p_town_city_".$country, "E.g. Zürich") ?>" placeholder="<?= $collector_sh->translate("p_town_city_autofill_".$country, "Filled in automatically") ?>" required="required">
+            <input id="fields_city" name="city" class="cart-input p" value="" type="text" readonly data-example-placeholder="<?= $collector_sh->translate("p_town_city_".$country, "E.g. Zürich") ?>" placeholder="<?= $collector_sh->translate("p_town_city_autofill_".$country, "Select address first") ?>" required="required">
         </div>
     </div>
 </div>
