@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr":"Enter the city.",
         "invalid_address_rs": "Enter street and house number.",
         "invalid_zip_rs": "5 digits.",
-        "invalid_city_rs": "Enter the town or city."
+        "invalid_city_rs": "Enter the town or city.",
+        "invalid_address_ch": "Please enter street and house number.",
+        "invalid_zip_ch": "4 digits.",
+        "invalid_city_ch": "Please enter a town/city."
 }

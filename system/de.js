@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "Betreten Sie die Stadt.",
         "invalid_address_rs": "Geben Sie die Straße und die Hausnummer ein.",
         "invalid_zip_rs": "5 Ziffern.",
-        "invalid_city_rs": "Geben Sie den Ort oder die Stadt ein."
+        "invalid_city_rs": "Geben Sie den Ort oder die Stadt ein.",
+        "invalid_address_ch": "Bitte Strasse und Hausnummer eingeben.",
+        "invalid_zip_ch": "4 Ziffern.",
+        "invalid_city_ch": "Bitte Ort eingeben."
 }
