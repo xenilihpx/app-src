@@ -44,7 +44,7 @@ $country="ch";
     <div class="col-sm-4">
         <div class="mb-3">
             <label class="p cart-input-label" for="fields_zip"><?= $collector_sh->translate("zip_".$country, "Postal code") ?></label>
-            <input id="fields_zip" name="zip" class="cart-input p" value="" type="text" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" readonly data-example-placeholder="<?= $collector_sh->translate("p_zip_".$country, "E.g. 8001") ?>" placeholder="<?= $collector_sh->translate("p_zip_autofill_".$country, "Filled in automatically") ?>" required="required">
+            <input id="fields_zip" name="zip" class="cart-input p" value="" type="text" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" readonly data-example-placeholder="<?= $collector_sh->translate("p_zip_".$country, "E.g. 8001") ?>" placeholder="<?= $collector_sh->translate("p_zip_autofill_".$country, "Autofilled") ?>" required="required">
         </div>
     </div>
     <div class="col-sm-8">
