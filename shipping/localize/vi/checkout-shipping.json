@@ -1,4 +1,12 @@
 {
+    "address_nz": "\u0110\u1ecba ch\u1ec9",
+    "p_address_nz": "V\u00ed d\u1ee5: 12 Queen Street",
+    "address2_nz": "C\u0103n h\u1ed9, ph\u00f2ng suite, t\u00f2a nh\u00e0 (t\u00f9y ch\u1ecdn)",
+    "p_address2_nz": "V\u00ed d\u1ee5: C\u0103n h\u1ed9 s\u1ed1 3, Harbour House",
+    "p_suburb_eg_nz": "V\u00ed d\u1ee5: Ponsonby",
+    "p_zip_eg_nz": "V\u00ed d\u1ee5: 1011",
+    "town_city_label_nz": "Th\u1ecb tr\u1ea5n \/ th\u00e0nh ph\u1ed1",
+    "p_town_city_eg_nz": "V\u00ed d\u1ee5: Auckland",
     "consigneeId_label__tw": "M\u00e3 s\u1ed1 ng\u01b0\u1eddi nh\u1eadn h\u00e0ng",
     "consigneeId_note": "L\u01b0u \u00fd: H\u00e3y \u0111\u1ea3m b\u1ea3o m\u00e3 s\u1ed1 ng\u01b0\u1eddi nh\u1eadn h\u00e0ng tr\u00f9ng kh\u1edbp v\u1edbi t\u00ean \u0111\u1ec3 tr\u00e1nh s\u1ef1 ch\u1eadm tr\u1ec5.",
     "consigneeId__tw": "Nh\u1eadp s\u1ed1 CMND \/ ARC",

@@ -1,4 +1,12 @@
 {
+    "address_nz": "Adres",
+    "p_address_nz": "Np. 12 Queen Street",
+    "address2_nz": "Mieszkanie, apartament, budynek (opcjonalnie)",
+    "p_address2_nz": "Np. Budynek nr 3, Harbour House",
+    "p_suburb_eg_nz": "Np. Ponsonby",
+    "p_zip_eg_nz": "Np. 1011",
+    "town_city_label_nz": "Miasto",
+    "p_town_city_eg_nz": "Np. Auckland",
     "consigneeId_label__tw": "Numer identyfikacyjny odbiorcy",
     "consigneeId_note": "Uwaga: Aby unikn\u0105\u0107 op\u00f3\u017anie\u0144, nale\u017cy upewni\u0107 si\u0119, \u017ce identyfikator odbiorcy zgadza si\u0119 z nazwiskiem.",
     "consigneeId__tw": "Wprowad\u017a numer dowodu osobistego \/ numer ARC",

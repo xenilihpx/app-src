@@ -1,4 +1,12 @@
 {
+    "address_nz": "Indirizzo",
+    "p_address_nz": "Ad es. 12 Queen Street",
+    "address2_nz": "Appartamento, suite, edificio (facoltativo)",
+    "p_address2_nz": "Ad es. Unit\u00e0 3, Harbour House",
+    "p_suburb_eg_nz": "Ad es. Ponsonby",
+    "p_zip_eg_nz": "Ad es. 1011",
+    "town_city_label_nz": "Citt\u00e0",
+    "p_town_city_eg_nz": "Ad es. Auckland",
     "consigneeId_label__tw": "ID del destinatario",
     "consigneeId_note": "Nota: assicurarsi che l'ID del destinatario corrisponda al nome per evitare ritardi.",
     "consigneeId__tw": "Inserisci il numero di identificazione nazionale \/ ARC",

@@ -1,4 +1,12 @@
 {
+    "address_nz": "\uc8fc\uc18c",
+    "p_address_nz": "\uc608: \ud038 \uc2a4\ud2b8\ub9ac\ud2b8 12\ubc88\uc9c0",
+    "address2_nz": "\uc544\ud30c\ud2b8, \uc2a4\uc704\ud2b8, \uac74\ubb3c (\uc120\ud0dd \uc0ac\ud56d)",
+    "p_address2_nz": "\uc608: 3\ud638\uc2e4, \ud558\ubc84 \ud558\uc6b0\uc2a4",
+    "p_suburb_eg_nz": "\uc608: \ud3f0\uc2a8\ube44",
+    "p_zip_eg_nz": "\uc608: 1011",
+    "town_city_label_nz": "\ub9c8\uc744 \/ \ub3c4\uc2dc",
+    "p_town_city_eg_nz": "\uc608: \uc624\ud074\ub79c\ub4dc",
     "consigneeId_label__tw": "\uc218\ucde8\uc778 ID",
     "consigneeId_note": "\ucc38\uace0: \uc9c0\uc5f0\uc774 \ubc1c\uc0dd\ud558\uc9c0 \uc54a\ub3c4\ub85d \uc218\ucde8\uc778 ID\uc640 \uc774\ub984\uc774 \uc77c\uce58\ud558\ub294\uc9c0 \ud655\uc778\ud574 \uc8fc\uc2ed\uc2dc\uc624.",
     "consigneeId__tw": "\uc8fc\ubbfc\ub4f1\ub85d\ubc88\ud638 \/ ARC \uc785\ub825",

@@ -1,4 +1,12 @@
 {
+    "address_nz": "Adres",
+    "p_address_nz": "\u00d6rne\u011fin: 12 Queen Street",
+    "address2_nz": "Daire, s\u00fcit, bina (iste\u011fe ba\u011fl\u0131)",
+    "p_address2_nz": "\u00d6rne\u011fin: 3. Birim, Harbour House",
+    "p_suburb_eg_nz": "\u00d6rne\u011fin: Ponsonby",
+    "p_zip_eg_nz": "\u00d6rne\u011fin: 1011",
+    "town_city_label_nz": "Kasaba \/ \u015fehir",
+    "p_town_city_eg_nz": "\u00d6rne\u011fin: Auckland",
     "consigneeId_label__tw": "Al\u0131c\u0131 Kimlik Numaras\u0131",
     "consigneeId_note": "Not: Gecikmeleri \u00f6nlemek i\u00e7in al\u0131c\u0131 kimli\u011finin isimle uyumlu oldu\u011fundan emin olun.",
     "consigneeId__tw": "Ulusal Kimlik Numaras\u0131 \/ ARC'yi girin",

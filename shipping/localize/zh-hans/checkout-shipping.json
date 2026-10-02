@@ -1,4 +1,12 @@
 {
+    "address_nz": "\u5730\u5740",
+    "p_address_nz": "\u4f8b\u5982\uff1a\u7687\u540e\u885712\u53f7",
+    "address2_nz": "\u516c\u5bd3\u3001\u5957\u623f\u3001\u697c\u5b87\uff08\u53ef\u9009\uff09",
+    "p_address2_nz": "\u4f8b\u5982\uff1a\u7b2c3\u5355\u5143\uff0c\u6d77\u6e2f\u5927\u53a6",
+    "p_suburb_eg_nz": "\u4f8b\u5982\uff1a\u5e9e\u68ee\u6bd4",
+    "p_zip_eg_nz": "\u4f8b\u5982 1011",
+    "town_city_label_nz": "\u57ce\u9547 \/ \u57ce\u5e02",
+    "p_town_city_eg_nz": "\u4f8b\u5982\uff1a\u5965\u514b\u5170",
     "consigneeId_label__tw": "\u6536\u8d27\u4ebaID",
     "consigneeId_note": "\u6ce8\u610f\uff1a\u8bf7\u786e\u4fdd\u6536\u8d27\u4ebaID\u4e0e\u59d3\u540d\u4e00\u81f4\uff0c\u4ee5\u514d\u9020\u6210\u5ef6\u8bef\u3002",
     "consigneeId__tw": "\u8f93\u5165\u56fd\u6c11\u8eab\u4efd\u8bc1\u53f7\/ARC",

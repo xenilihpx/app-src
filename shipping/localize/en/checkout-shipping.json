@@ -1,4 +1,12 @@
 {
+    "address_nz": "Address",
+    "p_address_nz": "E.g. 12 Queen Street",
+    "address2_nz": "Apartment, suite, building (optional)",
+    "p_address2_nz": "E.g. Unit 3, Harbour House",
+    "p_suburb_eg_nz": "E.g. Ponsonby",
+    "p_zip_eg_nz": "E.g. 1011",
+    "town_city_label_nz": "Town \/ city",
+    "p_town_city_eg_nz": "E.g. Auckland",
     "consigneeId_label__tw": "Consignee ID",
     "consigneeId_note": "Note: Ensure consignee ID matches name to avoid delays.",
     "consigneeId__tw": "Enter National ID \/ ARC",

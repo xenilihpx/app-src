@@ -1,4 +1,12 @@
 {
+    "address_nz": "Endere\u00e7o",
+    "p_address_nz": "Por exemplo: Rua Queen, 12",
+    "address2_nz": "Apartamento, su\u00edte, pr\u00e9dio (opcional)",
+    "p_address2_nz": "Por exemplo: Unidade 3, Harbour House",
+    "p_suburb_eg_nz": "Por exemplo, Ponsonby",
+    "p_zip_eg_nz": "Por exemplo, 1011",
+    "town_city_label_nz": "Cidade",
+    "p_town_city_eg_nz": "Por exemplo, Auckland",
     "consigneeId_label__tw": "ID do destinat\u00e1rio",
     "consigneeId_note": "Observa\u00e7\u00e3o: Certifique-se de que o n\u00famero de identifica\u00e7\u00e3o do destinat\u00e1rio corresponda ao nome para evitar atrasos.",
     "consigneeId__tw": "Insira o n\u00famero do documento de identidade nacional \/ ARC",

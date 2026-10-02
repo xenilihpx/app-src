@@ -1,4 +1,12 @@
 {
+    "address_nz": "Adresse",
+    "p_address_nz": "F.eks. 12 Queen Street",
+    "address2_nz": "Lejlighed, suite, bygning (valgfrit)",
+    "p_address2_nz": "F.eks. Enhed 3, Harbour House",
+    "p_suburb_eg_nz": "F.eks. Ponsonby",
+    "p_zip_eg_nz": "F.eks. 1011",
+    "town_city_label_nz": "By",
+    "p_town_city_eg_nz": "F.eks. Auckland",
     "consigneeId_label__tw": "Modtager-ID",
     "consigneeId_note": "Bem\u00e6rk: S\u00f8rg for, at modtager-ID\u2019et stemmer overens med navnet for at undg\u00e5 forsinkelser.",
     "consigneeId__tw": "Indtast nationalt ID-nummer \/ ARC-nummer",

@@ -1,4 +1,12 @@
 {
+    "address_nz": "Alamat",
+    "p_address_nz": "Misalnya, 12 Queen Street",
+    "address2_nz": "Apartemen, suite, gedung (opsional)",
+    "p_address2_nz": "Misalnya: Unit 3, Harbour House",
+    "p_suburb_eg_nz": "Misalnya, Ponsonby",
+    "p_zip_eg_nz": "Misalnya 1011",
+    "town_city_label_nz": "Kota",
+    "p_town_city_eg_nz": "Misalnya, Auckland",
     "consigneeId_label__tw": "ID Penerima Barang",
     "consigneeId_note": "Catatan: Pastikan nomor identitas penerima sesuai dengan namanya untuk menghindari keterlambatan.",
     "consigneeId__tw": "Masukkan Nomor Identitas Nasional \/ Kartu Tanda Penduduk Asing (ARC)",

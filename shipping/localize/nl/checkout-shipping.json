@@ -1,4 +1,12 @@
 {
+    "address_nz": "Adres",
+    "p_address_nz": "Bijvoorbeeld: 12 Queen Street",
+    "address2_nz": "Appartement, suite, gebouw (optioneel)",
+    "p_address2_nz": "Bijv. Unit 3, Harbour House",
+    "p_suburb_eg_nz": "Bijvoorbeeld Ponsonby",
+    "p_zip_eg_nz": "Bijv. 1011",
+    "town_city_label_nz": "Stad",
+    "p_town_city_eg_nz": "Bijvoorbeeld: Auckland",
     "consigneeId_label__tw": "Ontvanger-ID",
     "consigneeId_note": "Opmerking: Zorg ervoor dat het ID van de ontvanger overeenkomt met de naam om vertragingen te voorkomen.",
     "consigneeId__tw": "Voer uw nationaal identiteitsnummer \/ ARC in",

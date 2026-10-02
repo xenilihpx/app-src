@@ -1,4 +1,12 @@
 {
+    "address_nz": "Direcci\u00f3n",
+    "p_address_nz": "Por ejemplo: 12 de la calle Queen",
+    "address2_nz": "Piso, suite, edificio (opcional)",
+    "p_address2_nz": "Por ejemplo: Unidad 3, Harbour House",
+    "p_suburb_eg_nz": "Por ejemplo, Ponsonby",
+    "p_zip_eg_nz": "Por ejemplo, 1011",
+    "town_city_label_nz": "Pueblo \/ ciudad",
+    "p_town_city_eg_nz": "Por ejemplo, Auckland",
     "consigneeId_label__tw": "N.\u00ba de identificaci\u00f3n del destinatario",
     "consigneeId_note": "Nota: Aseg\u00farate de que el n\u00famero de identificaci\u00f3n del destinatario coincida con su nombre para evitar retrasos.",
     "consigneeId__tw": "Introduce el DNI o el ARC",

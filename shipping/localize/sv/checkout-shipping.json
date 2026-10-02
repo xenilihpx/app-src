@@ -1,4 +1,12 @@
 {
+    "address_nz": "Adress",
+    "p_address_nz": "T.ex. 12 Queen Street",
+    "address2_nz": "L\u00e4genhet, svit, byggnad (valfritt)",
+    "p_address2_nz": "T.ex. Enhet 3, Harbour House",
+    "p_suburb_eg_nz": "T.ex. Ponsonby",
+    "p_zip_eg_nz": "T.ex. 1011",
+    "town_city_label_nz": "Stad",
+    "p_town_city_eg_nz": "T.ex. Auckland",
     "address_ch": "Adress",
     "p_address_ch": "T.ex. Bahnhofstrasse 12",
     "address2_ch": "Ytterligare adressuppgifter (valfritt)",

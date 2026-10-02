@@ -1,4 +1,12 @@
 {
+    "address_nz": "Osoite",
+    "p_address_nz": "Esim. 12 Queen Street",
+    "address2_nz": "Asunto, sviitti, rakennus (valinnainen)",
+    "p_address2_nz": "Esim. yksikk\u00f6 3, Harbour House",
+    "p_suburb_eg_nz": "Esim. Ponsonby",
+    "p_zip_eg_nz": "Esim. 1011",
+    "town_city_label_nz": "Kaupunki",
+    "p_town_city_eg_nz": "Esim. Auckland",
     "consigneeId_label__tw": "Vastaanottajan tunnus",
     "consigneeId_note": "Huomautus: Varmista, ett\u00e4 vastaanottajan tunnus ja nimi t\u00e4sm\u00e4\u00e4v\u00e4t, jotta v\u00e4ltyt\u00e4\u00e4n viiv\u00e4styksilt\u00e4.",
     "consigneeId__tw": "Sy\u00f6t\u00e4 kansallinen henkil\u00f6tunnus \/ ARC-numero",

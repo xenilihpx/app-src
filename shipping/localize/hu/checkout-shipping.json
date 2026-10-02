@@ -1,4 +1,12 @@
 {
+    "address_nz": "C\u00edm",
+    "p_address_nz": "P\u00e9ld\u00e1ul: 12 Queen Street",
+    "address2_nz": "Lak\u00e1s, lakoszt\u00e1ly, \u00e9p\u00fclet (opcion\u00e1lis)",
+    "p_address2_nz": "P\u00e9ld\u00e1ul: 3. egys\u00e9g, Harbour House",
+    "p_suburb_eg_nz": "P\u00e9ld\u00e1ul Ponsonby",
+    "p_zip_eg_nz": "P\u00e9ld\u00e1ul 1011",
+    "town_city_label_nz": "V\u00e1ros",
+    "p_town_city_eg_nz": "P\u00e9ld\u00e1ul Auckland",
     "consigneeId_label__tw": "C\u00edmzett azonos\u00edt\u00f3ja",
     "consigneeId_note": "Megjegyz\u00e9s: A k\u00e9sedelmek elker\u00fcl\u00e9se \u00e9rdek\u00e9ben gy\u0151z\u0151dj\u00f6n meg arr\u00f3l, hogy a c\u00edmzett azonos\u00edt\u00f3ja megegyezik a nev\u00e9vel.",
     "consigneeId__tw": "Adja meg a nemzeti szem\u00e9lyi azonos\u00edt\u00f3sz\u00e1mot \/ ARC-sz\u00e1mot",

@@ -1,4 +1,12 @@
 {
+    "address_nz": "Adresa",
+    "p_address_nz": "Nap\u0159. 12 Queen Street",
+    "address2_nz": "Byt, apartm\u00e1, budova (voliteln\u011b)",
+    "p_address2_nz": "Nap\u0159. jednotka 3, Harbour House",
+    "p_suburb_eg_nz": "Nap\u0159. Ponsonby",
+    "p_zip_eg_nz": "Nap\u0159. 1011",
+    "town_city_label_nz": "M\u011bsto",
+    "p_town_city_eg_nz": "Nap\u0159. Auckland",
     "consigneeId_label__tw": "Identifika\u010dn\u00ed \u010d\u00edslo p\u0159\u00edjemce",
     "consigneeId_note": "Pozn\u00e1mka: Aby nedo\u0161lo ke zpo\u017ed\u011bn\u00edm, ujist\u011bte se, \u017ee se identifika\u010dn\u00ed \u010d\u00edslo p\u0159\u00edjemce shoduje s jeho jm\u00e9nem.",
     "consigneeId__tw": "Zadejte \u010d\u00edslo n\u00e1rodn\u00edho pr\u016fkazu toto\u017enosti \/ ARC",
