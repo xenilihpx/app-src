@@ -585,9 +585,11 @@ class OfferApi extends KonnektiveApi {
           if($this->currencySymbol=="NT$" || $this->currencySymbol=="¥" || $this->currencySymbol=="₩" ){
                 $forceToZeroDecimal=number_format($amount, 0);
           }
+          
           if($this->countryName=="Indonesia"){
                 return $this->currencySymbol.number_format($amount, 0, ',', '.');
           }
+
           if($this->countryName=="Netherlands" && $this->currencySymbol=="€"){
             return $this->currencySymbol.' '.number_format($amount, $decimal, ',', '.');
           } else if($this->currencySymbol=="€"){                    
@@ -606,7 +608,9 @@ class OfferApi extends KonnektiveApi {
             return number_format($amount, $decimal, ',', '.'). ' lei';
           }
 
-           if($this->currencySymbol=="kr"){
+          if($this->countryName=="Denmark"){
+            return number_format($amount, $decimal, ',', '.'). ' kr.';
+          }else if($this->currencySymbol=="kr"){
             return number_format($amount, $decimal, ',', ' '). ' kr';
           }
 

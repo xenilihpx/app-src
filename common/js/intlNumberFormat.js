@@ -87,8 +87,10 @@ function formatNumber(amount, currencySymbol) {
 
             symbolPrefix = true;   
             currencySymbol ="PKR "; 
-            decimal=0;    
-
+            decimal=0;   
+        }else if($("#userCountry").val() === "DK"){ 
+            currencySymbol =" kr.";    
+            code = "dk-DK"; 
         }else if(currencySymbol === "kr"){            
             currencySymbol =" kr";    
             code = "no-No"; 
