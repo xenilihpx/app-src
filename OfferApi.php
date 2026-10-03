@@ -969,6 +969,17 @@ class OfferApi extends KonnektiveApi {
      * downsellEverflowEventId is configured for it (currently US config only).
      * Otherwise null, meaning the normal upsell event id should be used.
      *
+     * Pages with independently-selectable product lines (e.g. big-mini-cutting-board's
+     * big/mini, each with its own upsell AND downsell event id, or any future page built
+     * the same way) define BOTH productGroups (group name => that group's product ids,
+     * already used elsewhere to build the page) AND groupEverflowEventIds (the SAME group
+     * names => that group's own Everflow event id). The ordered product is matched against
+     * each group by id, and that group's own event id is returned - group names are never
+     * hardcoded here, so this works for any page's own naming (big/mini, productA/productB,
+     * whatever a given funnel uses), not just this one. Without groupEverflowEventIds, every
+     * non-main product previously fell back to the single downsellEverflowEventId regardless
+     * of which one was actually ordered (e.g. ordering the mini downsell fired big's event).
+     *
      * Relies on $_SESSION['stored_products_order_'][...]['product1_id'], which is
      * set from the (popup-swapped) _product_order hidden input on every upsell import.
      */
@@ -979,11 +990,19 @@ class OfferApi extends KonnektiveApi {
         }
         $mainPid    = $funnel['productIds'][0] ?? null;
         $orderedPid = $_SESSION["stored_products_order_".$this->campaignId]["product1_id"] ?? null;
-        if ($orderedPid !== null && $mainPid !== null
-            && (string)$orderedPid !== (string)$mainPid) {
-            return $funnel['downsellEverflowEventId'];
+        if ($orderedPid === null || $mainPid === null || (string)$orderedPid === (string)$mainPid) {
+            return null;
         }
-        return null;
+
+        if (isset($funnel['productGroups'], $funnel['groupEverflowEventIds'])) {
+            foreach ($funnel['productGroups'] as $group => $ids) {
+                if (in_array((string)$orderedPid, array_map('strval', $ids), true) && isset($funnel['groupEverflowEventIds'][$group])) {
+                    return $funnel['groupEverflowEventIds'][$group];
+                }
+            }
+        }
+
+        return $funnel['downsellEverflowEventId'];
     }
 
     public function getDescriptor($productId=""){
