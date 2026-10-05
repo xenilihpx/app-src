@@ -1951,10 +1951,23 @@ class OfferApi extends KonnektiveApi {
                 $data['custom_order_ward']= $data['ward'];
         }
 
-        if(isset($data['county'])){         
-                $data['custom_order_county']= $data['county']; 
+        if(isset($data['county'])){
+                $data['custom_order_county']= $data['county'];
         }
-        
+
+        if(isset($data['suburb']) && $data['suburb']!=""){
+            if(isset($data['shipCountry']) && $data['shipCountry']=="NZ"){
+                // shipAddress2 (unit) + suburb, comma-separated, skip whichever is empty -
+                // e.g. "Apartment 2 Suite C, Dunedin North" or just "Dunedin North".
+                if(isset($data['shipAddress2']) && $data['shipAddress2']!=""){
+                    $data['shipAddress2']=$data['shipAddress2'].", ". $data['suburb'];
+                }else{
+                    $data['shipAddress2']=$data['suburb'];
+                }
+            }
+            $data['custom_order_suburb']= $data['suburb'];
+        }
+
         if(isset($data['tax_id'])){
             if($data['shipCountry']=="MX"){
                 $data['custom_order_mx_rfc_curp']= $data['tax_id'];

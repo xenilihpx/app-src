@@ -23,6 +23,7 @@
                         'houseno' : '#fields_houseno', //for brazil 
                         'bairro' : '#fields_bairro', //for brazil 
                         'barangay' : '#fields_barangay', //for ph
+                        'suburb' : '#fields_suburb', //for nz
                         'tax_id': '#fields_tax_id', //for mx, indonesia (npwp/nik)
                         'neighborhood': '#fields_neighborhood', //for mx, indonesia (rt/rw)
                         'apt_unit': '#fields_apt_unit', //for mx, indonesia (blok/unit/lantai)
@@ -2189,6 +2190,10 @@
 
                         if ($(formField.barangay).length!=0) {
                             model.barangay=$(formField.barangay).val().trim();
+                        }
+
+                        if ($(formField.suburb).length!=0) {
+                            model.suburb=$(formField.suburb).val().trim();
                         }
 
                         if ($(formField.tax_id).length!=0) {
