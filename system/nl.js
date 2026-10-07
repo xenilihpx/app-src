@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "Ga de stad binnen.",
         "invalid_address_rs": "Voer de straatnaam en het huisnummer in.",
         "invalid_zip_rs": "5 cijfers.",
-        "invalid_city_rs": "Voer de plaats of stad in."
+        "invalid_city_rs": "Voer de plaats of stad in.",
+        "invalid_address_ch": "Vul hier de straatnaam en het huisnummer in.",
+        "invalid_zip_ch": "4 cijfers.",
+        "invalid_city_ch": "Voer een plaats in."
 }

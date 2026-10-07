@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "Bước vào thành phố.",
         "invalid_address_rs": "Nhập tên đường và số nhà.",
         "invalid_zip_rs": "5 chữ số.",
-        "invalid_city_rs": "Nhập tên thị trấn hoặc thành phố."
+        "invalid_city_rs": "Nhập tên thị trấn hoặc thành phố.",
+        "invalid_address_ch": "Vui lòng nhập tên đường và số nhà.",
+        "invalid_zip_ch": "4 chữ số.",
+        "invalid_city_ch": "Vui lòng nhập tên thị trấn/thành phố."
 }

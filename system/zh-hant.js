@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "進入這座城市。",
         "invalid_address_rs": "請輸入街道名稱和門牌號碼。",
         "invalid_zip_rs": "5 位數。",
-        "invalid_city_rs": "請輸入城鎮或城市名稱。"
+        "invalid_city_rs": "請輸入城鎮或城市名稱。",
+        "invalid_address_ch": "請輸入街道名稱及門牌號碼。",
+        "invalid_zip_ch": "4 位數。",
+        "invalid_city_ch": "請輸入城鎮／城市名稱。"
 }

@@ -90,5 +90,8 @@ window.i18nData = {
     "invalid_city_gr": "Entra en la ciudad.",
     "invalid_address_rs": "Introduce la calle y el número de la vivienda.",
     "invalid_zip_rs": "5 dígitos.",
-    "invalid_city_rs": "Introduce el nombre del pueblo o la ciudad."
+    "invalid_city_rs": "Introduce el nombre del pueblo o la ciudad.",
+    "invalid_address_ch": "Introduce, por favor, la calle y el número de la vivienda.",
+    "invalid_zip_ch": "4 dígitos.",
+    "invalid_city_ch": "Introduce una localidad."
 };

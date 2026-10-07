@@ -90,5 +90,8 @@ window.i18nData = {
     "invalid_city_gr": "Kjør inn i byen.",
     "invalid_address_rs": "Skriv inn gate og husnummer.",
     "invalid_zip_rs": "5 sifre.",
-    "invalid_city_rs": "Skriv inn byen."
+    "invalid_city_rs": "Skriv inn byen.",
+    "invalid_address_ch": "Vennligst oppgi gate og husnummer.",
+    "invalid_zip_ch": "4 sifre.",
+    "invalid_city_ch": "Vennligst oppgi en by."
 }

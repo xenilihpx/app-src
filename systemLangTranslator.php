@@ -60,6 +60,8 @@ if (!$deepLKey) {
 $deepLLanguageMap = [
     'pt-br'   => 'PT-BR',
     'pt-pt'   => 'PT-PT',
+    'pt'   => 'PT-PT',
+    'sr-latn'   => 'sr',
     'mx'      => 'ES',      // Spanish (Mexico) - DeepL has no MX-specific target
     'zh-hans' => 'ZH-HANS',
     'zh-hant' => 'ZH-HANT',

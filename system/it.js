@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "Entra in città.",
         "invalid_address_rs": "Inserisci il nome della via e il numero civico.",
         "invalid_zip_rs": "5 cifre.",
-        "invalid_city_rs": "Inserisci il nome della città o del paese."
+        "invalid_city_rs": "Inserisci il nome della città o del paese.",
+        "invalid_address_ch": "Inserisci il nome della via e il numero civico.",
+        "invalid_zip_ch": "4 cifre.",
+        "invalid_city_ch": "Inserisci una città."
 }

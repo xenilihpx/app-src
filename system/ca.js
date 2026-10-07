@@ -90,5 +90,8 @@ window.i18nData={
     "invalid_city_gr": "Entra a la ciutat.",
     "invalid_address_rs": "Introdueix el carrer i el número de casa.",
     "invalid_zip_rs": "5 dígits.",
-    "invalid_city_rs": "Entra al poble o a la ciutat."
+    "invalid_city_rs": "Entra al poble o a la ciutat.",
+    "invalid_address_ch": "Introduïu el carrer i el número de casa.",
+    "invalid_zip_ch": "4 xifres.",
+    "invalid_city_ch": "Introdueix un poble o ciutat."
 }

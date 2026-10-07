@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "Kör in i staden.",
         "invalid_address_rs": "Ange gatuadress och husnummer.",
         "invalid_zip_rs": "5 siffror.",
-        "invalid_city_rs": "Ange ort eller stad."
+        "invalid_city_rs": "Ange ort eller stad.",
+        "invalid_address_ch": "Ange gatuadress och husnummer.",
+        "invalid_zip_ch": "4 siffror.",
+        "invalid_city_ch": "Ange en ort."
 }
