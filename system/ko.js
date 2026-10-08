@@ -93,5 +93,6 @@ window.i18nData = {
     "invalid_city_rs": "마을이나 도시 이름을 입력하세요.",
     "invalid_address_ch": "거리명과 집 번호를 입력해 주세요.",
     "invalid_zip_ch": "4자리.",
-    "invalid_city_ch": "도시명을 입력해 주세요."
+    "invalid_city_ch": "도시명을 입력해 주세요.",
+    "invalid_value_zh_hant": "주소를 번체 중국어로 입력해 주세요."
 };

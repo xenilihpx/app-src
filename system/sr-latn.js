@@ -93,5 +93,6 @@ window.i18nData={
         "invalid_city_rs":"Unesite grad ili opštinu.",
         "invalid_address_ch": "Молимо унесите назив улице и број куће.",
         "invalid_zip_ch": "4 цифре.",
-        "invalid_city_ch": "Молимо унесите град/место."
+        "invalid_city_ch": "Молимо унесите град/место.",
+        "invalid_value_zh_hant": "Унесите своју адресу на традиционалном кинеском."
 }

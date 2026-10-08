@@ -93,5 +93,6 @@ window.i18nData={
         "invalid_city_rs": "输入城镇或城市名称。",
         "invalid_address_ch": "请输入街道名称和门牌号。",
         "invalid_zip_ch": "4位数。",
-        "invalid_city_ch": "请输入城镇名称。"
+        "invalid_city_ch": "请输入城镇名称。",
+        "invalid_value_zh_hant": "请用繁体中文输入您的地址。"
 }

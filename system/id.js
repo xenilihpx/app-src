@@ -93,5 +93,6 @@ window.i18nData={
         "invalid_city_rs": "Masuklah ke kota tersebut.",
         "invalid_address_ch": "Silakan masukkan nama jalan dan nomor rumah.",
         "invalid_zip_ch": "4 digit.",
-        "invalid_city_ch": "Silakan masukkan nama kota."
+        "invalid_city_ch": "Silakan masukkan nama kota.",
+        "invalid_value_zh_hant": "Masukkan alamat Anda dalam bahasa Mandarin Tradisional."
 }

@@ -93,5 +93,6 @@ window.i18nData = {
     "invalid_city_rs": "Indiquez le nom de la ville.",
     "invalid_address_ch": "Veuillez indiquer le nom de la rue et le numéro de la maison.",
     "invalid_zip_ch": "4 chiffres.",
-    "invalid_city_ch": "Veuillez saisir une ville."
+    "invalid_city_ch": "Veuillez saisir une ville.",
+    "invalid_value_zh_hant": "Saisissez votre adresse en chinois traditionnel."
 };

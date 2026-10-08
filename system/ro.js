@@ -97,5 +97,6 @@ window.i18nData={
         "invalid_city_rs": "Introduceți numele localității sau al orașului.",
         "invalid_address_ch": "Vă rugăm să introduceți numele străzii și numărul casei.",
         "invalid_zip_ch": "4 cifre.",
-        "invalid_city_ch": "Vă rugăm să introduceți numele unui oraș."
+        "invalid_city_ch": "Vă rugăm să introduceți numele unui oraș.",
+        "invalid_value_zh_hant": "Introduceți adresa în chineză tradițională."
 }

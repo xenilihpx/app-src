@@ -93,5 +93,6 @@ window.i18nData={
         "invalid_city_rs": "町や都市の名前を入力してください。",
         "invalid_address_ch": "通り名と番地を入力してください。",
         "invalid_zip_ch": "4桁。",
-        "invalid_city_ch": "町名または市名を入力してください。"
+        "invalid_city_ch": "町名または市名を入力してください。",
+        "invalid_value_zh_hant": "住所を繁体字で入力してください。"
 }

@@ -93,5 +93,6 @@ window.i18nData={
         "invalid_city_rs": "Kirjoita kaupunki tai paikkakunta.",
         "invalid_address_ch": "Kirjoita katu ja talonumero.",
         "invalid_zip_ch": "4 numeroa.",
-        "invalid_city_ch": "Kirjoita kaupunki."
+        "invalid_city_ch": "Kirjoita kaupunki.",
+        "invalid_value_zh_hant": "Kirjoita osoitteesi perinteisellä kiinankielellä."
 }

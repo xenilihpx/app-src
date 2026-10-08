@@ -93,5 +93,6 @@ window.i18nData={
         "invalid_city_rs": "قصبے یا شہر میں داخل ہوں۔",
         "invalid_address_ch": "براہ کرم گلی اور گھر کا نمبر درج کریں۔",
         "invalid_zip_ch": "چار ہندسے",
-        "invalid_city_ch": "براہ کرم ایک قصبہ/شہر درج کریں۔"
+        "invalid_city_ch": "براہ کرم ایک قصبہ/شہر درج کریں۔",
+        "invalid_value_zh_hant": "اپنا پتہ روایتی چینی میں درج کریں۔"
 }

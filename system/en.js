@@ -93,5 +93,6 @@ window.i18nData={
         "invalid_city_rs": "Enter the town or city.",
         "invalid_address_ch": "Please enter street and house number.",
         "invalid_zip_ch": "4 digits.",
-        "invalid_city_ch": "Please enter a town/city."
+        "invalid_city_ch": "Please enter a town/city.",
+        "invalid_value_zh_hant": "Enter your address in Traditional Chinese."
 }

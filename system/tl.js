@@ -93,5 +93,6 @@ window.i18nData = {
     "invalid_city_rs": "Pasok sa bayan o lungsod.",
     "invalid_address_ch": "Ipasok ang numero ng kalye at bahay.",
     "invalid_zip_ch": "Apat na digit.",
-    "invalid_city_ch": "Pakilagay ang bayan o lungsod."
+    "invalid_city_ch": "Pakilagay ang bayan o lungsod.",
+    "invalid_value_zh_hant": "Ipasok ang iyong address sa Tradisyunal na Tsino."
 };

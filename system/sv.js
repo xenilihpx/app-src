@@ -93,5 +93,6 @@ window.i18nData={
         "invalid_city_rs": "Ange ort eller stad.",
         "invalid_address_ch": "Ange gatuadress och husnummer.",
         "invalid_zip_ch": "4 siffror.",
-        "invalid_city_ch": "Ange en ort."
+        "invalid_city_ch": "Ange en ort.",
+        "invalid_value_zh_hant": "Ange din adress på traditionell kinesiska."
 }

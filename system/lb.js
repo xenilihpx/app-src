@@ -93,5 +93,6 @@ window.i18nData={
         "invalid_city_rs": "Gitt an d'Stad oder an d'Gemeng.",
         "invalid_address_ch": "Gitt w.e.g. d'Strooss an d'Hausnummer an.",
         "invalid_zip_ch": "4 Zifferen",
-        "invalid_city_ch": "Gitt w.e.g. eng Gemeng/Stad an."
+        "invalid_city_ch": "Gitt w.e.g. eng Gemeng/Stad an.",
+        "invalid_value_zh_hant": "Gitt Är Adress an traditionell chinesescher Schrëft an."
 }
