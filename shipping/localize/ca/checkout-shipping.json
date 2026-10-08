@@ -1,4 +1,7 @@
 {
+    "city_empty_tw": "Seleccioneu el vostre comtat o la vostra ciutat.",
+    "on_error_address1_empty_tw": "Introdueix la carretera, el carrer i el n\u00famero.",
+    "p_town_city_new2_tw": "Seleccioneu comtat \/ ciutat",
     "on_error_address2_new__tw": "Introdueix el teu pis\/unitat en xin\u00e8s tradicional.",
     "type_zhtranditional_new_tw": "Si us plau, introdu\u00efu la vostra adre\u00e7a en xin\u00e8s tradicional.",
     "type_zhtranditional_tw": "Si us plau, ompliu la informaci\u00f3 d'enviament seg\u00fcent en angl\u00e8s.",

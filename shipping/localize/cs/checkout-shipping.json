@@ -1,4 +1,7 @@
 {
+    "city_empty_tw": "Vyberte si kraj nebo m\u011bsto.",
+    "on_error_address1_empty_tw": "Zadejte n\u00e1zev ulice, \u010d\u00edslo domu a \u010d\u00edslo bytu.",
+    "p_town_city_new2_tw": "Vyberte kraj \/ m\u011bsto",
     "on_error_address2_new__tw": "Zadejte \u010d\u00edslo patra\/bytov\u00e9 jednotky v tradi\u010dn\u00ed \u010d\u00edn\u0161tin\u011b.",
     "type_zhtranditional_new_tw": "Zadejte pros\u00edm svou adresu v tradi\u010dn\u00ed \u010d\u00edn\u0161tin\u011b.",
     "type_zhtranditional_tw": "Vypl\u0148te pros\u00edm n\u00e1sleduj\u00edc\u00ed \u00fadaje o doru\u010den\u00ed v angli\u010dtin\u011b.",

@@ -1,4 +1,7 @@
 {
+    "city_empty_tw": "V\u00e1lassza ki a megy\u00e9t vagy a v\u00e1rost.",
+    "on_error_address1_empty_tw": "\u00cdrja be az utca nev\u00e9t, a s\u00e1vot \u00e9s a h\u00e1zsz\u00e1mot.",
+    "p_town_city_new2_tw": "V\u00e1lasszon megy\u00e9t \/ v\u00e1rost",
     "on_error_address2_new__tw": "\u00cdrja be az emelet\u00e9t\/lak\u00e1ssz\u00e1m\u00e1t hagyom\u00e1nyos k\u00ednai \u00edr\u00e1sm\u00f3ddal.",
     "type_zhtranditional_new_tw": "K\u00e9rj\u00fck, adja meg a c\u00edm\u00e9t hagyom\u00e1nyos k\u00ednai \u00edr\u00e1sm\u00f3ddal.",
     "type_zhtranditional_tw": "K\u00e9rj\u00fck, t\u00f6ltse ki az al\u00e1bbi sz\u00e1ll\u00edt\u00e1si adatokat angolul.",

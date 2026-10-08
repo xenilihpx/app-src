@@ -1,4 +1,7 @@
 {
+    "city_empty_tw": "Valitse maakunta tai kaupunki.",
+    "on_error_address1_empty_tw": "Sy\u00f6t\u00e4 tie, kaista ja numero.",
+    "p_town_city_new2_tw": "Valitse maakunta \/ kaupunki",
     "on_error_address2_new__tw": "Kirjoita kerros\/asunto perinteisell\u00e4 kiinankielell\u00e4.",
     "type_zhtranditional_new_tw": "Kirjoita osoitteesi perinteisell\u00e4 kiinankielell\u00e4.",
     "type_zhtranditional_tw": "T\u00e4yt\u00e4 seuraavat toimitustiedot englanniksi.",

@@ -1,4 +1,7 @@
 {
+    "city_empty_tw": "\u8bf7\u9009\u62e9\u60a8\u7684\u53bf\u6216\u5e02\u3002",
+    "on_error_address1_empty_tw": "\u8bf7\u8f93\u5165\u8857\u9053\u3001\u5df7\u9053\u548c\u95e8\u724c\u53f7\u3002",
+    "p_town_city_new2_tw": "\u9009\u62e9\u53bf\/\u5e02",
     "on_error_address2_new__tw": "\u8bf7\u7528\u7e41\u4f53\u4e2d\u6587\u8f93\u5165\u697c\u5c42\/\u5355\u5143\u53f7\u3002",
     "type_zhtranditional_new_tw": "\u8bf7\u7528\u7e41\u4f53\u4e2d\u6587\u586b\u5199\u60a8\u7684\u5730\u5740\u3002",
     "type_zhtranditional_tw": "\u8bf7\u7528\u82f1\u8bed\u586b\u5199\u4ee5\u4e0b\u53d1\u8d27\u4fe1\u606f\u3002",
@@ -9,7 +12,7 @@
     "town_city_new_tw": "\u53bf\/\u5e02",
     "p_town_city_new_tw": "\u53bf\/\u5e02",
     "p_state_district_new_tw": "\u8bf7\u5148\u9009\u62e9\u53bf\/\u5e02",
-    "p_zip_new_tw": "\u6c7d\u8f66",
+    "p_zip_new_tw": "\u81ea\u52a8",
     "address_new_tw": "\u5730\u5740",
     "tw_address_new_tw": "\u4f8b\u5982\uff1a\u4fe1\u4e49\u8def5\u6bb57\u53f7",
     "tw_address_tw": "\u697c\u5c42\/\u5355\u5143\uff08\u53ef\u9009\uff09",

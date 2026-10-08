@@ -1,4 +1,7 @@
 {
+    "city_empty_tw": "S\u00e9lectionnez votre d\u00e9partement ou votre ville.",
+    "on_error_address1_empty_tw": "Saisissez le nom de la rue, le num\u00e9ro de la voie et le num\u00e9ro de maison.",
+    "p_town_city_new2_tw": "S\u00e9lectionnez un d\u00e9partement \/ une ville",
     "on_error_address2_new__tw": "Indiquez votre \u00e9tage\/logement en chinois traditionnel.",
     "type_zhtranditional_new_tw": "Veuillez saisir votre adresse en chinois traditionnel.",
     "type_zhtranditional_tw": "Veuillez remplir les informations d'exp\u00e9dition suivantes en anglais.",

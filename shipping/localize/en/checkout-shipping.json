@@ -1,4 +1,7 @@
 {
+    "city_empty_tw": "Select your county or city.",
+    "on_error_address1_empty_tw": "Enter road, lane and number.",
+    "p_town_city_new2_tw": "Select County \/ City",
     "on_error_address2_new__tw": "Enter your floor\/unit in Traditional Chinese.",
     "type_zhtranditional_new_tw": "Please enter your address in Traditional Chinese.",
     "type_zhtranditional_tw": "Please fill in the following shipping information in English.",
