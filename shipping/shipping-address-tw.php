@@ -35,7 +35,7 @@ input:disabled, input:read-only {
     </div>
 </div> -->
  <div class="tw-mb-2 tw-flex tw-gap-1 tw-text-[#4D4D4D]" style="font-size:0.75em; padding: 7px;border: 1px solid #f6ca79;background: #fef6e9;line-height: 1.3;" >
-            <span>&#x2139;</span><span><?= $collector_sh->translate("type_zhtranditional_new_tw", "Please enter your address in Traditional Chinese.") ?></span>
+            <span aria-hidden="true" style="flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:1.3em;height:1.3em;border-radius:3px;background:#2f7cf6;color:#fff;font-family:Georgia,'Times New Roman',serif;font-weight:bold;font-style:normal;font-size:1em;line-height:1;">i</span><span><?= $collector_sh->translate("type_zhtranditional_new_tw", "Please enter your address in Traditional Chinese.") ?></span>
     </div>
     
 <div class="mb-3">
