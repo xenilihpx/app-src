@@ -10,11 +10,13 @@ $country="_tw";
 ?>
 
 
-<div class="mb-3">
+<!-- Temporarily hidden for TW. The field is skipped by validateForm() in integrated.js (it
+     only validates :visible fields), so hiding it here also makes it non-required. -->
+<div class="mb-3" style="display:none">
     <label class="p cart-input-label" for="consigneeId" label=""><?=$collector_sh->translate("consigneeId_label_".$country, "Consignee ID"); ?></label>
     <div class="tooltip-box">
         <span class="tooltip-dialog"><?= $collector_sh->translate("consigneeId_note", "Note: Ensure consignee ID matches name to avoid delays."); ?></span>
-        <input id="fields_consigneeId" name="consigneeId" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("consigneeId_".$country, "Enter National ID / ARC "); ?>" required="required">
+        <input id="fields_consigneeId" name="consigneeId" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("consigneeId_".$country, "Enter National ID / ARC "); ?>">
     </div>
 </div>
 <div class="mb-3">
