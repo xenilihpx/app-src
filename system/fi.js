@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "Mene kaupunkiin.",
         "invalid_address_rs": "Kirjoita kadunnimi ja talonumero.",
         "invalid_zip_rs": "5 numeroa.",
-        "invalid_city_rs": "Kirjoita kaupunki tai paikkakunta."
+        "invalid_city_rs": "Kirjoita kaupunki tai paikkakunta.",
+        "invalid_address_ch": "Kirjoita katu ja talonumero.",
+        "invalid_zip_ch": "4 numeroa.",
+        "invalid_city_ch": "Kirjoita kaupunki."
 }

@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "Gitt an d'Stad eran.",
         "invalid_address_rs": "Gitt d'Strooss an d'Hausnummer an.",
         "invalid_zip_rs": "5 Zifferen.",
-        "invalid_city_rs": "Gitt an d'Stad oder an d'Gemeng."
+        "invalid_city_rs": "Gitt an d'Stad oder an d'Gemeng.",
+        "invalid_address_ch": "Gitt w.e.g. d'Strooss an d'Hausnummer an.",
+        "invalid_zip_ch": "4 Zifferen",
+        "invalid_city_ch": "Gitt w.e.g. eng Gemeng/Stad an."
 }

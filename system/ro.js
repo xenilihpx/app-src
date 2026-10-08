@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_city_gr": "Intrați în oraș.",
         "invalid_address_rs": "Introduceți numele străzii și numărul casei.",
         "invalid_zip_rs": "5 cifre.",
-        "invalid_city_rs": "Introduceți numele localității sau al orașului."
+        "invalid_city_rs": "Introduceți numele localității sau al orașului.",
+        "invalid_address_ch": "Vă rugăm să introduceți numele străzii și numărul casei.",
+        "invalid_zip_ch": "4 cifre.",
+        "invalid_city_ch": "Vă rugăm să introduceți numele unui oraș."
 }

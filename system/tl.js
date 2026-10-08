@@ -90,5 +90,8 @@ window.i18nData = {
     "invalid_city_gr": "Pasok sa lungsod.",
     "invalid_address_rs": "Ipasok ang numero ng kalye at bahay.",
     "invalid_zip_rs": "Limang digit.",
-    "invalid_city_rs": "Pasok sa bayan o lungsod."
+    "invalid_city_rs": "Pasok sa bayan o lungsod.",
+    "invalid_address_ch": "Ipasok ang numero ng kalye at bahay.",
+    "invalid_zip_ch": "Apat na digit.",
+    "invalid_city_ch": "Pakilagay ang bayan o lungsod."
 };

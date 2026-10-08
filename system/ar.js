@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "ادخل المدينة.",
         "invalid_address_rs": "أدخل اسم الشارع ورقم المنزل.",
         "invalid_zip_rs": "5 أرقام.",
-        "invalid_city_rs": "أدخل اسم البلدة أو المدينة."
+        "invalid_city_rs": "أدخل اسم البلدة أو المدينة.",
+        "invalid_address_ch": "يرجى إدخال اسم الشارع ورقم المنزل.",
+        "invalid_zip_ch": "4 أرقام.",
+        "invalid_city_ch": "يرجى إدخال اسم بلدة أو مدينة."
 }

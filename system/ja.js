@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "街へ入る。",
         "invalid_address_rs": "通り名と番地を入力してください。",
         "invalid_zip_rs": "5桁。",
-        "invalid_city_rs": "町や都市の名前を入力してください。"
+        "invalid_city_rs": "町や都市の名前を入力してください。",
+        "invalid_address_ch": "通り名と番地を入力してください。",
+        "invalid_zip_ch": "4桁。",
+        "invalid_city_ch": "町名または市名を入力してください。"
 }

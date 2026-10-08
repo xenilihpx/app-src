@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "شہر میں داخل ہوں۔",
         "invalid_address_rs": "گلی اور گھر کا نمبر درج کریں۔",
         "invalid_zip_rs": "پانچ ہندسے",
-        "invalid_city_rs": "قصبے یا شہر میں داخل ہوں۔"
+        "invalid_city_rs": "قصبے یا شہر میں داخل ہوں۔",
+        "invalid_address_ch": "براہ کرم گلی اور گھر کا نمبر درج کریں۔",
+        "invalid_zip_ch": "چار ہندسے",
+        "invalid_city_ch": "براہ کرم ایک قصبہ/شہر درج کریں۔"
 }

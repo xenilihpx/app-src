@@ -90,5 +90,8 @@ window.i18nData={
         "invalid_city_gr": "Şehre girin.",
         "invalid_address_rs": "Sokak adını ve ev numarasını girin.",
         "invalid_zip_rs": "5 basamak.",
-        "invalid_city_rs": "Kasabayı veya şehri girin."
+        "invalid_city_rs": "Kasabayı veya şehri girin.",
+        "invalid_address_ch": "Lütfen cadde adını ve ev numarasını girin.",
+        "invalid_zip_ch": "4 basamak.",
+        "invalid_city_ch": "Lütfen bir kasaba veya şehir adı girin."
 }
