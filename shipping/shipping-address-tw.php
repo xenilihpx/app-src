@@ -143,7 +143,7 @@ $country="_tw";
         }
     });
 
-    address1.addEventListener('keyup', function () {
+    address1.addEventListener('blur', function () {
         var valid = /[\u4e00-\u9fff]/.test(address1.value.trim());
         inlineError(address1, null, valid, address1.getAttribute("onError"));
         if(!valid) {
@@ -151,7 +151,7 @@ $country="_tw";
         }
     });
 
-    address2.addEventListener('keyup', function () {
+    address2.addEventListener('blur', function () {
         var valid = /[\u4e00-\u9fff]/.test(address2.value.trim());
         inlineError(address2, null, valid, address2.getAttribute("onError"));
         if(!valid) {
