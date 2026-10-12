@@ -1,0 +1,12 @@
+{
+    "address_1": "Address 1",
+    "p_address_1": "Street Address",
+    "address_2": "Address 2 (Optional)",
+    "p_address_2": "Apt, suite, unit, etc.",
+    "town_city": "Town\/City",
+    "p_town_city": "Town\/City",
+    "state": "State\/Province",
+    "p_state": "Select State \/ Province",
+    "zip": "Zip \/ Postal Code",
+    "p_zip": "Zip\/Postal Code"
+}
