@@ -119,6 +119,7 @@ class JsonCollector {
             'pt-br' => 'pt-BR',    // Portuguese (Brazil)
             'pt-pt' => 'pt-PT',    // Portuguese (Portugal)
             'mx' => 'es',          // Spanish (Mexico) - DeepL has no MX-specific target
+            'sr-latn' => 'sr',     // Serbian (Latin) - DeepL only knows the bare 'sr' code
         ];
 
         // Get the correct DeepL language code
