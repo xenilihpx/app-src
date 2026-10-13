@@ -72,6 +72,7 @@ $collector_sh = new JsonCollector(
 (function () {
     var REPO = "<?= REPONAME ?>";
     var postalLabel = <?= json_encode($collector_sh->translate("postal_code_hint_th", "Postal code {zip}")); ?>;
+    var provincePlaceholder = <?= json_encode($collector_sh->translate("p_state_th", "Select province")); ?>;
     var msgInvalidProvince = <?= json_encode($collector_sh->translate("invalid_province_th", "Please select a province.")); ?>;
     var msgInvalidDistrict = <?= json_encode($collector_sh->translate("invalid_district_th", "Please select a district.")); ?>;
     var msgInvalidSubdistrict = <?= json_encode($collector_sh->translate("invalid_subdistrict_th", "Please select a sub-district.")); ?>;
@@ -121,6 +122,18 @@ $collector_sh = new JsonCollector(
     }).catch(function (err) {
         console.error('Failed to load Thailand address data', err);
     });
+
+    // form_obj.addStatesProvince() in integrated.js (see the comment on
+    // #fields_state above) always writes its own generic placeholder
+    // ("-- Select --" / window.i18nData['select']) into the empty-value
+    // option after populating the list - same fix shipping-address-ro.php
+    // uses for its own county dropdown. Runs after that population (which
+    // happens synchronously on page load, and again on every country-field
+    // change) to swap in the Thailand-specific wording instead.
+    setTimeout(function () {
+        var opt = provinceEl.querySelector('option[value=""]');
+        if (opt) { opt.textContent = provincePlaceholder; }
+    }, 400);
 
     provinceEl.addEventListener('change', function () {
         zipEl.value = '';
