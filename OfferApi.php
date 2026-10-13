@@ -1099,21 +1099,23 @@ class OfferApi extends KonnektiveApi {
             $trace = curl_exec($ch);
             curl_close($ch);
 
+            
             if ($trace === false) {
-            return $this->default_country;
-            }
-
-            // Parse same as above
-            $lines = explode("\n", trim($trace));
-            $data = [];
-            foreach ($lines as $line) {
-                $parts = explode("=", $line, 2);
-                if (count($parts) === 2) {
-                    $data[$parts[0]] = $parts[1];
+                $loc= $this->default_country;
+            }else{
+                // Parse same as above
+                $lines = explode("\n", trim($trace));
+                $data = [];
+                foreach ($lines as $line) {
+                    $parts = explode("=", $line, 2);
+                    if (count($parts) === 2) {
+                        $data[$parts[0]] = $parts[1];
+                    }
                 }
-            }
 
-            $loc = $data['loc'];
+                $loc = $data['loc'];
+            }
+            
         }  
 
         $country_code =  in_array($loc ?? $this->default_country, $allowedCountries, true)? $loc: $this->default_country;
