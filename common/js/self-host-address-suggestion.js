@@ -626,10 +626,43 @@
                     }
             }
 
+            //for other element that are not declared
+            var inputElement = document.querySelector('input[toSearch="'+item.targetElement+'"]');              
+            if( zipcodeField !== inputElement && 
+                city_municipalityField !== inputElement && 
+                stateField !== inputElement && 
+                address2Field !== inputElement && 
+                neighborhoodField !== inputElement && 
+                ward_villageField !== inputElement && 
+                district_countyField !== inputElement && 
+                item.targetElement && 
+                inputElement) {
+
+                    inputElement.classList.remove("error");
+                    applySuggestionValue(inputElement, item.label);
+                  
+                    var input_el=document.querySelector('input[toSearch="'+item.targetElement+'"] + span.error-message');
+                    if(input_el && !inputElement.classList.contains('error')){
+                        input_el.remove();
+                    }
+            }
+
             if(item.state && item.state.trim() !== "" && item.elementToFill.indexOf(stateField.getAttribute('toSearch'))!=-1 
                 || item.elementToFill.indexOf('state')!=-1) {
-                    stateField.classList.remove("error")
-                    if (document.querySelectorAll("#fields_state option[value='"+item.state+"']").length > 0) {
+                    stateField.classList.remove("error");
+                    if(stateField.tagName === 'INPUT'){
+                        applySuggestionValue(stateField, item.label);
+
+                          if(country_selected.value=="TH"){
+                                stateField.setAttribute("value_id",item.province_code);
+                          }
+
+                    
+                        var input_el=document.querySelector('input[toSearch="'+item.targetElement+'"] + span.error-message');
+                        if(input_el && !stateField.classList.contains('error')){
+                            input_el.remove();
+                        }
+                    }else if (document.querySelectorAll("#fields_state option[value='"+item.state+"']").length > 0) {
                         stateField.value = item.state;
                         stateField.dispatchEvent(new Event("change", { bubbles: true }));
                     }else{

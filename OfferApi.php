@@ -235,9 +235,9 @@ class OfferApi extends KonnektiveApi {
     }
 
     public function searchZipCode($query='', $country_code='', $extraParams=[]){
-       // $upstreamUrl = 'http://localhost/api-melara/address-api/suggest.php?q=' . urlencode($query) . '&country=' . urlencode($country_code);
+        //$upstreamUrl = 'http://localhost/api-melara/address-api/suggest.php?q=' . urlencode($query) . '&country=' . urlencode($country_code). '&lang=' . urlencode($this->targetLanguage);
 
-        $upstreamUrl = 'https://api.melarapro.com/address-api/suggest.php?q=' . urlencode($query) . '&country=' . urlencode($country_code);
+        $upstreamUrl = 'https://api.melarapro.com/address-api/suggest.php?q=' . urlencode($query) . '&country=' . urlencode($country_code). '&lang=' . urlencode($this->targetLanguage);
         foreach ($extraParams as $key => $value) {
             if ($value === '' || $value === null) continue;
             $upstreamUrl .= '&' . urlencode($key) . '=' . urlencode($value);
@@ -247,7 +247,7 @@ class OfferApi extends KonnektiveApi {
             curl_setopt_array($ch, [
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_HTTPHEADER     => ['X-API-Key: WEB-PROXY-KEY-67890'],
-                CURLOPT_TIMEOUT        => 5,
+                CURLOPT_TIMEOUT        => 15,
                 CURLOPT_PROXY          => ""
             ]);
 

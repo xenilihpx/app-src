@@ -5,6 +5,7 @@ $collector_sh = new JsonCollector(
   targetLanguage: $OfferApi->targetLanguage,
   pageName: "checkout-shipping"
 );
+$country="th";
 ?>
 <?php if($OfferApi->targetLanguage=="zh-hant" || $OfferApi->targetLanguage=="zh-hans"){ ?>
             <div class="tw-mb-2 tw-flex tw-gap-1 tw-text-[#4D4D4D]" style="font-size:0.75em; padding: 7px;border: 1px solid #f6ca79;background: #fef6e9;line-height: 1.3;" >
@@ -27,35 +28,71 @@ $collector_sh = new JsonCollector(
     font-size: 0.8em;
     margin-top: 4px;
 }
+
+input:disabled {
+  cursor: default;
+  background-color: #f5f4f4 !important;
+}
 </style>
 
 <div class="mb-3">
     <label class="p cart-input-label" for="fields_state"><?= $collector_sh->translate("state_th", "Province"); ?></label>
-    <!-- Options are populated by form_obj.addStatesProvince() in integrated.js from
-         src/common/js/states.js's "TH" entry (already present, official two-digit
-         province codes) - same mechanism every other country's state/province
-         dropdown uses. Left empty here; that function always rebuilds it anyway. -->
-    <select id="fields_state" name="state" class="cart-input p" required="required"></select>
+
+    <div class="self-autocomplete">
+        <input id="fields_state" 
+            name="fields_state"
+            class="cart-input p search" type="text"                 
+            trigger="click focus"  
+            toenableel="fields_city"
+            readonly="readonly"
+            toSearch="<?= ($OfferApi->targetLanguage!="en")? "state_th" : "state_en"; ?>" 
+            placeholder="<?= $collector_sh->translate("p_province_new".$country, "Select Province",false); ?>"/> 
+            <div class="self-suggestions" style="display:none;"></div>                    
+    </div> 
 </div>
 
 <div class="mb-3">
-    <?php $p_district_th = $collector_sh->translate("p_district_th", "Select province first"); ?>
+    <?php $p_district_th = $collector_sh->translate("p_district_th", "Select province first",false); ?>
     <label class="p cart-input-label" for="fields_city"><?= $collector_sh->translate("district_th", "District"); ?></label>
-    <select id="fields_city" name="city" class="cart-input p" required="required" disabled data-placeholder="<?= htmlspecialchars($p_district_th, ENT_QUOTES); ?>">
-        <option value=""><?= $p_district_th; ?></option>
-    </select>
+    <div class="self-autocomplete">
+        <input id="fields_city" 
+            name="fields_city"
+            class="cart-input p search" type="text"                 
+            trigger="click focus"  
+            toenableel="fields_district"
+            disabled="disabled"
+            readonly="readonly"
+            toSearch="<?= ($OfferApi->targetLanguage!="en")? "city_th" : "city_en"; ?>" 
+            onPlaceholder="<?=$p_district_th; ?>"
+            placeholder="<?= $p_district_th; ?>"
+            onEnabled="<?=$collector_sh->translate("district_onenabled_".$country, "Select district") ?>"/>
+            <div class="self-suggestions" style="display:none;"></div>                    
+    </div> 
+    
 </div>
 
 <div class="mb-3">
     <?php $p_subdistrict_th = $collector_sh->translate("p_subdistrict_th", "Select district first"); ?>
     <label class="p cart-input-label" for="fields_district"><?= $collector_sh->translate("subdistrict_th", "Sub-district"); ?></label>
-    <select id="fields_district" name="ward" class="cart-input p" required="required" disabled data-placeholder="<?= htmlspecialchars($p_subdistrict_th, ENT_QUOTES); ?>">
-        <option value=""><?= $p_subdistrict_th; ?></option>
-    </select>
-    <div id="th_postal_hint" class="th-field-hint" style="display:none;"></div>
+
+    <div class="self-autocomplete">
+        <input id="fields_district" 
+            name="fields_district"
+            class="cart-input p search" type="text"                 
+            trigger="click focus" 
+            disabled="disabled"
+            readonly="readonly"
+            toSearch="<?= ($OfferApi->targetLanguage!="en")? "district_th" : "district_en"; ?>" 
+            onPlaceholder="<?=$p_subdistrict_th; ?>"
+            placeholder="<?= $p_subdistrict_th; ?>"
+            onEnabled="<?=$collector_sh->translate("sub_district_onenabled_".$country, "Select sub-district") ?>"/>
+            <div class="self-suggestions" style="display:none;"></div>                    
+    </div> 
+    <div id="th_postal_hint" class="th-field-hint" style="display:none;"><?= $collector_sh->translate("postal_code_hint_new_th", "Postal code: "); ?><span id="th_postal_code"></span></div>
 </div>
 
 <input type="hidden" id="fields_zip" name="zip" value="">
+<input type="hidden" id="fields_address2" name="address2" value="">
 
 <div class="mb-3">
     <label class="p cart-input-label" for="fields_address1"><?= $collector_sh->translate("street_address_th", "Address"); ?></label>
@@ -70,8 +107,7 @@ $collector_sh = new JsonCollector(
 
 <script>
 (function () {
-    var REPO = "<?= REPONAME ?>";
-    var postalLabel = <?= json_encode($collector_sh->translate("postal_code_hint_th", "Postal code {zip}")); ?>;
+
     var provincePlaceholder = <?= json_encode($collector_sh->translate("p_state_th", "Select province")); ?>;
     var msgInvalidProvince = <?= json_encode($collector_sh->translate("invalid_province_th", "Please select a province.")); ?>;
     var msgInvalidDistrict = <?= json_encode($collector_sh->translate("invalid_district_th", "Please select a district.")); ?>;
@@ -83,105 +119,45 @@ $collector_sh = new JsonCollector(
     var subdistrictEl = document.getElementById('fields_district');
     var zipEl = document.getElementById('fields_zip');
     var hintEl = document.getElementById('th_postal_hint');
+    var postalCodeEl = document.getElementById('th_postal_code');
+    var aptUnitEl = document.getElementById('fields_apt_unit');
+    var address2El = document.getElementById('fields_address2');
 
-    // #fields_state's own <option value="..."> codes come from states.js's "TH"
-    // entry (official two-digit province codes, e.g. "10" for Bangkok) - a
-    // different numbering than src/district/th/districts.json's province_id (which
-    // follows the source dataset's own 1-77 sequence). This maps one to the
-    // other so the district cascade below can filter correctly regardless of
-    // which code scheme the shopper's actual <option> carries.
-    // "S" (Phatthaya/Pattaya, a self-governing city rather than one of the 77
-    // provinces) maps to Chon Buri, the province it actually sits within.
-    var STATE_CODE_TO_PROVINCE_ID = {"37":26,"15":6,"31":20,"24":15,"18":9,"36":25,"22":13,"50":38,"57":45,"20":11,"86":69,"46":34,"62":49,"71":56,"40":28,"81":64,"10":1,"52":40,"51":39,"42":30,"16":7,"58":46,"44":32,"49":37,"26":17,"73":58,"48":36,"30":19,"60":47,"80":63,"55":43,"96":76,"39":27,"43":31,"12":3,"13":4,"94":74,"82":65,"93":73,"S":11,"56":44,"67":54,"76":61,"66":53,"65":52,"14":5,"54":42,"83":66,"25":16,"77":62,"85":68,"70":55,"21":12,"45":33,"27":18,"47":35,"11":2,"74":59,"75":60,"19":10,"91":71,"33":22,"17":8,"90":70,"64":51,"72":57,"84":67,"32":21,"63":50,"92":72,"23":14,"34":23,"41":29,"61":48,"53":41,"95":75,"35":24};
-
-    var districts = []; // each has a nested .subdistricts array (see src/district/th/districts.json)
-    var zipByTambonId = {};
-
-    function resetSelect(el) {
-        el.innerHTML = '<option value="">' + el.getAttribute('data-placeholder') + '</option>';
-    }
-
-    function fillSelect(el, items) {
-        var frag = document.createDocumentFragment();
-        var placeholderOpt = document.createElement('option');
-        placeholderOpt.value = '';
-        placeholderOpt.textContent = el.getAttribute('data-placeholder');
-        frag.appendChild(placeholderOpt);
-        items.forEach(function (it) {
-            var opt = document.createElement('option');
-            opt.value = it.id;
-            opt.textContent = it.label;
-            frag.appendChild(opt);
+    // self-host-address-suggestion.js assigns .value directly on #fields_zip
+    // and #fields_district (both when a suggestion is picked and when the
+    // cascade clears them) without dispatching any event, so hook the value
+    // setter on those elements to know whenever they change.
+    function watchValue(el, callback) {
+        if (!el) { return; }
+        var desc = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+        Object.defineProperty(el, 'value', {
+            configurable: true,
+            get: function () { return desc.get.call(this); },
+            set: function (v) { desc.set.call(this, v); callback(); }
         });
-        el.innerHTML = '';
-        el.appendChild(frag);
+        el.addEventListener('input', callback);
+        el.addEventListener('change', callback);
     }
 
-    fetch(REPO + '/src/district/th/districts.json').then(function (r) { return r.json(); }).then(function (data) {
-        districts = data;
-    }).catch(function (err) {
-        console.error('Failed to load Thailand address data', err);
-    });
+    function syncPostalHint() {
+        var zip = (zipEl.value || '').trim();
+        postalCodeEl.textContent = zip;
+        hintEl.style.display = zip !== '' ? 'block' : 'none';
+    }
 
-    // form_obj.addStatesProvince() in integrated.js (see the comment on
-    // #fields_state above) always writes its own generic placeholder
-    // ("-- Select --" / window.i18nData['select']) into the empty-value
-    // option after populating the list - same fix shipping-address-ro.php
-    // uses for its own county dropdown. Runs after that population (which
-    // happens synchronously on page load, and again on every country-field
-    // change) to swap in the Thailand-specific wording instead.
-    setTimeout(function () {
-        var opt = provinceEl.querySelector('option[value=""]');
-        if (opt) { opt.textContent = provincePlaceholder; }
-    }, 400);
+    function syncAddress2() {
+        address2El.value = [aptUnitEl.value, subdistrictEl.value]
+            .map(function (v) { return (v || '').trim(); })
+            .filter(function (v) { return v !== ''; })
+            .join(', ');
+    }
 
-    provinceEl.addEventListener('change', function () {
-        zipEl.value = '';
-        hintEl.style.display = 'none';
-        resetSelect(subdistrictEl);
-        subdistrictEl.disabled = true;
-
-        var provinceId = STATE_CODE_TO_PROVINCE_ID[provinceEl.value];
-        if (!provinceId) {
-            resetSelect(districtEl);
-            districtEl.disabled = true;
-            return;
-        }
-
-        var filtered = districts.filter(function (d) { return d.province_id === provinceId; });
-        fillSelect(districtEl, filtered.map(function (d) { return { id: d.id, label: (d.prefix_th || '') + d.th }; }));
-        districtEl.disabled = false;
-    });
-
-    districtEl.addEventListener('change', function () {
-        zipEl.value = '';
-        hintEl.style.display = 'none';
-
-        if (districtEl.value === '') {
-            resetSelect(subdistrictEl);
-            subdistrictEl.disabled = true;
-            return;
-        }
-
-        var districtId = parseInt(districtEl.value, 10);
-        var district = districts.find(function (d) { return d.id === districtId; });
-        var subdistricts = district ? district.subdistricts : [];
-        zipByTambonId = {};
-        subdistricts.forEach(function (s) { zipByTambonId[s.id] = s.zip; });
-        fillSelect(subdistrictEl, subdistricts.map(function (s) { return { id: s.id, label: (s.prefix_th || '') + s.th }; }));
-        subdistrictEl.disabled = false;
-    });
-
-    subdistrictEl.addEventListener('change', function () {
-        var zip = subdistrictEl.value !== '' ? zipByTambonId[parseInt(subdistrictEl.value, 10)] : '';
-        zipEl.value = zip || '';
-        if (zip) {
-            hintEl.textContent = postalLabel.replace('{zip}', zip);
-            hintEl.style.display = 'block';
-        } else {
-            hintEl.style.display = 'none';
-        }
-    });
+    watchValue(zipEl, syncPostalHint);
+    watchValue(subdistrictEl, syncAddress2);
+    aptUnitEl.addEventListener('input', syncAddress2);
+    aptUnitEl.addEventListener('change', syncAddress2);
+    syncPostalHint();
+    syncAddress2();
 
     // Field-specific inline error messages (blur + submit) - the shared
     // validateForm() in integrated.js only has a generic "Required Field."

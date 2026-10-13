@@ -2155,6 +2155,10 @@
                             model.shippingInfo.shipCity=$(formField.city).attr("siruta_id");
                         }
 
+                        if($(formField.state).is('[value_id]')){
+                            model.shippingInfo.shipState=$(formField.state).attr("value_id");
+                        }
+
                         if(getQueryStringByName("lang")!=""){
                              model.lang=getQueryStringByName("lang");
                         }
