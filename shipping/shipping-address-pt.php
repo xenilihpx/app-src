@@ -85,8 +85,9 @@ $country="pt";
         doorHint.style.display = isBareStreet() ? '' : 'none';
     }
 
-    function msg(key, fallback) {
-        return (window.i18nData && window.i18nData[key]) || fallback;
+    // Validation messages come from src/system/<lang>.js only.
+    function msg(key) {
+        return (window.i18nData && window.i18nData[key]) || key;
     }
 
     // Same "<span class='error-message'>" markup the rest of the checkout uses. Self-contained
@@ -139,17 +140,17 @@ $country="pt";
 
     function validateAddress() {
         if (address1.value.trim() === '' || !(picked || manualMode)) {
-            return inlineError(address1, false, msg('invalid_address_pt', 'Select your address from the list.'));
+            return inlineError(address1, false, msg('invalid_address_pt'));
         }
-        return inlineError(address1, !isBareStreet(), msg('invalid_door_number_pt', 'Add the door number.'));
+        return inlineError(address1, !isBareStreet(), msg('invalid_door_number_pt'));
     }
 
     function validateZip() {
-        return inlineError(zip, ZIP_RE.test(zip.value.trim()), msg('invalid_zip_pt', 'Format 0000-000.'));
+        return inlineError(zip, ZIP_RE.test(zip.value.trim()), msg('invalid_zip_pt'));
     }
 
     function validateCity() {
-        return inlineError(city, city.value.trim() !== '', msg('invalid_city_pt', 'Enter the town.'));
+        return inlineError(city, city.value.trim() !== '', msg('invalid_city_pt'));
     }
 
     // Picked from Google Places (dispatched by src/common/js/address.google.autocomplete.js).
