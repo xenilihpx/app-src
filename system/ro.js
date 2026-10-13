@@ -101,5 +101,6 @@ window.i18nData={
         "invalid_address_pt": "Selectați adresa din listă.",
         "invalid_zip_pt": "Format 0000-000.",
         "invalid_city_pt": "Introduceți localitatea.",
+        "invalid_door_number_pt": "Adăugați numărul străzii.",
         "invalid_value_zh_hant": "Introduceți adresa în chineză tradițională."
 }

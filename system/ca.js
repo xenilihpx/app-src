@@ -97,5 +97,6 @@ window.i18nData={
     "invalid_address_pt": "Selecciona la teva adreça de la llista.",
     "invalid_zip_pt": "Format 0000-000.",
     "invalid_city_pt": "Indica la localitat.",
+    "invalid_door_number_pt": "Afegeix el número del portal.",
     "invalid_value_zh_hant": "Introdueix la teva adreça en xinès tradicional."
 }

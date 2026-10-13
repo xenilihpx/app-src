@@ -97,5 +97,6 @@ window.i18nData = {
     "invalid_address_pt": "Vælg din adresse på listen.",
     "invalid_zip_pt": "Format 0000-000.",
     "invalid_city_pt": "Angiv byen.",
+    "invalid_door_number_pt": "Tilføj husnummeret.",
     "invalid_value_zh_hant": "Indtast din adresse på traditionelt kinesisk."
 };

@@ -97,5 +97,6 @@ window.i18nData={
         "invalid_address_pt": "فہرست سے اپنا پتہ منتخب کریں۔",
         "invalid_zip_pt": "فارمیٹ 0000-000۔",
         "invalid_city_pt": "شہر درج کریں۔",
+        "invalid_door_number_pt": "دروازے کا نمبر شامل کریں۔",
         "invalid_value_zh_hant": "اپنا پتہ روایتی چینی میں درج کریں۔"
 }

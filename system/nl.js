@@ -97,5 +97,6 @@ window.i18nData={
         "invalid_address_pt": "Selecteer je adres in de lijst.",
         "invalid_zip_pt": "Formaat 0000-000.",
         "invalid_city_pt": "Vul de plaats in.",
+        "invalid_door_number_pt": "Voeg het huisnummer toe.",
         "invalid_value_zh_hant": "Voer uw adres in traditioneel Chinees in."
 }

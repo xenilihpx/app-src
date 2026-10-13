@@ -534,5 +534,6 @@
     "zip_vn": "Zip \/ Postal Code",
     "zipbr": "Zip \/ Postal Code",
     "zipph": "Postal Code",
-    "zone_qa": "Zone"
+    "zone_qa": "Zone",
+    "door_number_hint_pt": "Add the door number. E.g. Rua de Santa Catarina, 123"
 }

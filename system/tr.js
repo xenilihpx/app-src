@@ -97,5 +97,6 @@ window.i18nData={
         "invalid_address_pt": "Adresinizi listeden seçin.",
         "invalid_zip_pt": "Biçim 0000-000.",
         "invalid_city_pt": "Yerleşim yerini girin.",
+        "invalid_door_number_pt": "Kapı numarasını ekleyin.",
         "invalid_value_zh_hant": "Adresinizi Geleneksel Çince olarak girin."
 }
