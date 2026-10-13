@@ -94,5 +94,8 @@ window.i18nData = {
     "invalid_address_ch": "Kérjük, adja meg az utcanevet és a házszámot.",
     "invalid_zip_ch": "4 számjegy.",
     "invalid_city_ch": "Kérjük, adja meg a város nevét.",
+    "invalid_address_pt": "Válassza ki a címét a listából.",
+    "invalid_zip_pt": "Formátum: 0000-000.",
+    "invalid_city_pt": "Adja meg a települést.",
     "invalid_value_zh_hant": "Írja be a címét hagyományos kínai írásmóddal."
 };

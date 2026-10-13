@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "Vul hier de straatnaam en het huisnummer in.",
         "invalid_zip_ch": "4 cijfers.",
         "invalid_city_ch": "Voer een plaats in.",
+        "invalid_address_pt": "Selecteer je adres in de lijst.",
+        "invalid_zip_pt": "Formaat 0000-000.",
+        "invalid_city_pt": "Vul de plaats in.",
         "invalid_value_zh_hant": "Voer uw adres in traditioneel Chinees in."
 }

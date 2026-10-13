@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "Por favor, introduza a rua e o número da casa.",
         "invalid_zip_ch": "4 dígitos.",
         "invalid_city_ch": "Por favor, introduza uma localidade.",
+        "invalid_address_pt": "Selecione a sua morada na lista.",
+        "invalid_zip_pt": "Formato 0000-000.",
+        "invalid_city_pt": "Indique a localidade.",
         "invalid_value_zh_hant": "Introduza a sua morada em chinês tradicional."
 }

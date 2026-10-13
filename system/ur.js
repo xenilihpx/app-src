@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "براہ کرم گلی اور گھر کا نمبر درج کریں۔",
         "invalid_zip_ch": "چار ہندسے",
         "invalid_city_ch": "براہ کرم ایک قصبہ/شہر درج کریں۔",
+        "invalid_address_pt": "فہرست سے اپنا پتہ منتخب کریں۔",
+        "invalid_zip_pt": "فارمیٹ 0000-000۔",
+        "invalid_city_pt": "شہر درج کریں۔",
         "invalid_value_zh_hant": "اپنا پتہ روایتی چینی میں درج کریں۔"
 }

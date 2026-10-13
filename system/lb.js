@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "Gitt w.e.g. d'Strooss an d'Hausnummer an.",
         "invalid_zip_ch": "4 Zifferen",
         "invalid_city_ch": "Gitt w.e.g. eng Gemeng/Stad an.",
+        "invalid_address_pt": "Wielt Är Adress aus der Lëscht.",
+        "invalid_zip_pt": "Format 0000-000.",
+        "invalid_city_pt": "Gitt d'Uertschaft an.",
         "invalid_value_zh_hant": "Gitt Är Adress an traditionell chinesescher Schrëft an."
 }

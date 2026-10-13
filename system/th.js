@@ -94,5 +94,8 @@ window.i18nData = {
     "invalid_address_ch": "กรุณาใส่ชื่อถนนและหมายเลขบ้าน",
     "invalid_zip_ch": "4 ตัวเลข.",
     "invalid_city_ch": "กรุณาป้อนชื่อเมือง/เมือง",
+    "invalid_address_pt": "เลือกที่อยู่ของคุณจากรายการ",
+    "invalid_zip_pt": "รูปแบบ 0000-000",
+    "invalid_city_pt": "กรอกเมือง",
     "invalid_value_zh_hant": "กรอกที่อยู่ของคุณด้วยภาษาจีนแบบดั้งเดิม"
 }

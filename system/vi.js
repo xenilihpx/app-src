@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "Vui lòng nhập tên đường và số nhà.",
         "invalid_zip_ch": "4 chữ số.",
         "invalid_city_ch": "Vui lòng nhập tên thị trấn/thành phố.",
+        "invalid_address_pt": "Chọn địa chỉ của bạn từ danh sách.",
+        "invalid_zip_pt": "Định dạng 0000-000.",
+        "invalid_city_pt": "Nhập thị trấn.",
         "invalid_value_zh_hant": "Hãy nhập địa chỉ của bạn bằng tiếng Trung phồn thể."
 }

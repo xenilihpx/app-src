@@ -509,5 +509,15 @@
     "invalid_city_rs": "Enter the town or city.",
     "manual_link_ch": "Address not found? Enter manually.",
     "p_zip_autofill_ch": "Autofilled",
-    "p_town_city_autofill_ch": "Select address first"
+    "p_town_city_autofill_ch": "Select address first",
+    "address_pt": "Address",
+    "p_address_pt": "E.g. Rua de Santa Catarina, 123",
+    "manual_link_pt": "Can't find your address? Enter it manually.",
+    "manual_note_pt": "Fill in the fields manually.",
+    "postal_code_pt": "Postal code",
+    "p_postal_code_pt": "0000-000",
+    "locality_pt": "Town",
+    "p_locality_pt": "E.g. Porto",
+    "unit_pt": "Floor \/ unit (optional)",
+    "p_unit_pt": "E.g. 2.\u00ba Esq."
 }

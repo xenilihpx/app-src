@@ -1565,6 +1565,11 @@
                 }
             });
 
+            //a country's shipping partial can register its own check (e.g. PT: the address must be picked from Google Places)
+            if (typeof window.validateShippingForm === 'function' && window.validateShippingForm() === false) {
+                totalErrors++;
+            }
+
             if (totalErrors == 0) {
                 if (typeof successCallback === 'function') {
                     successCallback();

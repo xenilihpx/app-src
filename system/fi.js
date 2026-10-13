@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "Kirjoita katu ja talonumero.",
         "invalid_zip_ch": "4 numeroa.",
         "invalid_city_ch": "Kirjoita kaupunki.",
+        "invalid_address_pt": "Valitse osoitteesi luettelosta.",
+        "invalid_zip_pt": "Muoto 0000-000.",
+        "invalid_city_pt": "Anna paikkakunta.",
         "invalid_value_zh_hant": "Kirjoita osoitteesi perinteisellä kiinankielellä."
 }

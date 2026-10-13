@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "Ange gatuadress och husnummer.",
         "invalid_zip_ch": "4 siffror.",
         "invalid_city_ch": "Ange en ort.",
+        "invalid_address_pt": "Välj din adress i listan.",
+        "invalid_zip_pt": "Format 0000-000.",
+        "invalid_city_pt": "Ange orten.",
         "invalid_value_zh_hant": "Ange din adress på traditionell kinesiska."
 }

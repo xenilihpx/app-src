@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "Zadejte prosím název ulice a číslo domu.",
         "invalid_zip_ch": "4 číslice.",
         "invalid_city_ch": "Zadejte prosím město.",
+        "invalid_address_pt": "Vyberte svou adresu ze seznamu.",
+        "invalid_zip_pt": "Formát 0000-000.",
+        "invalid_city_pt": "Zadejte obec.",
         "invalid_value_zh_hant": "Zadejte svou adresu v tradiční čínštině."
 }

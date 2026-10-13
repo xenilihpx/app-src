@@ -94,5 +94,8 @@ window.i18nData={
     "invalid_address_ch": "Introduïu el carrer i el número de casa.",
     "invalid_zip_ch": "4 xifres.",
     "invalid_city_ch": "Introdueix un poble o ciutat.",
+    "invalid_address_pt": "Selecciona la teva adreça de la llista.",
+    "invalid_zip_pt": "Format 0000-000.",
+    "invalid_city_pt": "Indica la localitat.",
     "invalid_value_zh_hant": "Introdueix la teva adreça en xinès tradicional."
 }

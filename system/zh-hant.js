@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "請輸入街道名稱及門牌號碼。",
         "invalid_zip_ch": "4 位數。",
         "invalid_city_ch": "請輸入城鎮／城市名稱。",
+        "invalid_address_pt": "請從清單中選擇您的地址。",
+        "invalid_zip_pt": "格式：0000-000。",
+        "invalid_city_pt": "請輸入城鎮。",
         "invalid_value_zh_hant": "請以繁體中文填寫地址。"
 }

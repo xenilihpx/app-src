@@ -7,12 +7,21 @@ let postalField;
 let fieldsCity;
 
 // Countries (ISO codes, lowercase) where address autocomplete is enabled
-const AUTOCOMPLETE_COUNTRIES = ["us", "gr", "ch"];
+const AUTOCOMPLETE_COUNTRIES = ["us", "gr", "ch", "pt"];
 
 // Countries whose street address reads "name then number" (e.g. "Bahnhofstrasse 12") instead of
 // this file's default "number then name" (e.g. "12 Main St") - only affects the order fillInAddress
 // builds address1Field.value in, nothing else.
-const STREET_NAME_FIRST_COUNTRIES = ["ch"];
+const STREET_NAME_FIRST_COUNTRIES = ["ch", "pt"];
+
+// Separator between street name and number for STREET_NAME_FIRST_COUNTRIES (default: a space),
+// e.g. PT "Rua de Santa Catarina, 123".
+const STREET_NUMBER_SEPARATOR = { pt: ", " };
+
+// Countries whose street name and district are taken in full (long_name) - Google's short_name
+// abbreviates PT streets ("R. de Santa Catarina"). For these, the locality also falls back to
+// postal_town, then administrative_area_level_2, then administrative_area_level_3 when empty.
+const LONG_NAME_COUNTRIES = ["pt"];
 
 // Use the selected country's ISO code (e.g. "US", "CA") to restrict results
 function getSelectedCountry() {
@@ -53,7 +62,7 @@ function bindAutocomplete() {
 
   autocomplete = new google.maps.places.Autocomplete(address1Field, {
     componentRestrictions: { country: isAutocompleteCountry() ? [getSelectedCountry()] : AUTOCOMPLETE_COUNTRIES },
-    fields: ["address_components", "geometry"],
+    fields: ["address_components", "geometry", "place_id"],
     types: ["address"]
   });
   autocomplete.addListener("place_changed", fillInAddress);
@@ -91,6 +100,15 @@ function fillInAddress() {
   let country ="";
   let state ="";
   let routeName = "", streetNumber = ""; // tracked separately so STREET_NAME_FIRST_COUNTRIES can reorder below
+  const selectedCountry = getSelectedCountry();
+  const useLongNames = LONG_NAME_COUNTRIES.includes(selectedCountry);
+  let localityFallback = {};
+
+  // Stale values from a previous pick must not survive when this result lacks them.
+  if (useLongNames) {
+    fieldsCity.value = "";
+    postalField.value = "";
+  }
 
   // Get each component of the address from the place details,
   // and then fill-in the corresponding field on the form.
@@ -108,8 +126,8 @@ function fillInAddress() {
       }
 
       case "route": {
-        address1 += component.short_name;
-        routeName = component.short_name;
+        routeName = useLongNames ? component.long_name : component.short_name;
+        address1 += routeName;
         break;
       }
 
@@ -138,9 +156,14 @@ function fillInAddress() {
         
         break;
       case "administrative_area_level_1": {
-        state=component.short_name;        
+        state = useLongNames ? component.long_name : component.short_name;
         break;
       }
+      case "postal_town":
+      case "administrative_area_level_2":
+      case "administrative_area_level_3":
+        localityFallback[componentType] = component.long_name;
+        break;
     }
   }
 
@@ -176,8 +199,13 @@ function fillInAddress() {
       }
   }  
 
-  if (STREET_NAME_FIRST_COUNTRIES.includes(getSelectedCountry())) {
-    address1 = (routeName + (streetNumber ? " " + streetNumber : "")).trim();
+  if (useLongNames && fieldsCity.value === "") {
+    fieldsCity.value = localityFallback.postal_town || localityFallback.administrative_area_level_2 || localityFallback.administrative_area_level_3 || "";
+  }
+
+  if (STREET_NAME_FIRST_COUNTRIES.includes(selectedCountry)) {
+    const separator = STREET_NUMBER_SEPARATOR[selectedCountry] || " ";
+    address1 = (routeName + (streetNumber ? separator + streetNumber : "")).trim();
   }
   address1Field.value = address1;
   if(postcode!=""){
@@ -217,6 +245,13 @@ function fillInAddress() {
   // prediction, set cursor focus on the second address line to encourage
   // entry of subpremise information such as apartment, unit, or floor number.
   address2Field.focus();
+
+  // Lets a country's shipping partial react to the pick (e.g. PT shows a confirmation line or
+  // opens manual mode when the result has no valid postal code/locality).
+  address1Field.dispatchEvent(new CustomEvent("address:picked", {
+    bubbles: true,
+    detail: { placeId: place.place_id || "", postcode: postcode, city: fieldsCity.value, district: state, country: country }
+  }));
 }
 
 window.initAutocomplete = initAutocomplete;

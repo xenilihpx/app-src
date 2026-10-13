@@ -98,5 +98,8 @@ window.i18nData={
         "invalid_address_ch": "Vă rugăm să introduceți numele străzii și numărul casei.",
         "invalid_zip_ch": "4 cifre.",
         "invalid_city_ch": "Vă rugăm să introduceți numele unui oraș.",
+        "invalid_address_pt": "Selectați adresa din listă.",
+        "invalid_zip_pt": "Format 0000-000.",
+        "invalid_city_pt": "Introduceți localitatea.",
         "invalid_value_zh_hant": "Introduceți adresa în chineză tradițională."
 }

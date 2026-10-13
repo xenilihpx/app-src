@@ -486,5 +486,15 @@
     "state_ph": "Prov\u00edncia \/ Regi\u00e3o",
     "p_stateph": "Prov\u00edncia",
     "zipph": "C\u00f3digo postal",
-    "p_zipph": "C\u00f3digo postal"
+    "p_zipph": "C\u00f3digo postal",
+    "address_pt": "Morada",
+    "p_address_pt": "Ex.: Rua de Santa Catarina, 123",
+    "manual_link_pt": "N\u00e3o encontra a sua morada? Introduzir manualmente",
+    "manual_note_pt": "Preencha os campos manualmente.",
+    "postal_code_pt": "C\u00f3digo postal",
+    "p_postal_code_pt": "0000-000",
+    "locality_pt": "Localidade",
+    "p_locality_pt": "Ex.: Porto",
+    "unit_pt": "Andar \/ fra\u00e7\u00e3o (opcional)",
+    "p_unit_pt": "Ex.: 2.\u00ba Esq."
 }

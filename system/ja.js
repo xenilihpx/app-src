@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "通り名と番地を入力してください。",
         "invalid_zip_ch": "4桁。",
         "invalid_city_ch": "町名または市名を入力してください。",
+        "invalid_address_pt": "リストから住所を選択してください。",
+        "invalid_zip_pt": "形式：0000-000",
+        "invalid_city_pt": "市区町村を入力してください。",
         "invalid_value_zh_hant": "住所を繁体字で入力してください。"
 }

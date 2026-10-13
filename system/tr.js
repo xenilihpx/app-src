@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "Lütfen cadde adını ve ev numarasını girin.",
         "invalid_zip_ch": "4 basamak.",
         "invalid_city_ch": "Lütfen bir kasaba veya şehir adı girin.",
+        "invalid_address_pt": "Adresinizi listeden seçin.",
+        "invalid_zip_pt": "Biçim 0000-000.",
+        "invalid_city_pt": "Yerleşim yerini girin.",
         "invalid_value_zh_hant": "Adresinizi Geleneksel Çince olarak girin."
 }

@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "Inserisci il nome della via e il numero civico.",
         "invalid_zip_ch": "4 cifre.",
         "invalid_city_ch": "Inserisci una città.",
+        "invalid_address_pt": "Seleziona il tuo indirizzo dall'elenco.",
+        "invalid_zip_pt": "Formato 0000-000.",
+        "invalid_city_pt": "Inserisci la località.",
         "invalid_value_zh_hant": "Inserisci il tuo indirizzo in cinese tradizionale."
 }

@@ -94,5 +94,8 @@ window.i18nData={
         "invalid_address_ch": "يرجى إدخال اسم الشارع ورقم المنزل.",
         "invalid_zip_ch": "4 أرقام.",
         "invalid_city_ch": "يرجى إدخال اسم بلدة أو مدينة.",
+        "invalid_address_pt": "اختر عنوانك من القائمة.",
+        "invalid_zip_pt": "الصيغة 0000-000.",
+        "invalid_city_pt": "أدخل المدينة.",
         "invalid_value_zh_hant": "أدخل عنوانك باللغة الصينية التقليدية."
 }
