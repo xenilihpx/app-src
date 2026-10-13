@@ -97,5 +97,6 @@ window.i18nData={
     "invalid_address_pt": "Επιλέξτε τη διεύθυνσή σας από τη λίστα.",
     "invalid_zip_pt": "Μορφή 0000-000.",
     "invalid_city_pt": "Εισαγάγετε την πόλη.",
+    "invalid_door_number_pt": "Προσθέστε τον αριθμό της πόρτας.",
     "invalid_value_zh_hant": "Εισάγετε τη διεύθυνσή σας στα παραδοσιακά κινέζικα."
 }

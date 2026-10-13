@@ -97,5 +97,6 @@ window.i18nData={
         "invalid_address_pt": "اختر عنوانك من القائمة.",
         "invalid_zip_pt": "الصيغة 0000-000.",
         "invalid_city_pt": "أدخل المدينة.",
+        "invalid_door_number_pt": "أضف رقم الباب.",
         "invalid_value_zh_hant": "أدخل عنوانك باللغة الصينية التقليدية."
 }

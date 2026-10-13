@@ -97,5 +97,6 @@ window.i18nData = {
     "invalid_address_pt": "Piliin ang iyong address mula sa listahan.",
     "invalid_zip_pt": "Format 0000-000.",
     "invalid_city_pt": "Ilagay ang bayan.",
+    "invalid_door_number_pt": "Idagdag ang numero ng bahay.",
     "invalid_value_zh_hant": "Ipasok ang iyong address sa Tradisyunal na Tsino."
 };

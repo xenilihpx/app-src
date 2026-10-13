@@ -11,6 +11,7 @@ $country="pt";
 <style>
 #pt-shipping-form .pt-address-confirm { color: #6b6b6b; font-size: 0.9em; margin-top: 6px; }
 #pt-shipping-form .pt-manual-note { font-size: 0.85em; color: #6b6b6b; }
+#pt-shipping-form .pt-door-hint { color: #b45309; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 4px; font-size: 0.85em; padding: 6px 8px; margin-top: 6px; }
 </style>
 
 <div id="pt-shipping-form">
@@ -19,6 +20,8 @@ $country="pt";
         <input id="fields_address1" name="address 1" class="cart-input p" value="" type="text" autocomplete="off" placeholder="<?= $collector_sh->translate("p_address_".$country, "E.g. Rua de Santa Catarina, 123") ?>" required="required">
         <!-- Código postal + Localidade read back from Google Places, shown as one grey line -->
         <div id="pt_address_confirm" class="p pt-address-confirm" style="display:none;"></div>
+        <!-- Shown when the picked Places result has no street_number (customer picked a bare street) -->
+        <div id="pt_door_hint" class="p pt-door-hint" style="display:none;"><?= $collector_sh->translate("door_number_hint_".$country, "Add the door number. E.g. Rua de Santa Catarina, 123") ?></div>
     </div>
     <div class="mb-3">
         <a href="javascript:void(0);" id="pt_manual_toggle" class="p" style="font-size: 0.85em; color: #1a73e8;"><?= $collector_sh->translate("manual_link_".$country, "Can't find your address? Enter it manually.") ?></a>
@@ -66,11 +69,25 @@ $country="pt";
     var manualLink = document.getElementById('pt_manual_toggle');
     var manualNote = document.getElementById('pt_manual_note');
     var manualFields = document.getElementById('pt_manual_fields');
+    var doorHint = document.getElementById('pt_door_hint');
     var picked = false;
     var manualMode = false;
+    // Street string Places returned when the pick had NO street_number - '' otherwise. The door
+    // number check compares the Morada against this, never 'does the Morada contain a digit'
+    // (street names like 'Rua 5 de Outubro' or 'Avenida 25 de Abril' already contain numbers).
+    var bareStreet = '';
 
-    function msg(key, fallback) {
-        return (window.i18nData && window.i18nData[key]) || fallback;
+    function isBareStreet() {
+        return bareStreet !== '' && address1.value.trim() === bareStreet;
+    }
+
+    function updateDoorHint() {
+        doorHint.style.display = isBareStreet() ? '' : 'none';
+    }
+
+    // Validation messages come from src/system/<lang>.js only.
+    function msg(key) {
+        return (window.i18nData && window.i18nData[key]) || key;
     }
 
     // Same "<span class='error-message'>" markup the rest of the checkout uses. Self-contained
@@ -122,16 +139,18 @@ $country="pt";
     }
 
     function validateAddress() {
-        var valid = address1.value.trim() !== '' && (picked || manualMode);
-        return inlineError(address1, valid, msg('invalid_address_pt', 'Select your address from the list.'));
+        if (address1.value.trim() === '' || !(picked || manualMode)) {
+            return inlineError(address1, false, msg('invalid_address_pt'));
+        }
+        return inlineError(address1, !isBareStreet(), msg('invalid_door_number_pt'));
     }
 
     function validateZip() {
-        return inlineError(zip, ZIP_RE.test(zip.value.trim()), msg('invalid_zip_pt', 'Format 0000-000.'));
+        return inlineError(zip, ZIP_RE.test(zip.value.trim()), msg('invalid_zip_pt'));
     }
 
     function validateCity() {
-        return inlineError(city, city.value.trim() !== '', msg('invalid_city_pt', 'Enter the town.'));
+        return inlineError(city, city.value.trim() !== '', msg('invalid_city_pt'));
     }
 
     // Picked from Google Places (dispatched by src/common/js/address.google.autocomplete.js).
@@ -141,7 +160,9 @@ $country="pt";
         placeId.value = d.placeId || '';
         zip.value = formatZip(d.postcode || '');
         city.value = d.city || '';
+        bareStreet = (d.street && !d.streetNumber) ? d.street.trim() : '';
         clearError(address1);
+        updateDoorHint();
 
         if (manualMode) { setState(''); return; }
 
@@ -157,7 +178,15 @@ $country="pt";
     // Editing the Morada after a pick clears código postal, localidade and the confirmation line -
     // the customer has to pick again. Programmatic fills don't fire 'input', so this is typing only.
     address1.addEventListener('input', function () {
-        if (manualMode) return;
+        // Adding the door number to a bare-street pick keeps the pick (código postal, localidade).
+        if (bareStreet !== '' && address1.value.trim().indexOf(bareStreet) === 0) {
+            updateDoorHint();
+            if (!isBareStreet()) clearError(address1);
+            return;
+        }
+        if (manualMode) { updateDoorHint(); return; }
+        bareStreet = '';
+        updateDoorHint();
         picked = false;
         zip.value = '';
         city.value = '';

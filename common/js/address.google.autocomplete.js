@@ -250,7 +250,7 @@ function fillInAddress() {
   // opens manual mode when the result has no valid postal code/locality).
   address1Field.dispatchEvent(new CustomEvent("address:picked", {
     bubbles: true,
-    detail: { placeId: place.place_id || "", postcode: postcode, city: fieldsCity.value, district: state, country: country }
+    detail: { placeId: place.place_id || "", postcode: postcode, city: fieldsCity.value, district: state, country: country, street: routeName, streetNumber: streetNumber, address1: address1 }
   }));
 }
 

@@ -97,5 +97,6 @@ window.i18nData = {
     "invalid_address_pt": "เลือกที่อยู่ของคุณจากรายการ",
     "invalid_zip_pt": "รูปแบบ 0000-000",
     "invalid_city_pt": "กรอกเมือง",
+    "invalid_door_number_pt": "เพิ่มเลขที่บ้าน",
     "invalid_value_zh_hant": "กรอกที่อยู่ของคุณด้วยภาษาจีนแบบดั้งเดิม"
 }

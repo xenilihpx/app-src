@@ -97,5 +97,6 @@ window.i18nData = {
     "invalid_address_pt": "목록에서 주소를 선택하세요.",
     "invalid_zip_pt": "형식: 0000-000",
     "invalid_city_pt": "도시를 입력하세요.",
+    "invalid_door_number_pt": "건물 번호를 추가하세요.",
     "invalid_value_zh_hant": "주소를 번체 중국어로 입력해 주세요."
 };

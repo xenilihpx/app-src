@@ -97,5 +97,6 @@ window.i18nData={
         "invalid_address_pt": "請從清單中選擇您的地址。",
         "invalid_zip_pt": "格式：0000-000。",
         "invalid_city_pt": "請輸入城鎮。",
+        "invalid_door_number_pt": "請新增門牌號碼。",
         "invalid_value_zh_hant": "請以繁體中文填寫地址。"
 }

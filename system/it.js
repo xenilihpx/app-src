@@ -97,5 +97,6 @@ window.i18nData={
         "invalid_address_pt": "Seleziona il tuo indirizzo dall'elenco.",
         "invalid_zip_pt": "Formato 0000-000.",
         "invalid_city_pt": "Inserisci la località.",
+        "invalid_door_number_pt": "Aggiungi il numero civico.",
         "invalid_value_zh_hant": "Inserisci il tuo indirizzo in cinese tradizionale."
 }

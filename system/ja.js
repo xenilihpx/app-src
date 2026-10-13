@@ -97,5 +97,6 @@ window.i18nData={
         "invalid_address_pt": "リストから住所を選択してください。",
         "invalid_zip_pt": "形式：0000-000",
         "invalid_city_pt": "市区町村を入力してください。",
+        "invalid_door_number_pt": "番地を追加してください。",
         "invalid_value_zh_hant": "住所を繁体字で入力してください。"
 }

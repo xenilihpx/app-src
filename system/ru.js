@@ -97,5 +97,6 @@ window.i18nData={
         "invalid_address_pt": "Выберите адрес из списка.",
         "invalid_zip_pt": "Формат 0000-000.",
         "invalid_city_pt": "Укажите населённый пункт.",
+        "invalid_door_number_pt": "Укажите номер дома.",
         "invalid_value_zh_hant": "Введите свой адрес на традиционном китайском языке."
 }
