@@ -964,7 +964,7 @@
                                     break;
 
                                 case 'district': 
-                                    valid = form_obj.checkEmptyFields(this, value, window.i18nData['invalid_district'] || 'Please enter district');
+                                    valid = form_obj.checkEmptyFields(this, value, window.i18nData['required'] || 'Required Field.');
                                     break;
 
                                 case 'village': 
@@ -1330,9 +1330,9 @@
                                     break;
 
                                 case 'district': 
-                                    valid = form_obj.checkEmptyFields(element, value, window.i18nData['invalid_district'] || 'Please enter district');
+                                    valid = form_obj.checkEmptyFields(element, value, window.i18nData['required'] || 'Required Field.');
                                     if(!valid){
-                                        errorMsg.push(window.i18nData['invalid_district'] || 'Please enter district');
+                                        errorMsg.push(window.i18nData['required'] || 'Required Field.');
                                     }
                                     break;
 
