@@ -132,7 +132,7 @@ class JsonCollector {
                     'ignoreTags' => "nt"
                 ];
 
-        $noGlossaryLangs = ['tl','da','pl','hu','cs','it','fi','es','fr','de','nl','sv','no','ro','sk','sl','et','lv','lt','vi','id','ca','ar', 'ro'];
+        $noGlossaryLangs = ['tl','da','pl','hu','cs','it','fi','es','fr','de','nl','sv','no','ro','sk','sl','et','lv','lt','vi','id','ca','ar', 'ro', 'el', 'nb', 'sr-latn'];
         if(in_array(strtolower($targetLanguage), $noGlossaryLangs)){
             unset($translateSettings['glossary']);
         }
