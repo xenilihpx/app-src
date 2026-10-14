@@ -150,7 +150,7 @@
     "p_street__qa": "Ex: 850",
     "building_qa": "Construint",
     "p_building__qa": "Ex: 25",
-    "helper_text_new_zone_qa": "Els n\u00fameros de zona, de carrer i de l'edifici s\u00f3n a la placa blava a l'exterior de l'edifici, o cerqueu gratu\u00eftament a <a class='tw-text-[#387FF5]' target='_blank' href='https:\/\/qnas.qa'>qnas.qa",
+    "helper_text_new_zone_qa": "Els n\u00fameros de zona, de carrer i de l'edifici s\u00f3n a la placa blava a l'exterior de l'edifici, o cerqueu gratu\u00eftament a <a class='tw-text-[#387FF5]' target='_blank' href='https:\/\/qnas.qa'>qnas.qa</a>",
     "unit__qa": "Unitat \/ Planta \/ Apartament (opcional)",
     "p_unit__qa": "Ex: Apartament 12, 4t pis",
     "street_name__qa": "Nom del carrer\/ Zona (opcional)",

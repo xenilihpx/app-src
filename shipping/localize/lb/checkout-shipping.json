@@ -94,7 +94,7 @@
     "p_street__qa": "Ex: 850",
     "building_qa": "Bauen",
     "p_building__qa": "Beispill: 25",
-    "helper_text_new_zone_qa": "D'Zonennummer, d'Stroossennummer an d'Gebaiernummer sinn op der bloer Plack ausserhalb vum Gebai, oder sich gratis op <a class='tw-text-[#387FF5]' target='_blank' href='https:\/\/qnas.qa'>qnas.qa",
+    "helper_text_new_zone_qa": "D'Zonennummer, d'Stroossennummer an d'Gebaiernummer sinn op der bloer Plack ausserhalb vum Gebai, oder sich gratis op <a class='tw-text-[#387FF5]' target='_blank' href='https:\/\/qnas.qa'>qnas.qa</a>",
     "unit__qa": "Eenheet \/ Stack \/ Appartement (optional)",
     "p_unit__qa": "Beispill: Appartement 12, 4. Stack",
     "street_name__qa": "Stroossennumm\/Gebitt (optional)",
