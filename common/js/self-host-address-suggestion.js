@@ -554,6 +554,10 @@
                     district_countyField.classList.remove("error");
                     applySuggestionValue(district_countyField, (country_selected.value=="ID")? capitalizeFirstLetter(item.district) : item.district);
 
+                    if(country_selected.value=="TH"){
+                        district_countyField.setAttribute("value_id",item.district_th);
+                    }
+
                     var district_=document.querySelector('#fields_district + span.error-message');
                     if(district_ && !district_countyField.classList.contains('error')){
                         district_.remove();
@@ -596,6 +600,10 @@
 
                     if(country_selected.value=="RO"){
                         city_municipalityField.setAttribute("siruta_id",item.siruta);
+                    }
+
+                    if(country_selected.value=="TH"){
+                        city_municipalityField.setAttribute("value_id",item.city_th);
                     }
 
                     var city_=document.querySelector('#fields_city + span.error-message');
@@ -654,7 +662,7 @@
                         applySuggestionValue(stateField, item.label);
 
                           if(country_selected.value=="TH"){
-                                stateField.setAttribute("value_id",item.province_code);
+                                stateField.setAttribute("value_id",item.province_th);
                           }
 
                     

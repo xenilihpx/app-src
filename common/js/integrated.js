@@ -2154,11 +2154,7 @@
                         if($(formField.country).val()=="RO" && $(formField.city).is('[siruta_id]')){
                             model.shippingInfo.shipCity=$(formField.city).attr("siruta_id");
                         }
-
-                        if($(formField.state).is('[value_id]')){
-                            model.shippingInfo.shipState=$(formField.state).attr("value_id");
-                        }
-
+                        
                         if(getQueryStringByName("lang")!=""){
                              model.lang=getQueryStringByName("lang");
                         }
@@ -2222,7 +2218,11 @@
                         }
 
                         if($(formField.district).length!=0) {
-                            model.district=$(formField.district).val().trim();
+                            if($(formField.district).is('[value_id]')){
+                                 model.district=$(formField.district).attr("value_id");
+                            }else{
+                                 model.district=$(formField.district).val().trim();
+                            }
                         }
 
                         if($(formField.village).length!=0) {
@@ -2238,6 +2238,15 @@
                         if ($(formField.rw).length!=0) {
                             model.rw=$(formField.rw).val().trim();
                         }
+
+                        if($(formField.city).is('[value_id]')){
+                            model.shippingInfo.shipCity=$(formField.city).attr("value_id");
+                        }
+                        
+                        if($(formField.state).is('[value_id]')){
+                            model.shippingInfo.shipState=$(formField.state).attr("value_id");
+                        }
+
 
                         if($("#checkoutPaymentType").length!=0){
                             if($("#checkoutPaymentType").val()=="paypal"){

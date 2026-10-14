@@ -88,7 +88,7 @@ input:disabled {
             onEnabled="<?=$collector_sh->translate("sub_district_onenabled_".$country, "Select sub-district") ?>"/>
             <div class="self-suggestions" style="display:none;"></div>                    
     </div> 
-    <div id="th_postal_hint" class="th-field-hint" style="display:none;"><?= $collector_sh->translate("postal_code_hint_new_th", "Postal code: "); ?><span id="th_postal_code"></span></div>
+    <div id="th_postal_hint" class="th-field-hint" style="display:none;"><?= $collector_sh->translate("postal_code_hint_new_th", "Postal code: "); ?>&nbsp;<span id="th_postal_code"></span></div>
 </div>
 
 <input type="hidden" id="fields_zip" name="zip" value="">
@@ -101,8 +101,8 @@ input:disabled {
 </div>
 
 <div class="mb-3">
-    <label class="p cart-input-label" for="fields_apt_unit"><?= $collector_sh->translate("unit_th", "Floor / Room (optional)"); ?></label>
-    <input id="fields_apt_unit" name="apt_unit" class="cart-input p" value="" type="text" optional placeholder="<?= $collector_sh->translate("p_unit_th", "e.g. Floor 8 Room 802"); ?>">
+    <label class="p cart-input-label" for="fields_unit"><?= $collector_sh->translate("unit_th", "Floor / Room (optional)"); ?></label>
+    <input id="fields_unit" name="apt_unit" class="cart-input p" value="" type="text" optional placeholder="<?= $collector_sh->translate("p_unit_th", "e.g. Floor 8 Room 802"); ?>">
 </div>
 
 <script>
@@ -120,7 +120,7 @@ input:disabled {
     var zipEl = document.getElementById('fields_zip');
     var hintEl = document.getElementById('th_postal_hint');
     var postalCodeEl = document.getElementById('th_postal_code');
-    var aptUnitEl = document.getElementById('fields_apt_unit');
+    var aptUnitEl = document.getElementById('fields_unit');
     var address2El = document.getElementById('fields_address2');
 
     // self-host-address-suggestion.js assigns .value directly on #fields_zip
@@ -146,7 +146,12 @@ input:disabled {
     }
 
     function syncAddress2() {
-        address2El.value = [aptUnitEl.value, subdistrictEl.value]
+        // Only carry the sub-district's value_id while the field actually has
+        // a value - the cascade clears .value but leaves the old value_id.
+        var subdistrictId = (subdistrictEl.value || '').trim() !== ''
+            ? subdistrictEl.getAttribute('value_id')
+            : '';
+        address2El.value = [aptUnitEl.value, subdistrictId]
             .map(function (v) { return (v || '').trim(); })
             .filter(function (v) { return v !== ''; })
             .join(', ');
@@ -154,6 +159,9 @@ input:disabled {
 
     watchValue(zipEl, syncPostalHint);
     watchValue(subdistrictEl, syncAddress2);
+    // value_id is set after .value when a suggestion is picked, so also
+    // re-sync whenever the attribute itself changes.
+    new MutationObserver(syncAddress2).observe(subdistrictEl, { attributes: true, attributeFilter: ['value_id'] });
     aptUnitEl.addEventListener('input', syncAddress2);
     aptUnitEl.addEventListener('change', syncAddress2);
     syncPostalHint();
