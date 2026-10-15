@@ -25,28 +25,6 @@ input:disabled, input:read-only {
 }
 </style>
 
-<?php
-// Consignee ID is hidden (not removed) for Vanotium (shop./get.vanotium) - may be needed again later.
-// Hidden fields are skipped by the checkout validation, so it is not required while hidden.
-// This form is also loaded on its own (country change), where setup.php doesn't load the
-// country config - so fall back to reading corporateName from this site's config file.
-$brandName = $OfferApi->corporateName ?? "";
-if ($brandName === "") {
-    $brandConfigFile = BASEPATH . "/integrated/config_" . strtolower(basename($_GET["country_code"] ?? "tw")) . ".php";
-    if (is_file($brandConfigFile)) {
-        $brandConfig = include $brandConfigFile;
-        $brandName = is_object($brandConfig) ? ($brandConfig->corporateName ?? "") : "";
-    }
-}
-$hideConsigneeId = strtolower(trim($brandName)) === "vanotium";
-?>
-<div class="mb-3<?= $hideConsigneeId ? " d-none" : "" ?>">
-    <label class="p cart-input-label" for="consigneeId" label=""><?=$collector_sh->translate("consigneeId_label_".$country, "Consignee ID"); ?></label>
-    <div class="tooltip-box">
-        <span class="tooltip-dialog"><?= $collector_sh->translate("consigneeId_note", "Note: Ensure consignee ID matches name to avoid delays."); ?></span>
-        <input id="fields_consigneeId" name="consigneeId" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("consigneeId_".$country, "Enter National ID / ARC "); ?>" <?= $hideConsigneeId ? "optional" : "required=\"required\"" ?>>
-    </div>
-</div>
  <div class="tw-mb-2 tw-flex tw-gap-1 tw-text-[#4D4D4D]" style="font-size:0.75em; padding: 7px;border: 1px solid #f6ca79;background: #fef6e9;line-height: 1.3;" >
             <span aria-hidden="true" style="flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:1.3em;height:1.3em;border-radius:3px;background:#2f7cf6;color:#fff;font-family:Georgia,'Times New Roman',serif;font-weight:bold;font-style:normal;font-size:1em;line-height:1;">i</span><span><?= $collector_sh->translate("type_zhtranditional_new_tw", "Please enter your address in Traditional Chinese.") ?></span>
     </div>

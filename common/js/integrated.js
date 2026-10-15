@@ -3782,12 +3782,6 @@
                 fields_ += '<input type="text" id="wallet_cpf" name="wallet_cpf" placeholder="000.000,000-00" class="form-control ship-form" required style="padding: 10px; font-size: 14px;width:100%;">';  
             }
 
-            //consignee ID is hidden for Vanotium (same as the TW shipping form) - kept for the other brands
-            if(model.shippingInfo.shipCountry=="TW" && ($("#merchantName").val() || "").trim().toLowerCase()!="vanotium"){
-                fields_ +='<label style="margin-top:10px;display:block;">'+(window.i18nData["consignee_id"] || 'Consignee ID:') +'<span style="color:red;">*</span></label>';           
-                fields_ += '<input type="text" id="wallet_consignee_id" name="wallet_consignee_id" class="form-control ship-form" required style="padding: 10px; font-size: 14px;width:100%;">';  
-            }
-            
             if(model.shippingInfo.shipCountry=="KR"){
                 fields_ +='<label style="margin-top:10px;display:block;">'+(window.i18nData["pccc"] || 'PCCC (Personal Customs Clearance Code):') +'<span style="color:red;">*</span></label>';           
                 fields_ += '<input type="text" id="wallet_pccc" name="wallet_pccc" class="form-control ship-form" required style="padding: 10px; font-size: 14px;width:100%;">';  
