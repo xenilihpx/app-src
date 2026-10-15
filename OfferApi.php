@@ -1836,6 +1836,61 @@ class OfferApi extends KonnektiveApi {
         }
     }
 
+    /**
+     * Posts a Stripe wallet charge that succeeded but whose Checkout Champ import returned ERROR
+     * (customer was charged, no CRM order) to api.melarapro.com/wallet-logs/import-error.php.
+     * Needs MELARA_API_KEY (optional MELARA_API_URL) in .env. Never throws so it can't break the checkout response.
+     */
+    private function logWalletImportError($importType, $data, $resp, $paymentIntent, $stripeCustomerId){
+        try {
+            $apiKey = getenv('MELARA_API_KEY') ?? "SHOP-STRIPE-LOGS";
+            if (!$apiKey) {
+                error_log("logWalletImportError: MELARA_API_KEY not set, PaymentIntent ".$paymentIntent->id." not logged");
+                return;
+            }
+
+            $respDecode = json_decode($resp);
+            $payload = [
+                'site'                  => $_SERVER['HTTP_HOST'] ?? '',
+                'import_type'           => $importType,
+                'campaign_id'           => $this->campaignId,
+                'session_id'            => $data['sessionId'] ?? ($_SESSION['session_id_'.$this->campaignId] ?? null),
+                'order_id'              => $data['orderId'] ?? null,
+                'pay_source'            => $data['paySource'] ?? null,
+                'payment_intent_id'     => $paymentIntent->id,
+                'payment_intent_status' => $paymentIntent->status,
+                'stripe_customer_id'    => $stripeCustomerId,
+                'amount'                => $paymentIntent->amount,
+                'currency'              => $paymentIntent->currency,
+                'email'                 => $data['emailAddress'] ?? ($data['email'] ?? null),
+                'testmode'              => (!empty($data['testmode']) && $data['testmode'] !== 'false'),
+                'error_message'         => $respDecode->message ?? $resp,
+                'request_data'          => $data,
+                'response_data'         => $resp
+            ];
+
+            $ch = curl_init(rtrim(getenv('MELARA_API_URL') ?: 'https://api.melarapro.com', '/').'/wallet-logs/import-error.php');
+            curl_setopt_array($ch, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST           => true,
+                CURLOPT_POSTFIELDS     => json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'X-API-Key: '.$apiKey],
+                CURLOPT_TIMEOUT        => 10,
+                CURLOPT_PROXY          => ""
+            ]);
+            $body = curl_exec($ch);
+            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $curlError = curl_error($ch);
+            curl_close($ch);
+
+            if ($body === false || $status !== 200) {
+                error_log("logWalletImportError: API log failed for PaymentIntent ".$paymentIntent->id." (HTTP ".$status.") ".($curlError ?: $body));
+            }
+        } catch (\Throwable $e) {
+            error_log("logWalletImportError: failed to log PaymentIntent ".$paymentIntent->id.": ".$e->getMessage());
+        }
+    }
+
     private function logDuplicateOrder($checkDup_order,$resp_decode){
             $checkDupDecode= json_decode($checkDup_order);
             
@@ -2626,8 +2681,11 @@ class OfferApi extends KonnektiveApi {
                                     }
                                      
                                 }
-                              
+                                //testing
+                                $this->logWalletImportError("order", $importData, $resp, $paymentIntent, $customer->id);
                                 if($resp_decode->result=="ERROR"){
+                                    //charged in Stripe but the CRM import failed, keep a record for manual follow up
+                                    $this->logWalletImportError("order", $importData, $resp, $paymentIntent, $customer->id);
                                     $this->messageCheck($resp_decode->message,$resp_decode->result);
                                 }else{
                                     $resp_decode=$this->logDuplicateOrder($checkDup_order,$resp_decode);//log duplicate
@@ -2807,14 +2865,16 @@ class OfferApi extends KonnektiveApi {
                                 }
                                 
                                 if($resp_decode->result=="ERROR"){
+                                    //charged in Stripe but the CRM import failed, keep a record for manual follow up
+                                    $this->logWalletImportError("upsell", $data, $resp, $paymentIntent, $_SESSION['order_data_'.$this->campaignId]['walletCustomerId']);
                                     $this->messageCheck($resp_decode->message,$resp_decode->result);
                                 }else{
                                     echo json_encode([
                                         "result" => $resp_decode->result,
                                         "message" => $resp_decode->message
-                                    ]);              
+                                    ]);
                                 }
-                                
+
                     } else{
 
                             // Order QA Decline
