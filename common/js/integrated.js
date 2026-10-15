@@ -2982,7 +2982,7 @@
                                 return item.type=="main";
                         })[0];
                                       
-                        if(selectedProd.hasOwnProperty("prodid")){                                                            
+                        if(selectedProd && selectedProd.hasOwnProperty("prodid")){                                                           
                             $(form_obj.prodSelectElement+"[data-campaignproductid="+selectedProd.prodid+"]").trigger("click");
                         }else{
                             $(form_obj.prodSelectElement+".active").trigger("click");
@@ -3848,9 +3848,21 @@
                                     locale: $("html").attr("lang")
                                });
 
+                // Init with the real cart total: a fixed placeholder (e.g. 1000) falls below Stripe's
+                // minimum charge for low-value currencies (TWD, HUF, IDR...) and the wallets never render.
+                // Fallback is high enough for every currency; the actual amount is re-set on "click"
+                var initAmount = 0;
+                try {
+                    var stripeAmount = form_obj.getStripeAmount().amount;
+                    initAmount = Math.round($("#paySource").length!=0 ? stripeAmount*100 : stripeAmount);
+                } catch (e) {}
+                if (!(initAmount > 0)) {
+                    initAmount = 1000000;
+                }
+
                 const elements = stripe.elements({
                     mode: "payment",
-                    amount: 1000,
+                    amount: initAmount,
                     currency: $("#prodCurrency").val().toLowerCase(),
                     appearance: { variables: { borderRadius: '4px' } },
                     setupFutureUsage: 'off_session',
