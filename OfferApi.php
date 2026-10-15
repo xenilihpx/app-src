@@ -2681,11 +2681,10 @@ class OfferApi extends KonnektiveApi {
                                     }
                                      
                                 }
-                                //testing
-                                $this->logWalletImportError("order", $importData, $resp, $paymentIntent, $customer->id);
+                              
                                 if($resp_decode->result=="ERROR"){
                                     //charged in Stripe but the CRM import failed, keep a record for manual follow up
-                                    $this->logWalletImportError("order", $importData, $resp, $paymentIntent, $customer->id);
+                                    //$this->logWalletImportError("order", $importData, $resp, $paymentIntent, $customer->id);
                                     $this->messageCheck($resp_decode->message,$resp_decode->result);
                                 }else{
                                     $resp_decode=$this->logDuplicateOrder($checkDup_order,$resp_decode);//log duplicate
@@ -2866,7 +2865,7 @@ class OfferApi extends KonnektiveApi {
                                 
                                 if($resp_decode->result=="ERROR"){
                                     //charged in Stripe but the CRM import failed, keep a record for manual follow up
-                                    $this->logWalletImportError("upsell", $data, $resp, $paymentIntent, $_SESSION['order_data_'.$this->campaignId]['walletCustomerId']);
+                                    //$this->logWalletImportError("upsell", $data, $resp, $paymentIntent, $_SESSION['order_data_'.$this->campaignId]['walletCustomerId']);
                                     $this->messageCheck($resp_decode->message,$resp_decode->result);
                                 }else{
                                     echo json_encode([
