@@ -3660,7 +3660,6 @@
                     }
 
                     if(model.shippingInfo.shipCountry=="BR" ||
-                        model.shippingInfo.shipCountry=="TW" || 
                         model.shippingInfo.shipCountry=="KR" || 
                         model.shippingInfo.phoneNumber==null || 
                         model.shippingInfo.phoneNumber==""){
