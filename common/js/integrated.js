@@ -1662,25 +1662,50 @@
         }
 
         
-        //max wait (ms) for EF.click before falling back to the direct click request
+        //max wait (ms) for the click API request / EF.click before giving up on it
         form_obj.efClickTimeout=8000;
 
         //resolves with the transaction id of the click fired on this page load ("" if none could be generated)
         form_obj.efClickPromise=null;
 
-        //EF.click through the Everflow SDK. The SDK promise never settles when /sdk/click returns no transaction id,
-        //so it is capped by a timeout, and when the SDK is missing (blocked) or fails, /sdk/click is called directly.
-        //Never rejects, resolves with the transaction id or "".
+        //Fires the click through the Everflow click API (/sdk/click) first; when that returns no transaction id,
+        //falls back to EF.click through the Everflow SDK. The SDK promise never settles when /sdk/click returns
+        //no transaction id, so it is capped by a timeout. Never rejects, resolves with the transaction id or "".
         form_obj.efClick=function(options){
-            var sdkClick = (typeof EF!="undefined")
-                ? form_obj.efPromiseTimeout(EF.click(options), form_obj.efClickTimeout, "EF.click")
-                : Promise.reject(new Error("Everflow SDK not loaded"));
+            return form_obj.efClickRequest(options).then(function(transactionId){
+                if(transactionId){
+                    return transactionId;
+                }
+                console.warn("Everflow click API returned no transaction id, falling back to EF.click");
+                return form_obj.efClickSdk(options);
+            });
+        }
 
-            return sdkClick.then(function(transactionId){
-                return transactionId || form_obj.efClickRequest(options);
+        //EF.click through the Everflow SDK, waiting for the SDK (scripts/main.js) to load if needed
+        form_obj.efClickSdk=function(options){
+            return form_obj.waitEFSdk().then(function(){
+                return form_obj.efPromiseTimeout(EF.click(options), form_obj.efClickTimeout, "EF.click");
+            }).then(function(transactionId){
+                return transactionId || "";
             }, function(err){
                 console.warn(err && err.message ? err.message : err);
-                return form_obj.efClickRequest(options);
+                return "";
+            });
+        }
+
+        //resolves once the Everflow SDK is loaded, rejects after ~6s (20 x 300ms) if it never loads (e.g. blocked)
+        form_obj.waitEFSdk=function(){
+            return new Promise(function(resolve, reject){
+                var retryCount=0;
+                (function check(){
+                    if(typeof EF!="undefined"){
+                        resolve();
+                    }else if(retryCount++ < 20){
+                        setTimeout(check, 300);
+                    }else{
+                        reject(new Error("Everflow SDK not loaded"));
+                    }
+                })();
             });
         }
 
@@ -1717,16 +1742,9 @@
             });
         }
 
-        form_obj.triggerEFClick = function(param, retryCount){
-            retryCount = retryCount || 0;
-            if(typeof EF=="undefined" && retryCount<20){
-                //Everflow SDK (scripts/main.js) may still be loading; wait ~6s for it,
-                //after that efClick() calls /sdk/click directly so the transaction_id is still generated
-                setTimeout(function(){
-                    form_obj.triggerEFClick(param, retryCount+1);
-                },300);
-                return;
-            }
+        form_obj.triggerEFClick = function(param){
+            //no need to wait for the Everflow SDK here: efClick() calls the click API first
+            //and only waits for the SDK when it has to fall back to EF.click
             if(!param.transaction_id){
                 //direct links may come without oid in the url, fall back to the offer's configured Everflow offer id
                 param.oid = param.oid || form_obj.getEFOfferId();
@@ -1874,20 +1892,34 @@
                    $("body").append("<input type='hidden' id='everflow_trans_id' value=''/>");
                 }
         
-                if(form_obj.getEFTransactionIdFromUrl()!="" && (getQueryStringByName('affId') != '' || getQueryStringByName('affid') != '')){
+                var urlAffId = getQueryStringByName('affId') || getQueryStringByName('affid');
+
+                if(form_obj.getEFTransactionIdFromUrl()!="" && urlAffId != ''){
                     sessionStorage.setItem("offer_" + getCurrentOffer(), JSON.stringify(form_obj.efClickData()));
                     $("#everflow_trans_id").val(form_obj.getEFTransactionIdFromUrl());
                     return;
                 }
 
-                //direct link (no transaction id in the url): EF.click generates the transaction id
-                if (getQueryStringByName('affId') != '' || getQueryStringByName('affid') != '') {
+                var storedTransactionId = form_obj.getDataPropertyValue("transaction_id");
 
-                    if(form_obj.getDataPropertyValue("click_ef")!=true || form_obj.getEFTransactionIdFromUrl()==""){
-                        form_obj.triggerEFClick(form_obj.efClickData());//trigger everflow click event
-                        sessionStorage.setItem("offer_" + getCurrentOffer(), JSON.stringify(form_obj.efClickData()));
-                    }        
-                   
+                //upsell and thank you pages never fire a new click: the order keeps its transaction id
+                //(reset after the base conversion on the first upsell page, the server keeps it for the upsell conversions)
+                if (getQueryStringByName("orderId") != "" || form_obj.isThankyou()) {
+                    $("#everflow_trans_id").val(storedTransactionId);
+                    return;
+                }
+
+                //EF.click already generated a transaction id for this visit (same affiliate):
+                //reuse it on every page up to checkout instead of firing a new click
+                if (storedTransactionId != "" && (urlAffId == "" || urlAffId == form_obj.getDataPropertyValue("affId"))) {
+                    $("#everflow_trans_id").val(storedTransactionId);
+                    return;
+                }
+
+                //direct link (no transaction id in the url): EF.click generates the transaction id
+                if (urlAffId != '') {
+                    sessionStorage.setItem("offer_" + getCurrentOffer(), JSON.stringify(form_obj.efClickData()));
+                    form_obj.triggerEFClick(form_obj.efClickData());//trigger everflow click event
                 }else if(Object.keys(form_obj.getDataStorage()).length==0){
                     sessionStorage.setItem("offer_" + getCurrentOffer(), JSON.stringify({}));
                 }else if(form_obj.getDataPropertyValue("transaction_id")=="" && form_obj.getDataPropertyValue("affId")!="" && Object.keys(form_obj.getDataStorage()).length!=0){
@@ -2387,11 +2419,10 @@
         //Creates the Everflow conversion server side through the Everflow Network API
         //(Create Conversions with Transaction IDs) instead of the EF.conversion() JS SDK.
         //Resolves with the transaction_id, rejects if the conversion could not be created.
+        //An empty transaction_id is still sent: after the reset on the first upsell page the server
+        //uses the transaction id it kept for the order (it rejects when it has none either).
         form_obj.fireEverflowConversion=function(params, sessionOrderId){
             return form_obj.waitEFTransactionId(params.transaction_id).then(function (transaction_id) {
-                if (!transaction_id) {
-                    throw new Error("Everflow conversion skipped: no transaction_id");
-                }
                 params.transaction_id = transaction_id;
                 return form_obj.createEverflowConversion(params, sessionOrderId);
             });
@@ -2435,6 +2466,8 @@
                 if (!resp || resp.result != "SUCCESS") {
                     throw new Error("Everflow conversion failed: " + (resp && resp.message ? resp.message : "unknown error"));
                 }
+                params.alreadySent = !!resp.alreadySent; //server already created this order/event conversion, nothing was sent now
+                params.transaction_id = resp.transaction_id || params.transaction_id; //the one the server used
                 return params.transaction_id;
             });
 
@@ -2463,10 +2496,11 @@
                     };
                  }
 
-                form_obj.fireEverflowConversion(params, getQueryStringByName("orderId")).catch(function (err) {
+                var conversion = form_obj.fireEverflowConversion(params, getQueryStringByName("orderId")).catch(function (err) {
                     console.warn(err && err.message ? err.message : err);
                 });
                 form_obj.execAdditionalBaseConversion(amount);
+                return conversion;
              }
         }
 
@@ -2496,10 +2530,24 @@
                         params.event_id = $('#everFlowEventId').val();
                     }
 
+                    var isBase = typeof params.event_id == "undefined"; //base conversion, sent to Everflow as event id 0
+                    if (isBase) {
+                        //kept until the base conversion succeeds, so the first upsell page can refire it
+                        form_obj.setDataPropertyValue("ef_base_conversion", {
+                            orderId: orderId,
+                            offer_id: params.offer_id,
+                            amount: params.amount,
+                            transaction_id: params.transaction_id
+                        });
+                    }
+
                     var conversion = form_obj.fireEverflowConversion(params, orderId).then(function (transaction_id) {
-                        if(typeof params.event_id == "undefined") {
-                            form_obj.execAdditionalBaseConversion(params.amount);
-                            form_obj.purchaseExec(data.purchaseData); // for purchase event
+                        if(isBase) {
+                            form_obj.setDataPropertyValue("ef_base_conversion", "");
+                            if (!params.alreadySent) {
+                                form_obj.execAdditionalBaseConversion(params.amount);
+                                form_obj.purchaseExec(data.purchaseData); // for purchase event
+                            }
                         }
                         return transaction_id;
                     });
@@ -2519,6 +2567,51 @@
                     reject();
                 });
             }
+        }
+
+        //First upsell page: refires the base conversion (event id 0) when it did not fire on checkout.
+        //The server keeps one conversion per order/event, so a base conversion that already fired
+        //is answered with alreadySent and never created again.
+        form_obj.retryBaseConversion=function(){
+            if ($("#efFirstUpsell").val() != "1" || getQueryStringByName("main") == "true") {
+                return; //not the first upsell page, or the 3ds flow (conversionEverflow3ds) fires the base conversion here
+            }
+            var pending = form_obj.getDataPropertyValue("ef_base_conversion");
+            if (!pending || !pending.orderId) {
+                return; //base conversion already fired on checkout
+            }
+            if (String(pending.orderId) != getQueryStringByName("orderId")) {
+                form_obj.setDataPropertyValue("ef_base_conversion", ""); //left over from another order
+                return;
+            }
+
+            var params = {
+                offer_id: pending.offer_id,
+                amount: pending.amount,
+                order_id: pending.orderId,
+                transaction_id: pending.transaction_id || form_obj.getDataPropertyValue("transaction_id")
+            };
+            return form_obj.fireEverflowConversion(params, pending.orderId).then(function () {
+                form_obj.setDataPropertyValue("ef_base_conversion", "");
+                if (!params.alreadySent) {
+                    form_obj.execAdditionalBaseConversion(params.amount);
+                }
+            }).catch(function (err) {
+                console.warn(err && err.message ? err.message : err);
+            });
+        }
+
+        //First upsell page: once the base conversion call is done (fired on checkout, refired by
+        //retryBaseConversion or fired by the 3ds flow), the EF.click transaction id is reset so the
+        //next visit gets a new click. The server keeps it for this order's upsell conversions.
+        form_obj.resetEFTransactionIdAfterBase=function(baseConversions){
+            if ($("#efFirstUpsell").val() != "1") {
+                return;
+            }
+            Promise.all(baseConversions).then(function () {
+                form_obj.setDataPropertyValue("transaction_id", "");
+                $("#everflow_trans_id").val("");
+            });
         }
 
         form_obj.EFConversionInit=function (data, addAmount, pageType) {
@@ -4076,7 +4169,10 @@
                     form_obj.submitForm();//checkout submit button function
                 } else if(form_obj.isUpsellPage()){ 
                     form_obj.disableBack();
-                    form_obj.conversionEverflow3ds();                 
+                    form_obj.resetEFTransactionIdAfterBase([
+                        form_obj.conversionEverflow3ds(),
+                        form_obj.retryBaseConversion() //base conversion that did not fire on checkout
+                    ]);
                     form_obj.noUpsellLink();
                     form_obj.yesUpsellLink();
                     if(getQueryStringByName("gtmetrix")==""){

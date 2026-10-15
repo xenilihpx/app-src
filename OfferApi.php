@@ -516,6 +516,8 @@ class OfferApi extends KonnektiveApi {
                 $element.='<input type="hidden" id="everFlowEventId" name="everFlowEventId" value="'.$this->nextFunnelPage()['everflowEventId'].'"/>';
                 //everflow event id used only when the no-thanks popup downsell is accepted (set per funnel page, currently US config only)
                 $element.='<input type="hidden" id="downsellEverFlowEventId" name="downsellEverFlowEventId" value="'.($this->nextFunnelPage()['downsellEverflowEventId'] ?? '').'"/>';
+                //first upsell page: integrated.js refires the base Everflow conversion here if it did not fire on checkout
+                $element.='<input type="hidden" id="efFirstUpsell" name="efFirstUpsell" value="'.(($this->upsells[0]['page'] ?? '')===$this->funnelPage() ? '1' : '0').'"/>';
                 if($_SESSION['order_data_'.$this->campaignId]["prepaidType"]!==null){
                     $element.='<input type="hidden" id="paySource" name="paySource" paysource="'.$_SESSION['order_data_'.$this->campaignId]["prepaidType"].'"/>';
                 }else{
@@ -2930,6 +2932,15 @@ class OfferApi extends KonnektiveApi {
             return;
         }
 
+        // the browser resets its EF.click transaction id after the base conversion on the first upsell page,
+        // so the order keeps its transaction id here for the upsell conversions that follow
+        $orderTransactionKey = 'ef_transaction_id_'.$this->campaignId;
+        if ($transactionId === '') {
+            $transactionId = $_SESSION[$orderTransactionKey][$sessionOrder['orderId']] ?? '';
+        } else {
+            $_SESSION[$orderTransactionKey] = [$sessionOrder['orderId'] => $transactionId]; // current order only
+        }
+
         if ($transactionId === '' || $offerId <= 0) {
             echo json_encode(["result" => "ERROR", "message" => "Missing transaction_id or offer_id"]);
             return;
@@ -2938,7 +2949,7 @@ class OfferApi extends KonnektiveApi {
         // one conversion per order/event, so retries or reloads do not double count
         $sentKey = $sessionOrder['orderId'].'_'.$eventId;
         if (!empty($_SESSION['ef_conversion_sent_'.$this->campaignId][$sentKey])) {
-            echo json_encode(["result" => "SUCCESS", "message" => "Already sent"]);
+            echo json_encode(["result" => "SUCCESS", "message" => "Already sent", "alreadySent" => true, "transaction_id" => $transactionId]);
             return;
         }
 
@@ -2967,7 +2978,7 @@ class OfferApi extends KonnektiveApi {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST           => true,
             CURLOPT_POSTFIELDS     => json_encode($payload),
-            CURLOPT_TIMEOUT        => 10,
+            CURLOPT_TIMEOUT        => 20,
             CURLOPT_HTTPHEADER     => [
                 'Content-Type: application/json',
                 'X-Eflow-Api-Key: '.$apiKey
@@ -2981,7 +2992,7 @@ class OfferApi extends KonnektiveApi {
         $resp = json_decode($response, true);
         if ($httpCode == 200 && !empty($resp['result'])) {
             $_SESSION['ef_conversion_sent_'.$this->campaignId][$sentKey] = true;
-            echo json_encode(["result" => "SUCCESS", "message" => "Conversion created"]);
+            echo json_encode(["result" => "SUCCESS", "message" => "Conversion created", "transaction_id" => $transactionId]);
         } else {
             error_log("Everflow create conversion failed (HTTP ".$httpCode."): ".($curlError ?: $response));
             echo json_encode(["result" => "ERROR", "message" => "Everflow API request failed"]);
