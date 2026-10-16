@@ -19,7 +19,9 @@ $country="_tw";
     padding-right: 32px;
     text-transform: capitalize;
 }
-input:disabled, input:read-only {
+/* exclude checkbox/radio: they always match :read-only, which wiped the checked fill (e.g. SecureShip) */
+input:not([type=checkbox]):not([type=radio]):disabled,
+input:not([type=checkbox]):not([type=radio]):read-only {
   cursor: default;
   background-color: #f5f4f4 !important;
 }
