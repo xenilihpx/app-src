@@ -2138,7 +2138,8 @@
                         //success
                         form_obj.progressModal();                  
                         $(submitBtn).prop('disabled', true);
-                        
+
+                        form_obj.ensureMainProd(); //select the default product if the cart has no main product
                         var cartData = form_obj.getDataStorage();
                         
                         //process import order
@@ -2835,6 +2836,7 @@
                         form_obj.paymentCustomCallback();// gituyo ni para kun naay add nga code like dle ipagawas ang popup kun mobayad na 
                         form_obj.beginCheckoutExec();
 
+                        form_obj.ensureMainProd(); //select the default product if the cart has no main product
                         var cartData = form_obj.getDataStorage();
                         if (cartData.hasOwnProperty("products")) {
                             if (cartData.products.length > 0) {
@@ -2974,22 +2976,40 @@
             }
         }
 
+        //get the default product selection element: the .active one, else the first one
+        form_obj.getDefaultProdEl = function(){
+                if(!form_obj.prodSelectElement){
+                    return $();
+                }
+                var el = $(form_obj.prodSelectElement+".active").first();
+                return (el.length!=0) ? el : $(form_obj.prodSelectElement).first();
+        }
+
+        //make sure a main product is in the cart, selecting the default product if there is none
+        form_obj.ensureMainProd = function(){
+                var products = form_obj.getDataPropertyValue("products") || [];
+                var hasMain = products.some(function(item){
+                        return item.type=="main";
+                });
+                if(!hasMain){
+                    form_obj.getDefaultProdEl().trigger("click");
+                }
+        }
+
         //select product that was already selected
-        form_obj.initSelectedProd = function(){            
-                //click selected main product              
-                if(form_obj.getDataPropertyValue("products").length!=0){                    
+        form_obj.initSelectedProd = function(){
+                //click selected main product
+                if(form_obj.getDataPropertyValue("products").length!=0){
                         var selectedProd = form_obj.getDataPropertyValue("products").filter(function(item){
                                 return item.type=="main";
                         })[0];
-                                      
-                        if(selectedProd && selectedProd.hasOwnProperty("prodid")){                                                           
-                            $(form_obj.prodSelectElement+"[data-campaignproductid="+selectedProd.prodid+"]").trigger("click");
-                        }else{
-                            $(form_obj.prodSelectElement+".active").trigger("click");
-                        }
-                        form_obj.initActivatedCoupon(); //activate applied coupon 
+                        var selectedEl = (selectedProd && selectedProd.hasOwnProperty("prodid")) ? $(form_obj.prodSelectElement+"[data-campaignproductid="+selectedProd.prodid+"]").first() : $();
+
+                        //fall back to the default product if the stored one is not on this page
+                        (selectedEl.length!=0 ? selectedEl : form_obj.getDefaultProdEl()).trigger("click");
+                        form_obj.initActivatedCoupon(); //activate applied coupon
                 }else{
-                        $(form_obj.prodSelectElement+".active").trigger("click");                        
+                        form_obj.getDefaultProdEl().trigger("click");
                 }
         }
         
@@ -3363,6 +3383,7 @@
                     };
 
                 if($("#paySource").length==0){ //if zero you are not in the upsell page
+                        form_obj.ensureMainProd(); //select the default product if the cart has no main product
                         var cartData = form_obj.getDataStorage();
                         var shippingPrice = 0, mainTotal = 0, shippingRate = {};
                         if (cartData.products.length > 0) {
