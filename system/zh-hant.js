@@ -98,5 +98,6 @@ window.i18nData={
         "invalid_zip_pt": "格式：0000-000。",
         "invalid_city_pt": "請輸入城鎮。",
         "invalid_door_number_pt": "請新增門牌號碼。",
-        "invalid_value_zh_hant": "請以繁體中文填寫地址。"
+        "invalid_value_zh_hant": "請以繁體中文填寫地址。",
+        "network_error": "發生網路錯誤。請檢查您的網路連線，然後再試一次。"
 }

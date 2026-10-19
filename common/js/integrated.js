@@ -2711,17 +2711,63 @@
             })
         }
         
-        form_obj.getResponse=function(model,successCallback,failureCallBack, importLead) {
-           
-            fetch(url, {
+        //retries after a network error ("TypeError: Failed to fetch" / "Load failed"): connection dropped,
+        //network switched or the mobile browser was backgrounded. Payment calls are safe to retry because the
+        //server replays the response of a purchase already completed with the same token instead of charging again.
+        form_obj.fetchRetryDelays=[1000, 2000, 4000];
+        form_obj.noRetryCallTypes=["paypal_transaction_confirm"]; //not token protected, never sent twice
+
+        form_obj.isNetworkError=function(error){
+            return error instanceof TypeError;
+        }
+
+        form_obj.waitOnline=function(ms){
+            return new Promise(function (resolve) {
+                var done=function(){
+                    clearTimeout(timer);
+                    window.removeEventListener('online', done);
+                    resolve();
+                };
+                var timer=setTimeout(function(){
+                    if (navigator.onLine === false) {
+                        window.addEventListener('online', done); //wait for the connection to come back
+                        timer=setTimeout(done, 15000);
+                    } else {
+                        done();
+                    }
+                }, ms);
+            });
+        }
+
+        form_obj.postJSON=function(model, attempt){
+            attempt = attempt || 0;
+            return fetch(url, {
                 method: 'POST',
+                credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(model)
-            }).then(function (response) {
+            }).catch(function (error) {
+                if (!form_obj.isNetworkError(error)) {
+                    throw error;
+                }
+                error.networkError = true; //fetch itself failed, the server response never arrived
+                if (attempt >= form_obj.fetchRetryDelays.length || form_obj.noRetryCallTypes.indexOf(model.call_type) != -1) {
+                    throw error;
+                }
+                console.warn('Request failed (' + error.message + '), retrying ' + model.call_type + ' attempt ' + (attempt + 1));
+                return form_obj.waitOnline(form_obj.fetchRetryDelays[attempt]).then(function () {
+                    return form_obj.postJSON(model, attempt + 1);
+                });
+            });
+        }
+
+        form_obj.getResponse=function(model,successCallback,failureCallBack, importLead) {
+
+            form_obj.postJSON(model).then(function (response) {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Network response was not ok (' + response.status + ')');
                 }
                 return response.json();
             }).then(function (data) {
@@ -2788,12 +2834,17 @@
                 if(typeof importLead=="undefined"){
                     form_obj.removeProgressModal();
                 }
-                 
+                console.log('Error:', error);
+
                 if (typeof failureCallBack === 'function') {
-                    failureCallBack(error);
-                    console.log('Error:', error);
+                    if (error && error.networkError) {
+                        //show a readable message instead of "TypeError: Failed to fetch" / "Load failed"
+                        failureCallBack(window.i18nData['network_error'] || "We couldn't connect to the server. Please check your internet connection and try again.");
+                    } else {
+                        failureCallBack(error);
+                    }
                 }
-            })           
+            })
             
         }  
         

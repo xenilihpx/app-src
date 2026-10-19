@@ -98,5 +98,6 @@ window.i18nData={
         "invalid_zip_pt": "格式：0000-000。",
         "invalid_city_pt": "请输入城镇。",
         "invalid_door_number_pt": "请添加门牌号。",
-        "invalid_value_zh_hant": "请用繁体中文输入您的地址。"
+        "invalid_value_zh_hant": "请用繁体中文输入您的地址。",
+        "network_error": "网络错误。请检查您的网络连接，然后重试。"
 }

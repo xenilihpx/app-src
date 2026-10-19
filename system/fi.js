@@ -98,5 +98,6 @@ window.i18nData={
         "invalid_zip_pt": "Muoto 0000-000.",
         "invalid_city_pt": "Anna paikkakunta.",
         "invalid_door_number_pt": "Lisää talon numero.",
-        "invalid_value_zh_hant": "Kirjoita osoitteesi perinteisellä kiinankielellä."
+        "invalid_value_zh_hant": "Kirjoita osoitteesi perinteisellä kiinankielellä.",
+        "network_error": "Verkkovirhe. Tarkista internetyhteytesi ja yritä uudelleen."
 }

@@ -98,5 +98,6 @@ window.i18nData={
         "invalid_zip_pt": "فارمیٹ 0000-000۔",
         "invalid_city_pt": "شہر درج کریں۔",
         "invalid_door_number_pt": "دروازے کا نمبر شامل کریں۔",
-        "invalid_value_zh_hant": "اپنا پتہ روایتی چینی میں درج کریں۔"
+        "invalid_value_zh_hant": "اپنا پتہ روایتی چینی میں درج کریں۔",
+        "network_error": "نیٹ ورک کی خرابی۔ براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں اور دوبارہ کوشش کریں۔"
 }

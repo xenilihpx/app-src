@@ -98,5 +98,6 @@ window.i18nData = {
     "invalid_zip_pt": "Formato 0000-000.",
     "invalid_city_pt": "Ingresa la localidad.",
     "invalid_door_number_pt": "Agrega el número exterior.",
-    "invalid_value_zh_hant": "Introduce tu dirección en chino tradicional."
+    "invalid_value_zh_hant": "Introduce tu dirección en chino tradicional.",
+    "network_error": "Error de red. Comprueba tu conexión a Internet e inténtalo de nuevo."
 };

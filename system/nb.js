@@ -98,5 +98,6 @@ window.i18nData = {
     "invalid_zip_pt": "Format 0000-000.",
     "invalid_city_pt": "Oppgi stedet.",
     "invalid_door_number_pt": "Legg til husnummeret.",
-    "invalid_value_zh_hant": "Skriv inn adressen din på tradisjonell kinesisk."
+    "invalid_value_zh_hant": "Skriv inn adressen din på tradisjonell kinesisk.",
+    "network_error": "Nettverksfeil. Kontroller internettforbindelsen din og prøv på nytt."
 }

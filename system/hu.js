@@ -98,5 +98,6 @@ window.i18nData = {
     "invalid_zip_pt": "Formátum: 0000-000.",
     "invalid_city_pt": "Adja meg a települést.",
     "invalid_door_number_pt": "Adja meg a házszámot.",
-    "invalid_value_zh_hant": "Írja be a címét hagyományos kínai írásmóddal."
+    "invalid_value_zh_hant": "Írja be a címét hagyományos kínai írásmóddal.",
+    "network_error": "Hálózati hiba. Kérjük, ellenőrizze az internetkapcsolatát, majd próbálja meg újra."
 };

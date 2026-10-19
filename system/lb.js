@@ -98,5 +98,6 @@ window.i18nData={
         "invalid_zip_pt": "Format 0000-000.",
         "invalid_city_pt": "Gitt d'Uertschaft an.",
         "invalid_door_number_pt": "Setzt d'Hausnummer derbäi.",
-        "invalid_value_zh_hant": "Gitt Är Adress an traditionell chinesescher Schrëft an."
+        "invalid_value_zh_hant": "Gitt Är Adress an traditionell chinesescher Schrëft an.",
+        "network_error": "Netzwierkfeeler. W.e.g. kontrolléiert Är Internetverbindung a probéiert et nees."
 }

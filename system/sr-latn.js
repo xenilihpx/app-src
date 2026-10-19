@@ -98,5 +98,6 @@ window.i18nData={
         "invalid_zip_pt": "Format 0000-000.",
         "invalid_city_pt": "Unesite mesto.",
         "invalid_door_number_pt": "Dodajte kućni broj.",
-        "invalid_value_zh_hant": "Унесите своју адресу на традиционалном кинеском."
+        "invalid_value_zh_hant": "Унесите своју адресу на традиционалном кинеском.",
+        "network_error": "Мрежна грешка. Молимо проверите вашу интернет везу и покушајте поново."
 }

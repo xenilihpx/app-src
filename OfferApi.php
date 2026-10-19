@@ -3114,6 +3114,41 @@ class OfferApi extends KonnektiveApi {
         //end CF turnstile
     }
 
+    //Runs a payment call protected by the one time page token.
+    //The token is cleared on every successful purchase, so when the browser retries a request whose response
+    //never arrived ("TypeError: Failed to fetch" / "Load failed"), the response of the purchase already made
+    //with that token is replayed instead of rejecting it (or charging again).
+    //A retry sent while the first request is still running waits on the session lock, then gets the replay.
+    private function tokenProtectedCall($data, $method) {
+        $token = isset($data['token_']) ? (string)$data['token_'] : '';
+        $replayKey = $data['call_type'].'_'.$token;
+
+        if ($token !== '' && isset($_SESSION['completed_requests'][$replayKey])) {
+            echo $_SESSION['completed_requests'][$replayKey];
+            exit;
+        }
+
+        if ($token === '' || !isset($_SESSION['token']) || $token !== $_SESSION['token']) {
+            echo json_encode([
+                "result" => "ERROR",
+                "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
+            ]);
+            exit;
+        }
+
+        ob_start();
+        $this->$method($data);
+        $output = ob_get_clean();
+
+        if (!isset($_SESSION['token'])) { //token cleared: the purchase succeeded
+            $completed = isset($_SESSION['completed_requests']) ? $_SESSION['completed_requests'] : [];
+            $completed[$replayKey] = $output;
+            $_SESSION['completed_requests'] = array_slice($completed, -5, 5, true); //keep only the latest ones
+        }
+
+        echo $output;
+    }
+
     private function handlePOST() {
         // Check if required form fields are set
         $data = json_decode(file_get_contents("php://input"), true);
@@ -3137,38 +3172,14 @@ class OfferApi extends KonnektiveApi {
                 break;
 
             case 'order_import':                
-                if (!isset($data['token_']) || $data['token_'] !== $_SESSION['token']) {
-                    echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
-                    ]);
-                    exit;
-                }else{
-                    $this->importOrder($data);
-                }
+                $this->tokenProtectedCall($data, 'importOrder');
                 break;
 
             case 'get_paypalURL':
-                if (!isset($data['token_']) || $data['token_'] !== $_SESSION['token']) {
-                    echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
-                    ]);
-                    exit;
-                }else{
-                    $this->get_paypalURL($data);
-                }
+                $this->tokenProtectedCall($data, 'get_paypalURL');
                 break;
             case 'get_paypalURL_direct_api':
-                if (!isset($data['token_']) || $data['token_'] !== $_SESSION['token']) {
-                    echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
-                    ]);
-                    exit;
-                }else{
-                    $this->get_paypalURL_direct_api($data);
-                }
+                $this->tokenProtectedCall($data, 'get_paypalURL_direct_api');
                 break;
 
             case 'paypal_transaction_confirm':
@@ -3180,15 +3191,7 @@ class OfferApi extends KonnektiveApi {
                 break;
 
             case 'yes_upsell':
-                if (!isset($data['token_']) || $data['token_'] !== $_SESSION['token']) {
-                    echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
-                    ]);
-                    exit;
-                }else{
-                    $this->importUpsell($data);
-                }               
+                $this->tokenProtectedCall($data, 'importUpsell');               
                 break;
             
             case 'click_import_thankyou':
@@ -3212,67 +3215,27 @@ class OfferApi extends KonnektiveApi {
                 }                
                 break;
             case 'stripe_express_order_import':
-                 if (!isset($data['token_']) || $data['token_'] !== $_SESSION['token']) {
-                    echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
-                    ]);
-                    exit;
-                }else{
-                    $this->stripeExpressOrderImport($data);
-                }
+                 $this->tokenProtectedCall($data, 'stripeExpressOrderImport');
                 break;
 
             case 'stripe_express_order_import_upsell':
-                 if (!isset($data['token_']) || $data['token_'] !== $_SESSION['token']) {
-                    echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
-                    ]);
-                    exit;
-                }else{
-                   $this->stripeExpressUpsellImport($data);
-                }
+                 $this->tokenProtectedCall($data, 'stripeExpressUpsellImport');
 
                 break;
 
             case 'payment_intent_klarna':
 
-                if (!isset($data['token_']) || $data['token_'] !== $_SESSION['token']) {
-                    echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
-                    ]);
-                    exit;
-                }else{
-                   $this->stripePaymentIntentKlarna($data);
-                }
+                $this->tokenProtectedCall($data, 'stripePaymentIntentKlarna');
                 break;
 
             case 'order_import_klarna':
 
-                if (!isset($data['token_']) || $data['token_'] !== $_SESSION['token']) {
-                    echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
-                    ]);
-                    exit;
-                }else{
-                   $this->importOrderKlarna($data);
-                }
+                $this->tokenProtectedCall($data, 'importOrderKlarna');
                 break;
 
             case 'order_import_prepaid':
 
-                if (!isset($data['token_']) || $data['token_'] !== $_SESSION['token']) {
-                    echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate("Invalid Request. Please reload the page.")
-                    ]);
-                    exit;
-                }else{
-                   $this->importOrderPrepaid($data);
-                }
+                $this->tokenProtectedCall($data, 'importOrderPrepaid');
                 break;
 
             case 'ef_create_conversion':

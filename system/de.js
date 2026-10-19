@@ -98,5 +98,6 @@ window.i18nData={
         "invalid_zip_pt": "Format 0000-000.",
         "invalid_city_pt": "Geben Sie den Ort ein.",
         "invalid_door_number_pt": "Fügen Sie die Hausnummer hinzu.",
-        "invalid_value_zh_hant": "Geben Sie Ihre Adresse in traditionellem Chinesisch ein."
+        "invalid_value_zh_hant": "Geben Sie Ihre Adresse in traditionellem Chinesisch ein.",
+        "network_error": "Netzwerkfehler. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
 }

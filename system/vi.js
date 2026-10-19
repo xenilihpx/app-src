@@ -98,5 +98,6 @@ window.i18nData={
         "invalid_zip_pt": "Định dạng 0000-000.",
         "invalid_city_pt": "Nhập thị trấn.",
         "invalid_door_number_pt": "Thêm số nhà.",
-        "invalid_value_zh_hant": "Hãy nhập địa chỉ của bạn bằng tiếng Trung phồn thể."
+        "invalid_value_zh_hant": "Hãy nhập địa chỉ của bạn bằng tiếng Trung phồn thể.",
+        "network_error": "Lỗi mạng. Vui lòng kiểm tra kết nối Internet của bạn và thử lại."
 }

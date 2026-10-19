@@ -98,5 +98,6 @@ window.i18nData={
         "invalid_zip_pt": "Formát 0000-000.",
         "invalid_city_pt": "Zadejte obec.",
         "invalid_door_number_pt": "Doplňte číslo domu.",
-        "invalid_value_zh_hant": "Zadejte svou adresu v tradiční čínštině."
+        "invalid_value_zh_hant": "Zadejte svou adresu v tradiční čínštině.",
+        "network_error": "Chyba sítě. Zkontrolujte prosím připojení k internetu a zkuste to znovu."
 }
