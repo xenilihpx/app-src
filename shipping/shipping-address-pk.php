@@ -35,7 +35,7 @@ $country="pk";
             <input id="fields_city" name="city"
                    toSearch="city" 
                    class="cart-input p search" value="" type="text" 
-                   disabled trigger="click focus keyup"  
+                   disabled trigger="click focus"  
                    onEnabled="<?= $collector_sh->translate("p_district_onenabled".$country, "Select city",false); ?>"
                    onPlaceholder="<?= $collector_sh->translate("p_district_new".$country, "Select province first",false); ?>"
                    placeholder="<?= $collector_sh->translate("p_district_new".$country, "Select province first",false); ?>"/>
