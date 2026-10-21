@@ -3214,11 +3214,17 @@
         form_obj.yesUpsellLink=function(callback){
             form_obj.createStripeBtn();  
             $(document).on("click", ".yes-upsell-link", function(e){
-                e.preventDefault();  
+                e.preventDefault();
                form_obj.progressModal(window.i18nData['processing'] || "Processing request...");
-               
-                if(!$(this).hasClass("hasClicked_")){
-                    $(this).addClass("hasClicked_");
+
+                // Guarded page-wide, not per-element: some pages render more than one
+                // .yes-upsell-link for the same step (e.g. the main CTA and the
+                // no-thanks popup's "Claim My Offer" button both carry this class).
+                // A per-element guard lets a user click both before the first request
+                // resolves and accept the upsell AND its downsell on the same order.
+                if(!form_obj.upsellSubmitInFlight){
+                    form_obj.upsellSubmitInFlight = true;
+                    $(".yes-upsell-link").addClass("hasClicked_");
                     var el=$(this);
 
                     var model = {
@@ -3256,27 +3262,30 @@
                     }
 
 
-                    var items=form_obj.cartItemUpsell(model);                    
+                    var items=form_obj.cartItemUpsell(model);
                     form_obj.getResponse(items, function (data) {
-                        if(typeof callback=="function"){ 
+                        if(typeof callback=="function"){
                             callback(data);
-                            el.removeClass("hasClicked_");
+                            form_obj.upsellSubmitInFlight = false;
+                            $(".yes-upsell-link").removeClass("hasClicked_");
                         }else{
                             //form_obj.removeProgressModal();
-                            el.removeClass("hasClicked_");
+                            form_obj.upsellSubmitInFlight = false;
+                            $(".yes-upsell-link").removeClass("hasClicked_");
 
                             //success callback credit card and paypal enabled reference transaction
                             var price=parseFloat($("#prod_id").attr("unitprice")) * parseInt($("#prod_id").attr("quantity"));
                             var shipping=parseFloat($("#prod_id").attr("shipping")) * parseInt($("#prod_id").attr("quantity"));
-                            var upsaleAmount = (price + shipping).toFixed(2); 
-                            
+                            var upsaleAmount = (price + shipping).toFixed(2);
+
                             form_obj.nextPage(data, upsaleAmount, "upsell"); //redirect to next page
-                        
+
                         }
-                    },function(data){                       
+                    },function(data){
                          form_obj.removeProgressModal();
-                         el.removeClass("hasClicked_"); 
-                    });  
+                         form_obj.upsellSubmitInFlight = false;
+                         $(".yes-upsell-link").removeClass("hasClicked_");
+                    });
                 }          
             });
         }
