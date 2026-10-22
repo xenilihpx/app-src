@@ -67,14 +67,17 @@ class JsonCollector {
 
     private function getLocalizedFilePath(string $targetLanguage, string $namespace): string {
         if($namespace === 'shipping') {
-            // Shipping text must stay colocated inside the src/shipping submodule
+            // Shipping text must stay colocated inside the root src/shipping submodule
             // (src/shipping/localize/<lang>/...), not the main repo's root /lang.
+            // Resolved from __DIR__ (this file lives in root src/) and never
+            // prefixed with $this->subFolder, so a product page such as
+            // /apex-pillow can't scatter copies into <subFolder>/src/shipping.
             // Only the shipping form itself (isShippingFile) uses its own page
             // name (checkout-shipping); every other page lands here only via a
             // country_name* key, which always belongs in checkout.json instead
             // of that page's own funnel name.
             $shippingPageName = $this->isShippingFile ? $this->pageName : self::SHIPPING_COUNTRY_NAME_PAGE;
-            return BASEPATH.$this->subFolder."/src/shipping/localize/".$targetLanguage."/".$shippingPageName.".json";
+            return __DIR__."/shipping/localize/".$targetLanguage."/".$shippingPageName.".json";
         }
         return BASEPATH.$this->subFolder."/lang/".$targetLanguage."/".$this->pageName.".json";
     }
