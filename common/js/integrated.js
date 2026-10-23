@@ -1749,7 +1749,7 @@
                 //direct links may come without oid in the url, fall back to the offer's configured Everflow offer id
                 param.oid = param.oid || form_obj.getEFOfferId();
 
-                var ddmClick = function(){
+                var ddmClick = function(transaction_id){
                     return form_obj.efClick({
                         tracking_domain: $("#ddm_tracking_url").val() || "https://www.b04jdmd.com",
                         offer_id: param.oid,
@@ -1758,7 +1758,7 @@
                         sub2: param.sub2,
                         sub3: param.sub3,
                         sub4: param.sub4,
-                        sub5: param.sub5,
+                        sub5: param.sub5 || transaction_id,
                         sub6: param.sub6,
                         sub7: param.sub7,
                         sub8: param.sub8,
@@ -1794,10 +1794,10 @@
                     }).then(function(transaction_id){
                             sessionStorage.setItem("Adv_offerId_"+getCurrentOffer(), transaction_id ? getQueryStringByName("oid2") : "");
                             sessionStorage.setItem("Adv_transId_"+getCurrentOffer(), transaction_id || "");
-                            return ddmClick();
+                            return ddmClick(transaction_id);
                     });
                 } else {
-                    form_obj.efClickPromise = ddmClick();
+                    form_obj.efClickPromise = ddmClick("");
                 }
             }
 
