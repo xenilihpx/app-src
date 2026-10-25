@@ -604,6 +604,8 @@
 
                     if(country_selected.value=="TH"){
                         city_municipalityField.setAttribute("value_id",item.city_th);
+                    }else if(country_selected.value=="VN"){
+                        city_municipalityField.setAttribute("value_id",item.city_vn);
                     }
 
                     var city_=document.querySelector('#fields_city + span.error-message');
@@ -663,6 +665,8 @@
 
                           if(country_selected.value=="TH"){
                                 stateField.setAttribute("value_id",item.province_th);
+                          }else if(country_selected.value=="VN"){
+                                stateField.setAttribute("value_id",item.province_vn);
                           }
 
                     
