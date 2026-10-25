@@ -94,13 +94,28 @@ $countryKey="vn";
 </div>
 
 <script>
-    document.getElementById("fields_city").addEventListener('change', function(event){
-        var hint = document.getElementById("vn_postal_hint");
-        var zip = document.getElementById("fields_zip").value.trim();
+    (function () {
+        var cityField = document.getElementById("fields_city");
+        var stateField = document.getElementById("fields_state");
 
-        document.getElementById("vn_postal_code").textContent = zip;
-        hint.style.display = (event.target.value.trim() !== "") ? "block" : "none";
-    });
+        function updateVnPostalHint() {
+            var hint = document.getElementById("vn_postal_hint");
+            var zip = document.getElementById("fields_zip").value.trim();
+
+            document.getElementById("vn_postal_code").textContent = zip;
+            hint.style.display = (cityField.value.trim() !== "") ? "block" : "none";
+        }
+
+        // self-host-address-suggestion.js sets fields_city/fields_zip by
+        // assigning .value directly, which doesn't fire "change" - so also
+        // refresh once a suggestion click bubbles up. Picking a province
+        // clears fields_city too, so watch its suggestions as well.
+        [cityField, stateField].forEach(function (el) {
+            var wrap = el.closest('.self-autocomplete');
+            if (wrap) { wrap.addEventListener('click', updateVnPostalHint); }
+        });
+        cityField.addEventListener('change', updateVnPostalHint);
+    })();
 
     (function () {
         var msgInvalidProvince = <?= json_encode($collector_sh->translate("invalid_province_" . $countryKey, "Please select a province or city.")); ?>;
