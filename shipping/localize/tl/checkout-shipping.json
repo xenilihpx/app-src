@@ -1,4 +1,12 @@
 {
+    "town_city_hk": "Distrito",
+    "p_address_1_hk": "Yunit\/Palapag\/Bilding",
+    "p_address_2_hk": "Kalye\/Daan",
+    "house_building_no_hk": "Bilang ng bahay\/gusali",
+    "state_hk": "Estado\/Panrehiyon",
+    "p_state_hk": "Pumili ng Estado \/ Lalawigan",
+    "zip_hk": "Zip \/ Kodigo Postal",
+    "p_zip_hk": "Zip\/Kodigo ng Puwesto",
     "invalid_province_vn": "Piliin ang lalawigan o lungsod.",
     "invalid_ward_vn": "Piliin ang ward o commune.",
     "invalid_address_1_vn": "Pakilagay ang iyong address.",

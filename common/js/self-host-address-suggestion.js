@@ -552,7 +552,9 @@
             if(item.district && item.district.trim() !== "" && item.elementToFill.indexOf(district_countyField.getAttribute('toSearch'))!=-1 
                 || item.elementToFill.indexOf('district')!=-1) {
                     district_countyField.classList.remove("error");
-                    applySuggestionValue(district_countyField, (country_selected.value=="ID")? capitalizeFirstLetter(item.district) : item.district);
+                    // FIX FOR fields_district auto suggestion
+                    var districtValue = (country_selected.value=="TH")? (item[district_countyField.getAttribute('toSearch')] || item.district) : item.district;
+                    applySuggestionValue(district_countyField, (country_selected.value=="ID")? capitalizeFirstLetter(districtValue) : districtValue);
 
                     if(country_selected.value=="TH"){
                         district_countyField.setAttribute("value_id",item.district_th);
@@ -596,7 +598,9 @@
             if(item.city && item.city.trim() !== "" && item.elementToFill.indexOf(city_municipalityField.getAttribute('toSearch'))!=-1 
                 ||  item.elementToFill.indexOf('city')!=-1) {
                     city_municipalityField.classList.remove("error");
-                    applySuggestionValue(city_municipalityField, (country_selected.value=="ID")? capitalizeFirstLetter(item.city) : item.city);
+                    // TH: same as district above - city_th/city_en to match this field's toSearch column
+                    var cityValue = (country_selected.value=="TH")? (item[city_municipalityField.getAttribute('toSearch')] || item.city) : item.city;
+                    applySuggestionValue(city_municipalityField, (country_selected.value=="ID")? capitalizeFirstLetter(cityValue) : cityValue);
 
                     if(country_selected.value=="RO"){
                         city_municipalityField.setAttribute("siruta_id",item.siruta);
