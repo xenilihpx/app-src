@@ -34,8 +34,8 @@ $useTabbedLocationPicker = true;
 
 <?php if ($useTabbedLocationPicker): ?>
 
-<link rel="preload" as="style" href="<?= REPONAME ?>/src/common/css/location-picker-tabs.css?t=1792667663709">
-<link rel="stylesheet" href="<?= REPONAME ?>/src/common/css/location-picker-tabs.css?t=1792667663709">
+<link rel="preload" as="style" href="<?= REPONAME ?>/src/common/css/location-picker-tabs.css?t=1793027485347">
+<link rel="stylesheet" href="<?= REPONAME ?>/src/common/css/location-picker-tabs.css?t=1793027485347">
 
 <div class="mb-3">
     <label class="p cart-input-label" for="location_picker_display_id"><?= $collector_sh->translate("location_label".$country, "Province, City / Regency, District, Village"); ?></label>
@@ -346,7 +346,7 @@ $useTabbedLocationPicker = true;
 </script>
 
 <?php if ($useTabbedLocationPicker): ?>
-    <script src="<?= REPONAME ?>/src/common/js/location-picker-tabs.js?t=1792667663709" defer></script>
+    <script src="<?= REPONAME ?>/src/common/js/location-picker-tabs.js?t=1793027485347" defer></script>
 <?php endif; ?>
 <?php $collector_sh->saveTranslation(); ?>
 
