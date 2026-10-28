@@ -177,8 +177,9 @@ input:not([type=checkbox]):not([type=radio]):read-only {
     });
 
     address2.addEventListener('blur', function () {
-        var valid = /[\u4e00-\u9fff]/.test(address2.value.trim());
-        
+        var empty = address2.value.trim() == '';
+        var valid = empty || /[\u4e00-\u9fff]/.test(address2.value.trim());
+
         inlineError(address2, null, valid, address2.getAttribute("onErrorValue"));
         if(!valid) {
             address2.value="";
