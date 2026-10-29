@@ -742,7 +742,7 @@
 
                 if (hasValue) {
                     targetEl.removeAttribute('disabled');
-                    targetEl.removeAttribute('readonly');
+                    //targetEl.removeAttribute('readonly');
                     placeholderText = targetEl.getAttribute('onEnabled');
                 } else {
                     targetEl.setAttribute('disabled', '');

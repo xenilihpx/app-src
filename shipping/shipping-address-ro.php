@@ -9,13 +9,13 @@ $country = "ro";
 ?>
 
 <style>
-/* #fields_city {
+#fields_city {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23343a40' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 9px 5px;
     padding-right: 32px;
-} */
+} 
 
 #fields_zip_hint{
     display:none;
@@ -39,7 +39,7 @@ $country = "ro";
         <div class="self-autocomplete">       
             <input id="fields_city" name="city" siruta_id="" class="cart-input p search" 
                 disabled
-                toSearch="city" linkElement="fields_zip"  trigger="click focus keyup" value="" type="text" 
+                toSearch="city" linkElement="fields_zip"  trigger="click focus" readonly value="" type="text" 
                 placeholder="<?=$collector_sh->translate("p_town_city_2_new_".$country, "Select county first") ?>" 
                 onEnabled="<?=$collector_sh->translate("p_town_city_enable_new_".$country, "Select locality") ?>" 
                 onPlaceholder="<?=$collector_sh->translate("p_town_city_2_new_".$country, "Select county first",false) ?>"required="required">
