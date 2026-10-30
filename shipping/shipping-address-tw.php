@@ -20,8 +20,7 @@ $country="_tw";
     text-transform: capitalize;
 }
 /* exclude checkbox/radio: they always match :read-only, which wiped the checked fill (e.g. SecureShip) */
-input:not([type=checkbox]):not([type=radio]):disabled,
-input:not([type=checkbox]):not([type=radio]):read-only {
+input:not([type=checkbox]):not([type=radio]):disabled {
   cursor: default;
   background-color: #f5f4f4 !important;
 }
@@ -36,7 +35,7 @@ input:not([type=checkbox]):not([type=radio]):read-only {
     <div class="self-autocomplete">
         <input id="fields_city" 
                onErrorEmpty="<?=$collector_sh->translate("city_empty".$country, "Select your county or city.");?>"
-               trigger="click focus keyup" toenableel="fields_district" toSearch="city" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" name="city" class="search cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_town_city_new2".$country, "Select County / City"); ?>" required="required">
+               trigger="click focus" readonly toenableel="fields_district" toSearch="city" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" name="city" class="search cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_town_city_new2".$country, "Select County / City"); ?>" required="required">
         <div id="self-suggestions" class="self-suggestions" style="display:none;"></div>
     </div>
 </div>
@@ -49,7 +48,7 @@ input:not([type=checkbox]):not([type=radio]):read-only {
                     <label class="p cart-input-label" for="state" label="State/Province"><?= $collector_sh->translate("state_district".$country, "District"); ?></label>
                     <div class="self-autocomplete">
                         <input type="hidden" id="fields_state" name="state" value="">
-                        <input type="text" trigger="click keyup focus" linkElement="fields_zip" disabled
+                        <input type="text" trigger="click focus" linkElement="fields_zip" disabled readonly
                                toSearch="district" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" 
                                class="search cart-input p" required="required" id="fields_district" name="state"                               
                                onEnabled="<?=$collector_sh->translate("p_town_city_enable_new_".$country, "Select district") ?>" 
@@ -63,7 +62,7 @@ input:not([type=checkbox]):not([type=radio]):read-only {
                 <div class="mb-3"> 
                     <label class="p cart-input-label" for="zip" label="Zip/Postal Code"><?= $collector_sh->translate("zip_postal".$country, "Postal Code"); ?></label>
                     <div> 
-                        <input readonly id="fields_zip" name="zip" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_zip_new".$country, "Auto"); ?>" required="required">
+                        <input disabled id="fields_zip" name="zip" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_zip_new".$country, "Auto"); ?>" required="required">
                     </div>
                 </div>
             </div>
@@ -177,8 +176,9 @@ input:not([type=checkbox]):not([type=radio]):read-only {
     });
 
     address2.addEventListener('blur', function () {
-        var valid = /[\u4e00-\u9fff]/.test(address2.value.trim());
-        
+        var empty = address2.value.trim() == '';
+        var valid = empty || /[\u4e00-\u9fff]/.test(address2.value.trim());
+
         inlineError(address2, null, valid, address2.getAttribute("onErrorValue"));
         if(!valid) {
             address2.value="";

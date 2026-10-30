@@ -565,8 +565,23 @@
                     }                    
                 });
 
-                $(formField.country).val($("#userCountry").val().toUpperCase()).trigger("change");
+                form_obj.preselectCountry().trigger("change");
             });
+        }
+
+        //select the country in the country field, falls back to #userCountry when the code is not in the list
+        form_obj.preselectCountry=function(countryCode){
+            var $country = $(formField.country);
+            var userCountry = ($("#userCountry").val() || "").toUpperCase();
+            var code = (countryCode || userCountry).toUpperCase();
+
+            if($country.find("option[value='"+code+"']").length==0){
+                code = userCountry;
+            }
+            if($country.find("option[value='"+code+"']").length!=0){
+                $country.val(code);
+            }
+            return $country;
         }
 
         //add states to select
@@ -1749,7 +1764,7 @@
                 //direct links may come without oid in the url, fall back to the offer's configured Everflow offer id
                 param.oid = param.oid || form_obj.getEFOfferId();
 
-                var ddmClick = function(){
+                var ddmClick = function(transaction_id){
                     return form_obj.efClick({
                         tracking_domain: $("#ddm_tracking_url").val() || "https://www.b04jdmd.com",
                         offer_id: param.oid,
@@ -1758,7 +1773,7 @@
                         sub2: param.sub2,
                         sub3: param.sub3,
                         sub4: param.sub4,
-                        sub5: param.sub5,
+                        sub5: param.sub5 || transaction_id,
                         sub6: param.sub6,
                         sub7: param.sub7,
                         sub8: param.sub8,
@@ -1794,10 +1809,10 @@
                     }).then(function(transaction_id){
                             sessionStorage.setItem("Adv_offerId_"+getCurrentOffer(), transaction_id ? getQueryStringByName("oid2") : "");
                             sessionStorage.setItem("Adv_transId_"+getCurrentOffer(), transaction_id || "");
-                            return ddmClick();
+                            return ddmClick(transaction_id);
                     });
                 } else {
-                    form_obj.efClickPromise = ddmClick();
+                    form_obj.efClickPromise = ddmClick("");
                 }
             }
 
@@ -4042,11 +4057,11 @@
                 form_obj.clientGeoLocation(function(data){   
                     if($(formField.country+" option[value='"+data.countryCode+"']").length!=0){
                         callback(data.countryCode); 
-                        geo_options.initialCountry="auto"; 
-                        $(formField.country).val(data.countryCode).trigger("change");
+                        geo_options.initialCountry="auto";
+                        form_obj.preselectCountry(data.countryCode).trigger("change");
                     } else {
-                        $(formField.country).val(form_obj.intlPhoneInitialCountry).trigger("change");
-                    }    
+                        form_obj.preselectCountry(form_obj.intlPhoneInitialCountry).trigger("change");
+                    }
                 });                                   
             },
             //placeholderNumberType: "MOBILE",
@@ -4236,7 +4251,8 @@
                 form_obj.paypalTrigger(); //paypal button event            
             
                 if(!form_obj.isUpsellPage() && !form_obj.isThankyou()){ //execute code content if not in theh upsell page
-                    form_obj.initSelectedProd();//select previous selected product 
+                    form_obj.preselectCountry(); //run first so an error in the calls below can't leave the country empty
+                    form_obj.initSelectedProd();//select previous selected product
                     form_obj.stripeWalletButton(); //stripe wallet execute here         
                     form_obj.initiateLead(); //initiate lead event 
                     form_obj.intlPhoneInit(); //init IntlPhone                  
