@@ -235,6 +235,11 @@ class OfferApi extends KonnektiveApi {
     }
 
     public function searchZipCode($query='', $country_code='', $extraParams=[]){
+        //the TW address data only uses the formal 臺 (e.g. 臺北市), but shoppers almost always type 台 (台北, 台中, 台南, 台東) - which returned no suggestions and got wiped on blur
+        // if (strtolower($country_code) == 'tw') {
+        //     $query = str_replace('台', '臺', $query);
+        // }
+
         //$upstreamUrl = 'http://localhost/api-melara/address-api/suggest.php?q=' . urlencode($query) . '&country=' . urlencode($country_code). '&lang=' . urlencode($this->targetLanguage);
 
         $upstreamUrl = 'https://api.melarapro.com/address-api/suggest.php?q=' . urlencode($query) . '&country=' . urlencode($country_code). '&lang=' . urlencode($this->targetLanguage);
