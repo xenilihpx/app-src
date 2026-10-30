@@ -414,6 +414,10 @@
 
             var url = apiPath + 'integrated/?search_data=true&q=' + encodeURIComponent(query) + "&country=" + encodeURIComponent(document.getElementById('fields_country_select').value.toLowerCase());
             if (toSearchColumn) url += '&toSearch=' + encodeURIComponent(toSearchColumn);
+            // The search request is answered before the server detects the page
+            // language, so send it along - otherwise the labels come back in English
+            // (e.g. TH sub-districts) even on a Thai page.
+            if (document.documentElement.lang) url += '&lang=' + encodeURIComponent(document.documentElement.lang);
             url += buildCascadeParams(searchInput);
 
             var xhr = new XMLHttpRequest();
