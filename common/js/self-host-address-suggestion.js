@@ -166,18 +166,38 @@
         // searches and marks the click that immediately follows it as already
         // handled; a click with no preceding focus (field was already
         // focused) still searches on its own, e.g. to reopen a closed list.
-        var suppressNextClick = false;
+        //
+        // Time-based rather than a plain flag: focusing by keyboard (Tab) has
+        // no click after it, and a flag would then swallow the shopper's next
+        // real click on the field.
+        var lastFocusAt = 0;
 
         function onImmediateTrigger(e) {
-            if (e && e.type === 'click' && suppressNextClick) {
-                suppressNextClick = false;
-                return;
-            }
-            if (e && e.type === 'focus') suppressNextClick = true;
+            if (e && e.type === 'click' && Date.now() - lastFocusAt < 500) return;
+            if (e && e.type === 'focus') lastFocusAt = Date.now();
 
             clearTimeout(debounceTimer);
 
-            fetchSuggestions('');
+            fetchSuggestions('', true);
+        }
+
+        // Warm the cache for a click/focus field before the shopper ever opens
+        // it - right away if it's already usable, and again each time it gets
+        // enabled (e.g. fields_district once a city is picked), so the list
+        // is usually ready by the time it's clicked.
+        var hasImmediateTrigger = triggers.indexOf('click') !== -1 || triggers.indexOf('focus') !== -1;
+        var prefetchObserver = null;
+
+        function prefetch() {
+            if (searchInput.disabled) return;
+            var url = buildSuggestUrl(searchInput, toSearchColumn, '');
+            if (url) requestSuggestions(url, function () {});
+        }
+
+        if (hasImmediateTrigger) {
+            prefetch();
+            prefetchObserver = new MutationObserver(prefetch);
+            prefetchObserver.observe(searchInput, { attributes: true, attributeFilter: ['disabled'] });
         }
 
         function onKeydown(e) {
@@ -315,6 +335,7 @@
             searchInput.removeEventListener('blur', onBlur);
 
             if (placeholderObserver) placeholderObserver.disconnect();
+            if (prefetchObserver) prefetchObserver.disconnect();
 
             if (isSelect) {
                 searchInput.removeEventListener('change', onSelectChange);
@@ -397,70 +418,50 @@
             if (matchIndex !== -1) searchInput.selectedIndex = matchIndex;
         }
 
-        function fetchSuggestions(query) {
+        // immediate = opened by a click/focus rather than typing.
+        function fetchSuggestions(query, immediate) {
             requestSeq += 1;
             var seq = requestSeq;
-            
-            // Only show a loading state once the request has been pending a bit -
-            // avoids a flash of "Searching..." on fast/local connections.
             clearTimeout(loadingTimer);
-            loadingTimer = setTimeout(function () {
-                if (seq === requestSeq){
-                    showStatus(window.i18nData['searching'] || 'Searching...');
-                } 
-            }, LOADING_DELAY);
 
-            var apiPath = ((window.location.pathname.toLowerCase().indexOf("/mobile")!=-1)? "../" : "");
+            var url = buildSuggestUrl(searchInput, toSearchColumn, query);
+            if (!url) return;
 
-            var url = apiPath + 'integrated/?search_data=true&q=' + encodeURIComponent(query) + "&country=" + encodeURIComponent(document.getElementById('fields_country_select').value.toLowerCase());
-            if (toSearchColumn) url += '&toSearch=' + encodeURIComponent(toSearchColumn);
-            // The search request is answered before the server detects the page
-            // language, so send it along - otherwise the labels come back in English
-            // (e.g. TH sub-districts) even on a Thai page.
-            if (document.documentElement.lang) url += '&lang=' + encodeURIComponent(document.documentElement.lang);
-            url += buildCascadeParams(searchInput);
+            // Already loaded (prefetched or opened before with the same
+            // cascade) - show it instantly, no round trip.
+            var cached = suggestCache[url];
+            if (cached && cached.data) {
+                renderSuggestions(cached.data);
+                return;
+            }
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.timeout = REQUEST_TIMEOUT;
+            if (immediate && !isSelect) {
+                // The shopper explicitly opened this field - open the box
+                // right away so the click visibly does something.
+                showStatus(window.i18nData['searching'] || 'Searching...');
+            } else {
+                // Only show a loading state once the request has been pending a bit -
+                // avoids a flash of "Searching..." on fast/local connections.
+                loadingTimer = setTimeout(function () {
+                    if (seq === requestSeq){
+                        showStatus(window.i18nData['searching'] || 'Searching...');
+                    }
+                }, LOADING_DELAY);
+            }
 
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState !== 4) return;
+            requestSuggestions(url, function (suggestions) {
                 // Ignore this response if a newer request has since been sent -
                 // guards against out-of-order replies on flaky mobile connections.
                 if (seq !== requestSeq) return;
-
                 clearTimeout(loadingTimer);
 
-                if (xhr.status !== 200) {
+                if (!suggestions) {
                     showStatus(window.i18nData['unable_to_load_suggestions'] || 'Could not load suggestions');
                     return;
                 }
 
-                var data;
-                try {
-                    data = JSON.parse(xhr.responseText);
-                } catch (err) {
-                    showStatus(window.i18nData['unable_to_load_suggestions'] || 'Could not load suggestions');
-                    return;
-                }
-
-                if (!data.success || !data.suggestions || !data.suggestions.length) {
-                    showStatus(window.i18nData['unable_to_load_suggestions'] || 'Could not load suggestions');
-                    // hideSuggestions();
-                    return;
-                }
-
-                renderSuggestions(data.suggestions);
-            };
-
-            xhr.ontimeout = xhr.onerror = function () {
-                if (seq !== requestSeq) return;
-                clearTimeout(loadingTimer);
-                showStatus(window.i18nData['unable_to_load_suggestions'] || 'Could not load suggestions');
-            };
-
-            xhr.send();
+                renderSuggestions(suggestions);
+            });
         }
 
         // Recomputed on every show (not just once at bind time) so a later
@@ -798,6 +799,76 @@
             suggestionsBox.innerHTML = '';
             activeIndex = -1;
         }
+    }
+
+    // Suggestion responses, keyed by full request URL (query + country + lang
+    // + every cascade value), shared by all .search fields. An entry with no
+    // data yet is a request still in flight - later callers for the same URL
+    // (e.g. a click landing while the prefetch is still loading) just wait on
+    // it instead of sending a duplicate. Failed/empty responses aren't kept,
+    // so the next open retries.
+    var suggestCache = {};
+
+    function buildSuggestUrl(searchInput, toSearchColumn, query) {
+        var countrySelect = document.getElementById('fields_country_select');
+        if (!countrySelect) return null;
+
+        var apiPath = ((window.location.pathname.toLowerCase().indexOf("/mobile")!=-1)? "../" : "");
+
+        var url = apiPath + 'integrated/?search_data=true&q=' + encodeURIComponent(query) + "&country=" + encodeURIComponent(countrySelect.value.toLowerCase());
+        if (toSearchColumn) url += '&toSearch=' + encodeURIComponent(toSearchColumn);
+        // The search request is answered before the server detects the page
+        // language, so send it along - otherwise the labels come back in English
+        // (e.g. TH sub-districts) even on a Thai page.
+        if (document.documentElement.lang) url += '&lang=' + encodeURIComponent(document.documentElement.lang);
+        url += buildCascadeParams(searchInput);
+        return url;
+    }
+
+    // Calls done(suggestions), or done(null) on any failure/empty result.
+    function requestSuggestions(url, done) {
+        var entry = suggestCache[url];
+        if (entry) {
+            if (entry.data) done(entry.data);
+            else entry.waiters.push(done);
+            return;
+        }
+
+        entry = suggestCache[url] = { data: null, waiters: [done] };
+
+        function finish(suggestions) {
+            if (suggestions) entry.data = suggestions;
+            else delete suggestCache[url];
+
+            var waiters = entry.waiters;
+            entry.waiters = [];
+            for (var i = 0; i < waiters.length; i++) waiters[i](suggestions);
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.timeout = REQUEST_TIMEOUT;
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState !== 4) return;
+            if (xhr.status !== 200) return finish(null);
+
+            var data;
+            try {
+                data = JSON.parse(xhr.responseText);
+            } catch (err) {
+                return finish(null);
+            }
+
+            if (!data.success || !data.suggestions || !data.suggestions.length) return finish(null);
+            finish(data.suggestions);
+        };
+
+        xhr.ontimeout = xhr.onerror = function () {
+            finish(null);
+        };
+
+        xhr.send();
     }
 
     // linkElement="otherFieldId" on a field names an element whose value only
