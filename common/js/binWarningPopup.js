@@ -91,6 +91,7 @@ var CRMBinWarningPopup = (function () {
         var css = "";
         css += "#bin_warning_overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:2147483647;background:rgba(0,0,0,.55);overflow-y:auto;-webkit-overflow-scrolling:touch}";
         css += "#bin_warning_overlay .bin_warning_body{max-width:460px;width:92%;margin:100px auto;padding:24px 20px 16px;background:#fff;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.3);box-sizing:border-box;color:#222;font-size:15px;line-height:1.5;text-align:left}";
+        css += "#bin_warning_overlay .bin_warning_icon{display:block;width:48px;height:48px;margin:0 auto 12px}";
         css += "#bin_warning_overlay .bin_warning_message{margin:0 0 12px;font-weight:700}";
         css += "#bin_warning_overlay .bin_warning_note{margin:0 0 20px;padding:10px 12px;background:#fff6e5;border-left:3px solid #f0a500;font-size:14px}";
         css += "#bin_warning_overlay .bin_warning_primary{display:block;width:100%;padding:12px;border:0;border-radius:6px;background:#222;color:#fff;font-size:16px;font-weight:700;cursor:pointer}";
@@ -114,6 +115,11 @@ var CRMBinWarningPopup = (function () {
         var bankName = t("bin_warning_bank_" + match.bank, match.bank);
         var overlay = $('<div id="bin_warning_overlay" role="dialog" aria-modal="true">' +
                             '<div class="bin_warning_body">' +
+                                '<svg class="bin_warning_icon" viewBox="0 0 24 24" aria-hidden="true">' +
+                                    '<path d="M12 2.5 1.5 21h21L12 2.5z" fill="#f0a500" stroke="#f0a500" stroke-width="1.5" stroke-linejoin="round"/>' +
+                                    '<path d="M12 9v5.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>' +
+                                    '<circle cx="12" cy="17.6" r="1.3" fill="#fff"/>' +
+                                '</svg>' +
                                 '<p class="bin_warning_message"></p>' +
                                 '<p class="bin_warning_note"></p>' +
                                 '<button type="button" class="bin_warning_primary"></button>' +
