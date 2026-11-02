@@ -5,7 +5,7 @@
             
             //commonFilesPath = (window.location.pathname.toLowerCase().indexOf("/mobile")!=-1)? "../../" : "../",
             apiPath = (window.location.pathname.toLowerCase().indexOf("/mobile")!=-1)? "../" : "",
-            allowedCreditCard=["visa", "mastercard", "amex", "discover"],
+            allowedCreditCard=["visa", "mastercard", "amex", "discover","jcb"],
             url=apiPath + 'integrated/',
             formField = {
                         'email': '#fields_email',
