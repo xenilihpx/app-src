@@ -2091,6 +2091,11 @@ class OfferApi extends KonnektiveApi {
             $data['custom_order_sub5']= $_SESSION["sub5"];
         }
 
+        //bank key of the last BIN warning popup shown in the session
+        if(isset($data['binPopupShown'])){
+            $data['custom_order_bin_popup_shown']= $data['binPopupShown'];
+        }
+
         if(isset($_SESSION["custom_config"])){
             $data['custom_order_custom_config']= $_SESSION["custom_config"];
         }

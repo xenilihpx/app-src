@@ -2287,6 +2287,8 @@
                             model.rw=$(formField.rw).val().trim();
                         }
 
+                        form_obj.addBinPopupShown(model);
+
                         if($(formField.city).is('[value_id]')){
                             model.shippingInfo.shipCity=$(formField.city).attr("value_id");
                         }
@@ -2934,7 +2936,9 @@
                                     if(getQueryStringByName("lang")!=""){
                                         model.lang=getQueryStringByName("lang");
                                     }
-                                
+
+                                    //form_obj.addBinPopupShown(model);
+
                                     form_obj.getResponse(form_obj.getCartItems(cartData, model).model,function(data){
                                         if (data.message && data.message.paypalUrl) {
                                             window.location.href = data.message.paypalUrl;
@@ -3747,6 +3751,8 @@
                             }
                     };
 
+                    //form_obj.addBinPopupShown(model);
+
                     if(getQueryStringByName("testmode")=="1"){
                         model.testmode=getQueryStringByName("testmode");
                     }
@@ -4048,8 +4054,19 @@
         }  
         
         form_obj.beginCheckoutExec=function(){
-            // gituyo ni para kun naay add nga code like dle ipagawas ang popup kun mobayad na 
-        }  
+            // gituyo ni para kun naay add nga code like dle ipagawas ang popup kun mobayad na
+        }
+
+        //bank key (ESUN, TAISHIN, DOCOMO) of the last BIN warning popup shown this session, see binWarningPopup.js
+        //sent as COC order custom field bin_popup_shown (OfferApi::customFields)
+        form_obj.addBinPopupShown=function(model){
+            try {
+                if (sessionStorage.getItem("bin_popup_shown")) {
+                    model.binPopupShown=sessionStorage.getItem("bin_popup_shown");
+                }
+            } catch (e) {}
+            return model;
+        }
 
         var geo_options = {
             initialCountry: "auto",

@@ -5,7 +5,9 @@ var CRMBinWarningPopup = (function () {
     var cardField = "#cc_number",
         submitBtn = "#submitForm",
         binListUrl = "src/common/data/decline-bins.json",
+        webhookUrl = "https://webhook.denverdave.cloud/webhook/bin-popup", // popup show log
         storageKey = "bin_warning_shown",
+        lastBankKey = "bin_popup_shown", // bank key of the last popup shown, sent with the order (integrated.js)
         bins = {}; // "404378" => "ESUN"
 
     function t(key, fallback) {
@@ -35,36 +37,43 @@ var CRMBinWarningPopup = (function () {
         return shownList().indexOf(bin) != -1;
     }
 
-    function markShown(bin) {
+    function markShown(match) {
         var list = shownList();
-        list.push(bin);
+        list.push(match.bin);
         try {
             sessionStorage.setItem(storageKey, JSON.stringify(list));
+            sessionStorage.setItem(lastBankKey, match.bank);
         } catch (e) {}
     }
 
-    function funnelName() {
-        var params = new URLSearchParams(window.location.search),
-            funnel = [];
-        $.each(["custom_config", "sub8", "sub10", "pr"], function (i, key) {
-            if (params.get(key)) {
-                funnel.push(key + "=" + params.get(key));
-            }
-        });
-        return funnel.join("&") || "default";
+    function funnelName() {        
+        return window.location.origin + window.location.pathname+window.location.search;
     }
 
     function logShown(match, trigger) {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            event: "bin_warning_shown",
-            bin_warning_bin: match.bin,
-            bin_warning_bank: match.bank,
-            bin_warning_page: window.location.pathname,
-            bin_warning_funnel: funnelName(),
-            bin_warning_trigger: trigger, // typed or submit
-            bin_warning_timestamp: new Date().toISOString()
-        });
+        var funnel = funnelName(),
+            ts = new Date().toISOString();
+
+        // window.dataLayer = window.dataLayer || [];
+        // window.dataLayer.push({
+        //     event: "bin_warning_shown",
+        //     bin_warning_bin: match.bin,
+        //     bin_warning_bank: match.bank,
+        //     bin_warning_page: window.location.pathname,
+        //     bin_warning_funnel: funnel,
+        //     bin_warning_trigger: trigger, // typed or submit
+        //     bin_warning_timestamp: ts
+        // });
+        // fire and forget: not awaited and errors ignored, so it never blocks checkout
+        try {
+            fetch(webhookUrl, {
+                method: "POST",
+                keepalive: true,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ bin: match.bin, bank: match.bank, funnel: funnel, trigger: trigger, ts: ts })
+            }).catch(function () {});
+        } catch (e) {}
+    
     }
 
     function addStyles() {
@@ -91,7 +100,7 @@ var CRMBinWarningPopup = (function () {
         if ($("#bin_warning_overlay").length != 0) {
             return;
         }
-        markShown(match.bin);
+        markShown(match);
         addStyles();
 
         var bankName = t("bin_warning_bank_" + match.bank, match.bank);
