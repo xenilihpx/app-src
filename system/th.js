@@ -99,5 +99,12 @@ window.i18nData = {
     "invalid_city_pt": "กรอกเมือง",
     "invalid_door_number_pt": "เพิ่มเลขที่บ้าน",
     "invalid_value_zh_hant": "กรอกที่อยู่ของคุณด้วยภาษาจีนแบบดั้งเดิม",
-    "network_error": "เกิดข้อผิดพลาดในเครือข่าย โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและลองอีกครั้ง"
+    "network_error": "เกิดข้อผิดพลาดในเครือข่าย โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและลองอีกครั้ง",
+    "bin_warning_message": "โปรดทราบ — ธนาคารของคุณกำลังมีปัญหาในการประมวลผลธุรกรรมระหว่างประเทศ โปรดใช้บัตรอื่นหรือบัตรจากธนาคารอื่น",
+    "bin_warning_note": "หมายเหตุ: บัตร {BANK} กำลังถูกปฏิเสธการชำระเงินในขณะนี้ ส่วนบัตร JCB ยังใช้งานได้ตามปกติ",
+    "bin_warning_use_different_card": "ใช้บัตรอื่น",
+    "bin_warning_continue": "ต่อไปเลย",
+    "bin_warning_bank_ESUN": "ธนาคาร E.SUN Commercial Bank",
+    "bin_warning_bank_TAISHIN": "ธนาคารไทชิน อินเตอร์เนชันแนล",
+    "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

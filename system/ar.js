@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "أدخل المدينة.",
         "invalid_door_number_pt": "أضف رقم الباب.",
         "invalid_value_zh_hant": "أدخل عنوانك باللغة الصينية التقليدية.",
-        "network_error": "خطأ في الشبكة. يرجى التحقق من اتصالك بالإنترنت ومحاولة الإجراء مرة أخرى."
+        "network_error": "خطأ في الشبكة. يرجى التحقق من اتصالك بالإنترنت ومحاولة الإجراء مرة أخرى.",
+        "bin_warning_message": "تنبيه — يواجه البنك الذي تتعامل معه مشكلة في معالجة المعاملات الدولية. يرجى استخدام بطاقة أخرى أو بطاقة صادرة عن بنك آخر.",
+        "bin_warning_note": "ملاحظة: يتم حالياً رفض بطاقات {BANK}. أما بطاقات JCB فهي تعمل بشكل طبيعي.",
+        "bin_warning_use_different_card": "استخدم بطاقة أخرى",
+        "bin_warning_continue": "استمر على أي حال",
+        "bin_warning_bank_ESUN": "بنك إي.صن التجاري",
+        "bin_warning_bank_TAISHIN": "بنك تايشين الدولي",
+        "bin_warning_bank_DOCOMO": "NTT دوكومو"
 }

@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "Unesite mesto.",
         "invalid_door_number_pt": "Dodajte kućni broj.",
         "invalid_value_zh_hant": "Унесите своју адресу на традиционалном кинеском.",
-        "network_error": "Мрежна грешка. Молимо проверите вашу интернет везу и покушајте поново."
+        "network_error": "Мрежна грешка. Молимо проверите вашу интернет везу и покушајте поново.",
+        "bin_warning_message": "Пажња — ваша банка има проблема са обрадом међународних трансакција. Молимо вас да користите другу картицу или картицу из друге банке.",
+        "bin_warning_note": "Напомена: {BANK} картице тренутно се одбијају. JCB картице раде нормално.",
+        "bin_warning_use_different_card": "Користите другу картицу",
+        "bin_warning_continue": "Настави ипак",
+        "bin_warning_bank_ESUN": "Е.САН комерцијална банка",
+        "bin_warning_bank_TAISHIN": "Таишин Међународна Банка",
+        "bin_warning_bank_DOCOMO": "Ен-Ти-Ти Докомо"
 }

@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "Geben Sie den Ort ein.",
         "invalid_door_number_pt": "Fügen Sie die Hausnummer hinzu.",
         "invalid_value_zh_hant": "Geben Sie Ihre Adresse in traditionellem Chinesisch ein.",
-        "network_error": "Netzwerkfehler. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
+        "network_error": "Netzwerkfehler. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+        "bin_warning_message": "Achtung – Ihre Bank hat derzeit Probleme bei der Abwicklung internationaler Transaktionen. Bitte verwenden Sie eine andere Karte oder eine Karte einer anderen Bank.",
+        "bin_warning_note": "Hinweis: {BANK}-Karten werden derzeit nicht akzeptiert. JCB-Karten funktionieren wie gewohnt.",
+        "bin_warning_use_different_card": "Verwenden Sie eine andere Karte",
+        "bin_warning_continue": "Trotzdem weitermachen",
+        "bin_warning_bank_ESUN": "E.SUN Geschäftsbank",
+        "bin_warning_bank_TAISHIN": "Taishin International Bank",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

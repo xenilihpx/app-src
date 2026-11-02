@@ -99,5 +99,12 @@ window.i18nData = {
     "invalid_city_pt": "도시를 입력하세요.",
     "invalid_door_number_pt": "건물 번호를 추가하세요.",
     "invalid_value_zh_hant": "주소를 번체 중국어로 입력해 주세요.",
-    "network_error": "네트워크 오류가 발생했습니다. 인터넷 연결 상태를 확인한 후 다시 시도해 주세요."
+    "network_error": "네트워크 오류가 발생했습니다. 인터넷 연결 상태를 확인한 후 다시 시도해 주세요.",
+    "bin_warning_message": "참고해 주세요. 이용 중인 은행에서 해외 거래 처리에 문제가 발생하고 있습니다. 다른 카드나 타 은행의 카드를 사용해 주시기 바랍니다.",
+    "bin_warning_note": "참고: 현재 {BANK} 카드는 결제가 거부되고 있습니다. JCB 카드는 정상적으로 사용 가능합니다.",
+    "bin_warning_use_different_card": "다른 카드를 사용하세요",
+    "bin_warning_continue": "어쨌든 계속하기",
+    "bin_warning_bank_ESUN": "E.SUN 상업은행",
+    "bin_warning_bank_TAISHIN": "타이신 국제은행",
+    "bin_warning_bank_DOCOMO": "NTT 도코모"
 };

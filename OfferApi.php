@@ -734,7 +734,15 @@ class OfferApi extends KonnektiveApi {
         //return $default;
         return null;
     }
-    
+
+    // Cache-bust value for static files (?t=): the file's last modified time,
+    // so the browser only downloads a file again after it actually changed.
+    // $path is relative to the project root, e.g. "public/js/checkout.js"
+    public function assetVersion($path){
+        $file = BASEPATH . '/' . preg_replace('#^(\./|/)+#', '', $path);
+        return is_file($file) ? filemtime($file) : 1;
+    }
+
     public function languages($subFolder=""){
         $directory = BASEPATH.$subFolder."/lang"; // Replace with your directory path
         $folders = array();

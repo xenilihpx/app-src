@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "请输入城镇。",
         "invalid_door_number_pt": "请添加门牌号。",
         "invalid_value_zh_hant": "请用繁体中文输入您的地址。",
-        "network_error": "网络错误。请检查您的网络连接，然后重试。"
+        "network_error": "网络错误。请检查您的网络连接，然后重试。",
+        "bin_warning_message": "请注意——您的银行目前无法处理国际交易。请使用其他卡片或另一家银行的卡片。",
+        "bin_warning_note": "注意：{BANK} 卡目前无法使用。JCB 卡可正常使用。",
+        "bin_warning_use_different_card": "请使用另一张卡",
+        "bin_warning_continue": "不管怎样，继续吧",
+        "bin_warning_bank_ESUN": "E.SUN 商业银行",
+        "bin_warning_bank_TAISHIN": "泰信国际银行",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

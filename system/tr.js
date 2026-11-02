@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "Yerleşim yerini girin.",
         "invalid_door_number_pt": "Kapı numarasını ekleyin.",
         "invalid_value_zh_hant": "Adresinizi Geleneksel Çince olarak girin.",
-        "network_error": "Ağ hatası. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin."
+        "network_error": "Ağ hatası. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+        "bin_warning_message": "Dikkat — bankanız uluslararası işlemleri gerçekleştirmekte sorun yaşıyor. Lütfen başka bir kart veya başka bir bankaya ait bir kart kullanın.",
+        "bin_warning_note": "Not: {BANK} kartları şu anda reddedilmektedir. JCB kartları ise normal şekilde çalışmaktadır.",
+        "bin_warning_use_different_card": "Başka bir kart kullanın",
+        "bin_warning_continue": "Yine de devam et",
+        "bin_warning_bank_ESUN": "E.SUN Ticari Bankası",
+        "bin_warning_bank_TAISHIN": "Taishin Uluslararası Bankası",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

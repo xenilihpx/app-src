@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "市区町村を入力してください。",
         "invalid_door_number_pt": "番地を追加してください。",
         "invalid_value_zh_hant": "住所を繁体字で入力してください。",
-        "network_error": "ネットワークエラーが発生しました。インターネット接続を確認してから、もう一度お試しください。"
+        "network_error": "ネットワークエラーが発生しました。インターネット接続を確認してから、もう一度お試しください。",
+        "bin_warning_message": "ご注意ください。ご利用の銀行で、国際取引の処理に問題が発生しています。別のカード、または他行のカードをご利用ください。",
+        "bin_warning_note": "注：現在、{BANK}のカードは利用できません。JCBカードは通常通りご利用いただけます。",
+        "bin_warning_use_different_card": "別のカードを使用する",
+        "bin_warning_continue": "このまま続ける",
+        "bin_warning_bank_ESUN": "玉山銀行",
+        "bin_warning_bank_TAISHIN": "台新銀行",
+        "bin_warning_bank_DOCOMO": "NTTドコモ"
 }

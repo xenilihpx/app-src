@@ -99,5 +99,12 @@ window.i18nData = {
     "invalid_city_pt": "Ilagay ang bayan.",
     "invalid_door_number_pt": "Idagdag ang numero ng bahay.",
     "invalid_value_zh_hant": "Ipasok ang iyong address sa Tradisyunal na Tsino.",
-    "network_error": "Maling koneksyon sa network. Pakisuri ang iyong koneksyon sa internet at subukang muli."
+    "network_error": "Maling koneksyon sa network. Pakisuri ang iyong koneksyon sa internet at subukang muli.",
+    "bin_warning_message": "Paalala — nahihirapan ang iyong bangko sa pagproseso ng mga internasyonal na transaksyon. Mangyaring gumamit ng ibang card o card mula sa ibang bangko.",
+    "bin_warning_note": "Tandaan: Kasalukuyang tinatanggihan ang mga {BANK} card. Gumagana nang normal ang mga JCB card.",
+    "bin_warning_use_different_card": "Gumamit ng ibang kard",
+    "bin_warning_continue": "Magpatuloy pa rin",
+    "bin_warning_bank_ESUN": "E.SUN Komersyal na Bangko",
+    "bin_warning_bank_TAISHIN": "Taishin Internasyonal na Bangko",
+    "bin_warning_bank_DOCOMO": "NTT Docomo"
 };

@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "Anna paikkakunta.",
         "invalid_door_number_pt": "Lisää talon numero.",
         "invalid_value_zh_hant": "Kirjoita osoitteesi perinteisellä kiinankielellä.",
-        "network_error": "Verkkovirhe. Tarkista internetyhteytesi ja yritä uudelleen."
+        "network_error": "Verkkovirhe. Tarkista internetyhteytesi ja yritä uudelleen.",
+        "bin_warning_message": "Huomio — pankillasi on ongelmia kansainvälisten maksutapahtumien käsittelyssä. Käytä toista korttia tai toisen pankin korttia.",
+        "bin_warning_note": "Huomautus: {BANK} -kortteja ei tällä hetkellä hyväksytä. JCB-kortit toimivat normaalisti.",
+        "bin_warning_use_different_card": "Käytä toista korttia",
+        "bin_warning_continue": "Jatka silti",
+        "bin_warning_bank_ESUN": "E.SUN-liikepankki",
+        "bin_warning_bank_TAISHIN": "Taishin International Bank",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

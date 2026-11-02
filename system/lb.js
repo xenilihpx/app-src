@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "Gitt d'Uertschaft an.",
         "invalid_door_number_pt": "Setzt d'Hausnummer derbäi.",
         "invalid_value_zh_hant": "Gitt Är Adress an traditionell chinesescher Schrëft an.",
-        "network_error": "Netzwierkfeeler. W.e.g. kontrolléiert Är Internetverbindung a probéiert et nees."
+        "network_error": "Netzwierkfeeler. W.e.g. kontrolléiert Är Internetverbindung a probéiert et nees.",
+        "bin_warning_message": "Opmierksamkeet — Är Bank huet Problemer bei der Veraarbechtung vun internationalen Transaktiounen. W.e.g. benotzt eng aner Kaart oder eng Kaart vun enger anerer Bank.",
+        "bin_warning_note": "Notiz: {BANK}-Kaarten ginn de Moment ofgeleent. JCB-Kaarten funktionéieren normal.",
+        "bin_warning_use_different_card": "Benotzt eng aner Kaart",
+        "bin_warning_continue": "Gitt weider, egal wat.",
+        "bin_warning_bank_ESUN": "E.SUN Handelsbank",
+        "bin_warning_bank_TAISHIN": "Taishin International Bank",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

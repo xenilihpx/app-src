@@ -99,5 +99,12 @@ window.i18nData = {
     "invalid_city_pt": "Adja meg a települést.",
     "invalid_door_number_pt": "Adja meg a házszámot.",
     "invalid_value_zh_hant": "Írja be a címét hagyományos kínai írásmóddal.",
-    "network_error": "Hálózati hiba. Kérjük, ellenőrizze az internetkapcsolatát, majd próbálja meg újra."
+    "network_error": "Hálózati hiba. Kérjük, ellenőrizze az internetkapcsolatát, majd próbálja meg újra.",
+    "bin_warning_message": "Figyelem! A bankodnak problémái vannak a nemzetközi tranzakciók feldolgozásával. Kérjük, használj másik kártyát vagy egy másik bank kártyáját.",
+    "bin_warning_note": "Megjegyzés: A {BANK} kártyákat jelenleg elutasítja a rendszer. A JCB kártyák rendben működnek.",
+    "bin_warning_use_different_card": "Használjon másik kártyát",
+    "bin_warning_continue": "Mindenképpen folytasd",
+    "bin_warning_bank_ESUN": "E.SUN Kereskedelmi Bank",
+    "bin_warning_bank_TAISHIN": "Taishin Nemzetközi Bank",
+    "bin_warning_bank_DOCOMO": "NTT Docomo"
 };

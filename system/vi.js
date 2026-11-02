@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "Nhập thị trấn.",
         "invalid_door_number_pt": "Thêm số nhà.",
         "invalid_value_zh_hant": "Hãy nhập địa chỉ của bạn bằng tiếng Trung phồn thể.",
-        "network_error": "Lỗi mạng. Vui lòng kiểm tra kết nối Internet của bạn và thử lại."
+        "network_error": "Lỗi mạng. Vui lòng kiểm tra kết nối Internet của bạn và thử lại.",
+        "bin_warning_message": "Xin lưu ý — ngân hàng của bạn đang gặp sự cố trong việc xử lý các giao dịch quốc tế. Vui lòng sử dụng thẻ khác hoặc thẻ của ngân hàng khác.",
+        "bin_warning_note": "Lưu ý: Hiện tại, các thẻ {BANK} đang bị từ chối thanh toán. Các thẻ JCB vẫn hoạt động bình thường.",
+        "bin_warning_use_different_card": "Hãy dùng thẻ khác",
+        "bin_warning_continue": "Dù sao thì cứ tiếp tục đi",
+        "bin_warning_bank_ESUN": "Ngân hàng Thương mại E.SUN",
+        "bin_warning_bank_TAISHIN": "Ngân hàng Quốc tế Taishin",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

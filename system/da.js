@@ -99,5 +99,12 @@ window.i18nData = {
     "invalid_city_pt": "Angiv byen.",
     "invalid_door_number_pt": "Tilføj husnummeret.",
     "invalid_value_zh_hant": "Indtast din adresse på traditionelt kinesisk.",
-    "network_error": "Netværksfejl. Kontroller din internetforbindelse, og prøv igen."
+    "network_error": "Netværksfejl. Kontroller din internetforbindelse, og prøv igen.",
+    "bin_warning_message": "Bemærk — din bank har problemer med at behandle internationale transaktioner. Brug venligst et andet kort eller et kort fra en anden bank.",
+    "bin_warning_note": "Bemærk: {BANK}-kort bliver i øjeblikket afvist. JCB-kort fungerer som normalt.",
+    "bin_warning_use_different_card": "Brug et andet kort",
+    "bin_warning_continue": "Fortsæt alligevel",
+    "bin_warning_bank_ESUN": "E.SUN Commercial Bank",
+    "bin_warning_bank_TAISHIN": "Taishin International Bank",
+    "bin_warning_bank_DOCOMO": "NTT Docomo"
 };

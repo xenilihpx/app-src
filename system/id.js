@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "Masukkan kota.",
         "invalid_door_number_pt": "Tambahkan nomor rumah.",
         "invalid_value_zh_hant": "Masukkan alamat Anda dalam bahasa Mandarin Tradisional.",
-        "network_error": "Terjadi kesalahan jaringan. Silakan periksa koneksi internet Anda dan coba lagi."
+        "network_error": "Terjadi kesalahan jaringan. Silakan periksa koneksi internet Anda dan coba lagi.",
+        "bin_warning_message": "Perhatian — bank Anda sedang mengalami kendala dalam memproses transaksi internasional. Silakan gunakan kartu lain atau kartu dari bank lain.",
+        "bin_warning_note": "Catatan: Kartu {BANK} saat ini ditolak. Kartu JCB berfungsi seperti biasa.",
+        "bin_warning_use_different_card": "Gunakan kartu yang lain",
+        "bin_warning_continue": "Lanjutkan saja",
+        "bin_warning_bank_ESUN": "Bank Komersial E.SUN",
+        "bin_warning_bank_TAISHIN": "Bank Internasional Taishin",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

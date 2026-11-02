@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "Zadejte obec.",
         "invalid_door_number_pt": "Doplňte číslo domu.",
         "invalid_value_zh_hant": "Zadejte svou adresu v tradiční čínštině.",
-        "network_error": "Chyba sítě. Zkontrolujte prosím připojení k internetu a zkuste to znovu."
+        "network_error": "Chyba sítě. Zkontrolujte prosím připojení k internetu a zkuste to znovu.",
+        "bin_warning_message": "Upozornění – vaše banka má potíže se zpracováním mezinárodních transakcí. Použijte prosím jinou kartu nebo kartu od jiné banky.",
+        "bin_warning_note": "Poznámka: Karty {BANK} jsou v současné době odmítány. Karty JCB fungují normálně.",
+        "bin_warning_use_different_card": "Použijte jinou kartu",
+        "bin_warning_continue": "Pokračovat i tak",
+        "bin_warning_bank_ESUN": "E.SUN Komerční banka",
+        "bin_warning_bank_TAISHIN": "Taishin International Bank",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

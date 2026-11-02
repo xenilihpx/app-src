@@ -99,5 +99,12 @@ window.i18nData={
     "invalid_city_pt": "Indica la localitat.",
     "invalid_door_number_pt": "Afegeix el número del portal.",
     "invalid_value_zh_hant": "Introdueix la teva adreça en xinès tradicional.",
-    "network_error": "Error de xarxa. Si us plau, comproveu la vostra connexió a Internet i torneu-ho a provar."
+    "network_error": "Error de xarxa. Si us plau, comproveu la vostra connexió a Internet i torneu-ho a provar.",
+    "bin_warning_message": "Atenció: el vostre banc té problemes per processar transaccions internacionals. Si us plau, utilitzeu una altra targeta o una targeta d'un altre banc.",
+    "bin_warning_note": "Nota: les targetes {BANK} actualment són rebutjades. Les targetes JCB funcionen amb normalitat.",
+    "bin_warning_use_different_card": "Fes servir una targeta diferent",
+    "bin_warning_continue": "Continua igualment",
+    "bin_warning_bank_ESUN": "Banc Comercial E.SUN",
+    "bin_warning_bank_TAISHIN": "Banc Internacional Taishin",
+    "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

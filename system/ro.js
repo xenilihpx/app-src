@@ -103,5 +103,12 @@ window.i18nData={
         "invalid_city_pt": "Introduceți localitatea.",
         "invalid_door_number_pt": "Adăugați numărul străzii.",
         "invalid_value_zh_hant": "Introduceți adresa în chineză tradițională.",
-        "network_error": "Eroare de rețea. Vă rugăm să verificați conexiunea la internet și să încercați din nou."
+        "network_error": "Eroare de rețea. Vă rugăm să verificați conexiunea la internet și să încercați din nou.",
+        "bin_warning_message": "Atenție — banca dumneavoastră întâmpină dificultăți în procesarea tranzacțiilor internaționale. Vă rugăm să utilizați un alt card sau un card emis de o altă bancă.",
+        "bin_warning_note": "Notă: Cardurile {BANK} sunt respinse în prezent. Cardurile JCB funcționează normal.",
+        "bin_warning_use_different_card": "Folosește un alt card",
+        "bin_warning_continue": "Continuă oricum",
+        "bin_warning_bank_ESUN": "Banca Comercială E.SUN",
+        "bin_warning_bank_TAISHIN": "Banca Internațională Taishin",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

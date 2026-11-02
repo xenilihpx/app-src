@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "請輸入城鎮。",
         "invalid_door_number_pt": "請新增門牌號碼。",
         "invalid_value_zh_hant": "請以繁體中文填寫地址。",
-        "network_error": "發生網路錯誤。請檢查您的網路連線，然後再試一次。"
+        "network_error": "發生網路錯誤。請檢查您的網路連線，然後再試一次。",
+        "bin_warning_message": "提醒您：您的發卡銀行目前無法順利處理跨國交易，請改用其他信用卡或其他銀行的卡片。",
+        "bin_warning_note": "附註：{BANK}的 Visa／Mastercard 卡片目前無法完成交易，JCB 卡可正常使用。",
+        "bin_warning_use_different_card": "改用其他卡片",
+        "bin_warning_continue": "仍要繼續",
+        "bin_warning_bank_ESUN": "玉山銀行",
+        "bin_warning_bank_TAISHIN": "台新銀行",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }

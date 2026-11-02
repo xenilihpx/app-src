@@ -99,5 +99,12 @@ window.i18nData={
         "invalid_city_pt": "Vul de plaats in.",
         "invalid_door_number_pt": "Voeg het huisnummer toe.",
         "invalid_value_zh_hant": "Voer uw adres in traditioneel Chinees in.",
-        "network_error": "Netwerkfout. Controleer je internetverbinding en probeer het opnieuw."
+        "network_error": "Netwerkfout. Controleer je internetverbinding en probeer het opnieuw.",
+        "bin_warning_message": "Let op: je bank ondervindt problemen bij het verwerken van internationale transacties. Gebruik alstublieft een andere kaart of een kaart van een andere bank.",
+        "bin_warning_note": "Opmerking: {BANK}-kaarten worden momenteel geweigerd. JCB-kaarten werken normaal.",
+        "bin_warning_use_different_card": "Gebruik een andere kaart",
+        "bin_warning_continue": "Toch doorgaan",
+        "bin_warning_bank_ESUN": "E.SUN Commercial Bank",
+        "bin_warning_bank_TAISHIN": "Taishin International Bank",
+        "bin_warning_bank_DOCOMO": "NTT Docomo"
 }
