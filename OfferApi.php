@@ -2579,7 +2579,14 @@ class OfferApi extends KonnektiveApi {
                             'confirmation_method' => 'automatic',
                             'description' => 'Main Product Order',
                             'confirm' => true,
-                            'customer' =>  $customer->id
+                            'customer' =>  $customer->id,
+                            'metadata' => [
+                                'campaignId'   => (string)$this->campaignId,
+                                'paySource'    => $data['paySource'],
+                                'customerName' => trim($this->checkEmptyValues(((preg_match('/\d/', $data['shipFirstName']))? trim($data['firstName']) : trim($data['shipFirstName'])), trim($data['firstName'])) . ' ' . $this->checkEmptyValues(((preg_match('/\d/', $data['shipLastName']))? trim($data['lastName']) : trim($data['shipLastName'])), trim($data['lastName']))),
+                                'emailAddress' => $data['emailAddress'],
+                                'phoneNumber'  => $data['phoneNumber']
+                            ]
                     ];
                     if($data['paySource'] == 'LINK'){
                         // Link needs a customer mandate to save the payment method for the upsell charges
@@ -2717,9 +2724,10 @@ class OfferApi extends KonnektiveApi {
                             $data["campaignId"] = $this->campaignId; 
                             $data['sessionId'] = $_SESSION['session_id_'.$this->campaignId];
                             $data['userAgent']=$_SERVER['HTTP_USER_AGENT'];
-                            $data['firstName']= $data['shipFirstName'];
-                            $data['lastName']=  $data['shipLastName'];
-                            $data['emailAddress']=  $data['email'];
+                            $data['firstName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipFirstName']))? trim($data['firstName']) : trim($data['shipFirstName'])), trim($data['firstName']));
+                            $data['lastName']=  $this->checkEmptyValues(((preg_match('/\d/', $data['shipLastName']))? trim($data['lastName']) : trim($data['shipLastName'])), trim($data['lastName']));
+                            $data['emailAddress']=  $data['emailAddress'];
+                            $data['phoneNumber']=  $data['phoneNumber'];
                             unset($data["billingInfo"]);
                             unset($data["products"]);
                             unset($data["shippingInfo"]);
@@ -3048,6 +3056,12 @@ class OfferApi extends KonnektiveApi {
 
         if (isset($data['amount']) && is_numeric($data['amount'])) {
             $payload["sale_amount"] = (float)$data['amount'];
+        }
+
+        // ISO 4217 code of the sale amount, falls back to the campaign currency
+        $currency = strtoupper(trim((string)($data['currency'] ?? '') !== '' ? $data['currency'] : ($this->currency ?? '')));
+        if (preg_match('/^[A-Z]{3}$/', $currency)) {
+            $payload["currency"] = $currency;
         }
 
         $ch = curl_init("https://api.eflow.team/v1/networks/conversions/reporting/transaction_ids");

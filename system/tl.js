@@ -106,5 +106,6 @@ window.i18nData = {
     "bin_warning_continue": "Magpatuloy pa rin",
     "bin_warning_bank_ESUN": "E.SUN Komersyal na Bangko",
     "bin_warning_bank_TAISHIN": "Taishin Internasyonal na Bangko",
-    "bin_warning_bank_DOCOMO": "NTT Docomo"
+    "bin_warning_bank_DOCOMO": "NTT Docomo",
+    "bin_warning_note_JP": "Paalala: Ang mga {BANK} card ay kasalukuyang tinatanggihan."
 };

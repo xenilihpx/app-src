@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "استمر على أي حال",
         "bin_warning_bank_ESUN": "بنك إي.صن التجاري",
         "bin_warning_bank_TAISHIN": "بنك تايشين الدولي",
-        "bin_warning_bank_DOCOMO": "NTT دوكومو"
+        "bin_warning_bank_DOCOMO": "NTT دوكومو",
+        "bin_warning_note_JP": "ملاحظة: يتم حالياً رفض بطاقات {BANK}."
 }

@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "Lanjutkan saja",
         "bin_warning_bank_ESUN": "Bank Komersial E.SUN",
         "bin_warning_bank_TAISHIN": "Bank Internasional Taishin",
-        "bin_warning_bank_DOCOMO": "NTT Docomo"
+        "bin_warning_bank_DOCOMO": "NTT Docomo",
+        "bin_warning_note_JP": "Catatan: Kartu {BANK} saat ini ditolak."
 }

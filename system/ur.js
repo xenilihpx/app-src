@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "بہرحال جاری رکھیں",
         "bin_warning_bank_ESUN": "ای سن کمرشل بینک",
         "bin_warning_bank_TAISHIN": "تائیشن انٹرنیشنل بینک",
-        "bin_warning_bank_DOCOMO": "این ٹی ٹی ڈوکومو"
+        "bin_warning_bank_DOCOMO": "این ٹی ٹی ڈوکومو",
+        "bin_warning_note_JP": "نوٹ: {BANK} کارڈز فی الحال مسترد کیے جا رہے ہیں۔"
 }

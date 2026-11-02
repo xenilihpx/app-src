@@ -110,5 +110,6 @@ window.i18nData={
         "bin_warning_continue": "Continuă oricum",
         "bin_warning_bank_ESUN": "Banca Comercială E.SUN",
         "bin_warning_bank_TAISHIN": "Banca Internațională Taishin",
-        "bin_warning_bank_DOCOMO": "NTT Docomo"
+        "bin_warning_bank_DOCOMO": "NTT Docomo",
+        "bin_warning_note_JP": "Notă: În prezent, cardurile {BANK} sunt respinse."
 }

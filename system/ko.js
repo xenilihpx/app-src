@@ -106,5 +106,6 @@ window.i18nData = {
     "bin_warning_continue": "어쨌든 계속하기",
     "bin_warning_bank_ESUN": "E.SUN 상업은행",
     "bin_warning_bank_TAISHIN": "타이신 국제은행",
-    "bin_warning_bank_DOCOMO": "NTT 도코모"
+    "bin_warning_bank_DOCOMO": "NTT 도코모",
+    "bin_warning_note_JP": "참고: 현재 {BANK} 카드는 결제가 거부되고 있습니다."
 };

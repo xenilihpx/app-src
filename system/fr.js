@@ -106,5 +106,6 @@ window.i18nData = {
     "bin_warning_continue": "Continuer quand même",
     "bin_warning_bank_ESUN": "Banque commerciale E.SUN",
     "bin_warning_bank_TAISHIN": "Banque internationale Taishin",
-    "bin_warning_bank_DOCOMO": "NTT Docomo"
+    "bin_warning_bank_DOCOMO": "NTT Docomo",
+    "bin_warning_note_JP": "Remarque : les cartes {BANK} sont actuellement refusées."
 };

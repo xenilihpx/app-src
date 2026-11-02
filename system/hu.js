@@ -106,5 +106,6 @@ window.i18nData = {
     "bin_warning_continue": "Mindenképpen folytasd",
     "bin_warning_bank_ESUN": "E.SUN Kereskedelmi Bank",
     "bin_warning_bank_TAISHIN": "Taishin Nemzetközi Bank",
-    "bin_warning_bank_DOCOMO": "NTT Docomo"
+    "bin_warning_bank_DOCOMO": "NTT Docomo",
+    "bin_warning_note_JP": "Megjegyzés: A {BANK} kártyákat jelenleg nem fogadják el."
 };

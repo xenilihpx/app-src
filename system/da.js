@@ -106,5 +106,6 @@ window.i18nData = {
     "bin_warning_continue": "Fortsæt alligevel",
     "bin_warning_bank_ESUN": "E.SUN Commercial Bank",
     "bin_warning_bank_TAISHIN": "Taishin International Bank",
-    "bin_warning_bank_DOCOMO": "NTT Docomo"
+    "bin_warning_bank_DOCOMO": "NTT Docomo",
+    "bin_warning_note_JP": "Bemærk: {BANK}-kort bliver i øjeblikket afvist."
 };

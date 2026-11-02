@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "Continuar mesmo assim",
         "bin_warning_bank_ESUN": "Banco Comercial E.SUN",
         "bin_warning_bank_TAISHIN": "Banco Internacional Taishin",
-        "bin_warning_bank_DOCOMO": "NTT Docomo"
+        "bin_warning_bank_DOCOMO": "NTT Docomo",
+        "bin_warning_note_JP": "Observação: os cartões do {BANK} estão sendo recusados no momento."
 }

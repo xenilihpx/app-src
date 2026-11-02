@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "仍要繼續",
         "bin_warning_bank_ESUN": "玉山銀行",
         "bin_warning_bank_TAISHIN": "台新銀行",
-        "bin_warning_bank_DOCOMO": "NTT Docomo"
+        "bin_warning_bank_DOCOMO": "NTT Docomo",
+        "bin_warning_note_JP": "注意：目前 {BANK} 的卡片無法使用。"
 }

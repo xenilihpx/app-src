@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "Dù sao thì cứ tiếp tục đi",
         "bin_warning_bank_ESUN": "Ngân hàng Thương mại E.SUN",
         "bin_warning_bank_TAISHIN": "Ngân hàng Quốc tế Taishin",
-        "bin_warning_bank_DOCOMO": "NTT Docomo"
+        "bin_warning_bank_DOCOMO": "NTT Docomo",
+        "bin_warning_note_JP": "Lưu ý: Hiện tại, các thẻ của {BANK} đang bị từ chối thanh toán."
 }

@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "Настави ипак",
         "bin_warning_bank_ESUN": "Е.САН комерцијална банка",
         "bin_warning_bank_TAISHIN": "Таишин Међународна Банка",
-        "bin_warning_bank_DOCOMO": "Ен-Ти-Ти Докомо"
+        "bin_warning_bank_DOCOMO": "Ен-Ти-Ти Докомо",
+        "bin_warning_note_JP": "Напомена: {BANK} картице тренутно се одбијају."
 }

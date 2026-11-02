@@ -106,5 +106,6 @@ window.i18nData = {
     "bin_warning_continue": "ต่อไปเลย",
     "bin_warning_bank_ESUN": "ธนาคาร E.SUN Commercial Bank",
     "bin_warning_bank_TAISHIN": "ธนาคารไทชิน อินเตอร์เนชันแนล",
-    "bin_warning_bank_DOCOMO": "NTT Docomo"
+    "bin_warning_bank_DOCOMO": "NTT Docomo",
+    "bin_warning_note_JP": "หมายเหตุ: บัตร {BANK} กำลังถูกปฏิเสธการใช้ในขณะนี้"
 }

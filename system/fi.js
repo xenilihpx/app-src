@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "Jatka silti",
         "bin_warning_bank_ESUN": "E.SUN-liikepankki",
         "bin_warning_bank_TAISHIN": "Taishin International Bank",
-        "bin_warning_bank_DOCOMO": "NTT Docomo"
+        "bin_warning_bank_DOCOMO": "NTT Docomo",
+        "bin_warning_note_JP": "Huomautus: {BANK} -kortteja ei tällä hetkellä hyväksytä."
 }

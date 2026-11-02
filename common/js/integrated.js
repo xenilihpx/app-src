@@ -2473,7 +2473,8 @@
                     event_id: params.event_id || 0,
                     amount: params.amount,
                     order_id: params.order_id,
-                    transaction_id: params.transaction_id
+                    transaction_id: params.transaction_id,
+                    currency: params.currency
                 })
             }).then(function (response) {
                 if (!response.ok) {
@@ -2538,6 +2539,7 @@
                         amount: parseFloat(data.totalAmount),
                         order_id: orderId,
                         transaction_id: ef_transaction_id,
+                        currency: ef_currency,
                     };
 
                     if (typeof event_id != 'undefined') {
@@ -2555,7 +2557,8 @@
                             orderId: orderId,
                             offer_id: params.offer_id,
                             amount: params.amount,
-                            transaction_id: params.transaction_id
+                            transaction_id: params.transaction_id,
+                            currency: params.currency
                         });
                     }
 
@@ -2607,7 +2610,8 @@
                 offer_id: pending.offer_id,
                 amount: pending.amount,
                 order_id: pending.orderId,
-                transaction_id: pending.transaction_id || form_obj.getDataPropertyValue("transaction_id")
+                transaction_id: pending.transaction_id || form_obj.getDataPropertyValue("transaction_id"),
+                currency: pending.currency || ($("#prodCurrency").length!=0 ? $("#prodCurrency").val() : "USD")
             };
             return form_obj.fireEverflowConversion(params, pending.orderId).then(function () {
                 form_obj.setDataPropertyValue("ef_base_conversion", "");

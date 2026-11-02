@@ -106,5 +106,6 @@ window.i18nData={
     "bin_warning_continue": "Συνέχισε ούτως ή άλλως",
     "bin_warning_bank_ESUN": "Εμπορική Τράπεζα E.SUN",
     "bin_warning_bank_TAISHIN": "Taishin International Bank",
-    "bin_warning_bank_DOCOMO": "NTT Docomo"
+    "bin_warning_bank_DOCOMO": "NTT Docomo",
+    "bin_warning_note_JP": "Σημείωση: Οι κάρτες {BANK} δεν γίνονται δεκτές προς το παρόν."
 }

@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "Yine de devam et",
         "bin_warning_bank_ESUN": "E.SUN Ticari Bankası",
         "bin_warning_bank_TAISHIN": "Taishin Uluslararası Bankası",
-        "bin_warning_bank_DOCOMO": "NTT Docomo"
+        "bin_warning_bank_DOCOMO": "NTT Docomo",
+        "bin_warning_note_JP": "Not: {BANK} kartları şu anda reddedilmektedir."
 }

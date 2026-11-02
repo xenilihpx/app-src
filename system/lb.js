@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "Gitt weider, egal wat.",
         "bin_warning_bank_ESUN": "E.SUN Handelsbank",
         "bin_warning_bank_TAISHIN": "Taishin International Bank",
-        "bin_warning_bank_DOCOMO": "NTT Docomo"
+        "bin_warning_bank_DOCOMO": "NTT Docomo",
+        "bin_warning_note_JP": "Hinweis: {BANK}-Kaarten ginn de Moment ofgewise."
 }

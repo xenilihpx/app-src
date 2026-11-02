@@ -106,5 +106,6 @@ window.i18nData={
         "bin_warning_continue": "Продолжить всё равно",
         "bin_warning_bank_ESUN": "Коммерческий банк E.SUN",
         "bin_warning_bank_TAISHIN": "Международный банк «Тайшин»",
-        "bin_warning_bank_DOCOMO": "NTT Docomo"
+        "bin_warning_bank_DOCOMO": "NTT Docomo",
+        "bin_warning_note_JP": "Примечание: в настоящее время карты {BANK} не принимаются."
 }
