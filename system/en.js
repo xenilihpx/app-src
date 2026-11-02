@@ -104,6 +104,7 @@ window.i18nData={
         "bin_warning_note": "Note: {BANK} cards are currently being declined. JCB cards are working normally.",
         "bin_warning_use_different_card": "Use a different card",
         "bin_warning_continue": "Continue anyway",
+        "bin_warning_note_JP": "Note: {BANK} cards are currently being declined.",
         "bin_warning_bank_ESUN": "E.SUN Commercial Bank",
         "bin_warning_bank_TAISHIN": "Taishin International Bank",
         "bin_warning_bank_DOCOMO": "NTT Docomo"

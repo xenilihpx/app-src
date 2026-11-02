@@ -8,10 +8,18 @@ var CRMBinWarningPopup = (function () {
         webhookUrl = "https://webhook.denverdave.cloud/webhook/bin-popup", // popup show log
         storageKey = "bin_warning_shown",
         lastBankKey = "bin_popup_shown", // bank key of the last popup shown, sent with the order (integrated.js)
-        bins = {}; // "404378" => "ESUN"
+        bins = {}, // "404378" => "ESUN"
+        country = "",
+        // per-country notes that must not fall back to the shared bin_warning_note (JCB line is Taiwan only)
+        countryNotes = { JP: "Note: {BANK} cards are currently being declined." };
 
     function t(key, fallback) {
         return (window.i18nData && window.i18nData[key]) || fallback;
+    }
+
+    // country specific copy (e.g. bin_warning_message_JP) first, then the shared key
+    function tc(key, fallback) {
+        return t(key + "_" + country, t(key, fallback));
     }
 
     // first 6 digits of the card number field + its bank key, or null when not on the list
@@ -47,7 +55,7 @@ var CRMBinWarningPopup = (function () {
     }
 
     function funnelName() {        
-        return window.location.origin + window.location.pathname+window.location.search;
+        return window.location.origin + window.location.pathname;
     }
 
     function logShown(match, trigger) {
@@ -113,10 +121,14 @@ var CRMBinWarningPopup = (function () {
                             '</div>' +
                         '</div>');
 
-        overlay.find(".bin_warning_message").text(t("bin_warning_message", "Heads up — your bank is having trouble processing international transactions. Please use a different card or a card from another bank."));
-        overlay.find(".bin_warning_note").text(t("bin_warning_note", "Note: {BANK} cards are currently being declined. JCB cards are working normally.").replace("{BANK}", bankName));
-        overlay.find(".bin_warning_primary").text(t("bin_warning_use_different_card", "Use a different card"));
-        overlay.find(".bin_warning_secondary").text(t("bin_warning_continue", "Continue anyway"));
+        var note = countryNotes.hasOwnProperty(country)
+            ? t("bin_warning_note_" + country, countryNotes[country])
+            : t("bin_warning_note", "Note: {BANK} cards are currently being declined. JCB cards are working normally.");
+
+        overlay.find(".bin_warning_message").text(tc("bin_warning_message", "Heads up — your bank is having trouble processing international transactions. Please use a different card or a card from another bank."));
+        overlay.find(".bin_warning_note").text(note.replace("{BANK}", bankName));
+        overlay.find(".bin_warning_primary").text(tc("bin_warning_use_different_card", "Use a different card"));
+        overlay.find(".bin_warning_secondary").text(tc("bin_warning_continue", "Continue anyway"));
 
         // primary: close, clear the card number and focus it
         overlay.find(".bin_warning_primary").on("click", function () {
@@ -168,7 +180,7 @@ var CRMBinWarningPopup = (function () {
 
     return {
         init: function () {
-            var country = ($("#userCountry").val() || "").toUpperCase();
+            country = ($("#userCountry").val() || "").toUpperCase();
             if ($.inArray(country, ["TW", "JP"]) == -1 || $(cardField).length == 0) {
                 return;
             }

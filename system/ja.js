@@ -104,6 +104,9 @@ window.i18nData={
         "bin_warning_note": "注：現在、{BANK}のカードは利用できません。JCBカードは通常通りご利用いただけます。",
         "bin_warning_use_different_card": "別のカードを使用する",
         "bin_warning_continue": "このまま続ける",
+        "bin_warning_message_JP": "ご注意：お客様のカード発行会社では現在、海外取引の処理に問題が発生しております。恐れ入りますが、別のカード、または他社発行のカードをご利用ください。",
+        "bin_warning_note_JP": "備考：{BANK}のカードは現在ご利用いただけません。",
+        "bin_warning_use_different_card_JP": "別のカードを使う",
         "bin_warning_bank_ESUN": "玉山銀行",
         "bin_warning_bank_TAISHIN": "台新銀行",
         "bin_warning_bank_DOCOMO": "NTTドコモ"
