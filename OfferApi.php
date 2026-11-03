@@ -2676,8 +2676,9 @@ class OfferApi extends KonnektiveApi {
                                         "mainProductId" => $data['mainProductId'],
                                         "mainProductPrice" => $data['mainProductPrice'],
                                         "orderId" => $resp_decode->message->orderId,
+                                        "customerId" => $resp_decode->message->customerId, //used to note upsell declines
                                         "paySource" => $data['paySource'],
-                                        "orderProducts" => $orderProducts, 
+                                        "orderProducts" => $orderProducts,
                                         "items"=>  $resp_decode->message->items,
                                         "couponCode"=> $data['couponCode'],
                                         "shipProfileId"=> $data['shipProfileId'],
@@ -2719,42 +2720,85 @@ class OfferApi extends KonnektiveApi {
                                     ]);              
                                 }
                     } else{
-
-                            // Log decline in Konnektive                            
-                            $data["campaignId"] = $this->campaignId; 
-                            $data['sessionId'] = $_SESSION['session_id_'.$this->campaignId];
-                            $data['userAgent']=$_SERVER['HTTP_USER_AGENT'];
-                            $data['firstName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipFirstName']))? trim($data['firstName']) : trim($data['shipFirstName'])), trim($data['firstName']));
-                            $data['lastName']=  $this->checkEmptyValues(((preg_match('/\d/', $data['shipLastName']))? trim($data['lastName']) : trim($data['shipLastName'])), trim($data['lastName']));
-                            $data['emailAddress']=  $data['emailAddress'];
-                            $data['phoneNumber']=  $data['phoneNumber'];
-                            unset($data["billingInfo"]);
-                            unset($data["products"]);
-                            unset($data["shippingInfo"]);
-                            if($data['paySource'] == 'LINK'){
-                                $data['paySource'] = 'PREPAID'; // Checkout Champ has no Link pay source
-                            }
-
-                            $importDec=$this->import_order($data);
-                            if($importDec->result=="SUCCESS"){ 
-                                // Order QA Decline
-                                $qaData = [                        
-                                    'orderId'  => $importDec->message->orderId,
-                                    'action'   => 'DECLINE'
-                                ];
-                                $this->order_qa($data);
-                            }
-                            echo json_encode([
-                                        "result" => "ERROR",
-                                        "message" => $this->deepLTranslate("Transaction Declined")
-                            ]); 
+                            // Not captured (e.g. requires_action / requires_payment_method), log as decline in Checkout Champ
+                            $this->stripeExpressDeclineImport($data, "Payment status: ".$paymentIntent->status, $paymentIntent->id, $customer->id);
                     }
+            } catch (\Stripe\Exception\CardException $e) {
+                    // Stripe throws on a declined Apple Pay / Google Pay / Link charge when confirm=true
+                    $declinedIntent = $e->getError()->payment_intent ?? null;
+                    $this->stripeExpressDeclineImport(
+                        $data,
+                        $e->getMessage().($e->getDeclineCode() ? " (".$e->getDeclineCode().")" : ""),
+                        $declinedIntent->id ?? "",
+                        isset($customer) ? $customer->id : ""
+                    );
             } catch (Exception $e) {
                  echo json_encode([
                         "result" => "ERROR",
                         "message" => $this->deepLTranslate($e->getMessage())
                 ]);
-            }   
+            }
+    }
+
+    // Import a declined Stripe Express (Apple Pay / Google Pay / Link) order into Checkout Champ and mark it declined
+    private function stripeExpressDeclineImport($data, $declineReason, $paymentIntentId, $stripeCustomerId){
+
+            $data["campaignId"] = $this->campaignId;
+            $data['sessionId'] = $_SESSION['session_id_'.$this->campaignId];
+            $data['userAgent']=$_SERVER['HTTP_USER_AGENT'];
+            $data=array_merge($data,$this->extractOrders($data['products'])); //orders
+
+            $data['address1']= $this->checkEmptyValues(trim($data['address1']), trim($data['shipAddress1']));
+            $data['address2']= $this->checkEmptyValues(trim($data['address2']), trim($data['shipAddress2']));
+            $data['city']=  $this->checkEmptyValues(trim($data['city']), trim($data['shipCity']));
+            $data['state']= $this->checkEmptyValues(trim($data['state']), trim($data['shipState']));
+            $data['postalCode']=  $this->checkEmptyValues(trim($data['postalCode']),trim($data['shipPostalCode']));
+            $data['country']= $this->checkEmptyValues(trim($data['country']), trim($data['shipCountry']));
+
+            $data['shipAddress1']= $this->checkEmptyValues(trim($data['shipAddress1']), trim($data['address1']));
+            $data['shipAddress2']= $this->checkEmptyValues(trim($data['shipAddress2']), trim($data['address2']));
+            $data['shipCity']=  $this->checkEmptyValues(trim($data['shipCity']), trim($data['city']));
+            $data['shipState']= $this->checkEmptyValues(trim($data['shipState']), trim($data['state']));
+            $data['shipPostalCode']=  $this->checkEmptyValues(trim($data['shipPostalCode']),trim($data['postalCode']));
+            $data['shipCountry']= $this->checkEmptyValues(trim($data['shipCountry']), trim($data['country']));
+
+            $data['shipFirstName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipFirstName']))? trim($data['firstName']) : trim($data['shipFirstName'])), trim($data['firstName']));
+            $data['shipLastName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipLastName']))? trim($data['lastName']) : trim($data['shipLastName'])), trim($data['lastName']));
+
+            $data['custom_order_track_url']=$_SESSION['first_landpage_'.$this->campaignId]; //track url
+            $data['custom_order_language']=$this->targetLanguage;
+
+            unset($data["billingInfo"]);
+            unset($data["products"]);
+            unset($data["shippingInfo"]);
+
+            $paySource = $data['paySource'];
+            if($data['paySource'] == 'LINK'){
+                $data['paySource'] = 'PREPAID'; // Checkout Champ has no Link pay source
+            }
+
+            $importDec = json_decode($this->import_order($data));
+            if(isset($importDec->result) && $importDec->result=="SUCCESS"){
+                // Order QA Decline
+                $this->order_qa([
+                    'orderId'  => $importDec->message->orderId,
+                    'action'   => 'DECLINE'
+                ]);
+
+                $this->customer_add_note([
+                    "customerId" => $importDec->message->customerId,
+                    "message" => $importDec->message->orderId." declined using Stripe Express Checkout. Stripe Customer id: ".$stripeCustomerId.
+                                ", Payment Type: ".$paySource.
+                                ", Payment Intent Id: ".$paymentIntentId.
+                                ", Reason: ".$declineReason
+                ]);
+            }
+
+            echo json_encode([
+                        "result" => "ERROR",
+                        "message" => $this->deepLTranslate("Transaction Declined"),
+                        "decline" => true
+            ]);
     }
 
     private function stripeExpressUpsellImport($data){
@@ -2901,24 +2945,54 @@ class OfferApi extends KonnektiveApi {
                                 }
 
                     } else{
-
-                            // Order QA Decline
-                            $qaData = [                        
-                                    'orderId'  => $_SESSION['order_data_'.$this->campaignId]['orderId'],
-                                    'action'   => 'DECLINE'
-                            ];
-                            $this->order_qa($data);                            
-                            echo json_encode([
-                                        "result" => "ERROR",
-                                        "message" => $this->deepLTranslate("Upsell Transaction Declined")
-                            ]); 
+                            // Not captured (e.g. requires_action / requires_payment_method), log as upsell decline
+                            $this->stripeExpressUpsellDeclineImport($data, "Payment status: ".$paymentIntent->status, $paymentIntent->id);
                     }
+            } catch (\Stripe\Exception\CardException $e) {
+                    // Stripe throws on a declined Apple Pay / Google Pay / Link charge when confirm=true
+                    $declinedIntent = $e->getError()->payment_intent ?? null;
+                    $this->stripeExpressUpsellDeclineImport(
+                        $data,
+                        $e->getMessage().($e->getDeclineCode() ? " (".$e->getDeclineCode().")" : ""),
+                        $declinedIntent->id ?? ""
+                    );
             } catch (Exception $e) {
                  echo json_encode([
                         "result" => "ERROR",
                         "message" => $this->deepLTranslate($e->getMessage())
                 ]);
-            }        
+            }
+    }
+
+    // Record a declined Stripe Express (Apple Pay / Google Pay / Link) upsell in Checkout Champ.
+    // The main order is already paid, so it is NOT QA declined; the decline is stored as a customer note.
+    private function stripeExpressUpsellDeclineImport($data, $declineReason, $paymentIntentId){
+
+            $orderData = $_SESSION['order_data_'.$this->campaignId] ?? [];
+            // read products directly, extractOrders() would overwrite the stored ordered products in session
+            $productList = [];
+            foreach (($data['products'] ?? []) as $product) {
+                $product = (array)$product;
+                $productList[] = ($product['productId'] ?? '')." x".($product['quantity'] ?? 1);
+            }
+
+            if (!empty($orderData['customerId'])) {
+                $this->customer_add_note([
+                    "customerId" => $orderData['customerId'],
+                    "message" => "Upsell declined for order: ".$orderData['orderId']." using Stripe Express Checkout. Stripe Customer id: ".$orderData['walletCustomerId'].
+                                ", Payment Type: ".$orderData['paySource'].
+                                ", Payment Intent Id: ".$paymentIntentId.
+                                ", Products: ".implode(", ", $productList).
+                                ", Amount: ".$data['amount']." ".$data['currency'].
+                                ", Reason: ".$declineReason
+                ]);
+            }
+
+            echo json_encode([
+                        "result" => "ERROR",
+                        "message" => $this->deepLTranslate("Upsell Transaction Declined"),
+                        "decline" => true
+            ]);
     }
 
     private function stripePaymentIntentKlarna($data){
