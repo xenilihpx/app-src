@@ -141,8 +141,11 @@ var CRMBinWarningPopup = (function () {
             close();
             $(cardField).val("").trigger("change").focus();
         });
-        // secondary: just close, the customer can submit normally
-        overlay.find(".bin_warning_secondary").on("click", close);
+        // secondary: close and focus the card number (kept), the customer can submit normally
+        overlay.find(".bin_warning_secondary").on("click", function () {
+            close();
+            $(cardField).focus();
+        });
         $(document).on("keydown.binWarning", function (e) {
             if (e.keyCode == 27) {
                 close();

@@ -653,6 +653,47 @@
 			return false;
         }
 
+        //card brand from the number prefix, empty when it is not one of the supported brands
+        form_obj.getCardType=function(number){
+            var digits = (number || "").replace(/\D/g, "");
+            if (/^3[47]/.test(digits)) return "amex";
+            if (/^35(2[89]|[3-8])/.test(digits)) return "jcb";
+            if (/^4/.test(digits)) return "visa";
+            if (/^(5[1-5]|2[2-7])/.test(digits)) return "mastercard";
+            if (/^(6011|65|64[4-9]|622)/.test(digits)) return "discover";
+            return "";
+        }
+
+        //show the card brand icon inside the card number field while the user types
+        form_obj.cardTypeIcon=function(){
+            var el = $(formField.cardnumber);
+            if (el.length == 0 || $("#cc_type_icon").length != 0) {
+                return;
+            }
+            el.wrap('<span class="cc_type_wrap" style="position:relative;display:block;"></span>');
+            el.after('<img id="cc_type_icon" alt="" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);width:40px;height:26px;object-fit:contain;pointer-events:none;" />');
+            el.css("padding-right", "56px");
+
+            var update = function () {
+                var type = form_obj.getCardType(el.val()),
+                    icon = $("#cc_type_icon");
+                if (icon.attr("data-type") != (type || "default")) {
+                    //generic card until the number matches a supported brand
+                    icon.attr({
+                        src: commonFilesPath() + "src/common/images/cards/" + (type || "default") + ".svg",
+                        alt: type,
+                        "data-type": type || "default"
+                    });
+                }
+                //center on the input itself, the validation error label is placed inside the wrap too
+                if (el[0].offsetHeight) {
+                    icon.css("top", (el[0].offsetTop + el.outerHeight() / 2) + "px");
+                }
+            };
+            $(document).on("input keyup change focus blur", formField.cardnumber, update);
+            update();
+        }
+
         form_obj.inputElEvents=function(){
             $(formField.cvv+","+formField.cardnumber).on('keydown', function (e) {
                 // Allow: backspace, delete, tab, escape, enter, and arrows
@@ -721,6 +762,8 @@
             $(formField.cvv+","+formField.cardnumber+","+formField.phone+","+formField.phoneBill+",#wallet_phone").on('input', function () {
                 this.value = this.value.replace(/\D/g, '');
             });
+
+            form_obj.cardTypeIcon();
 
             $(formField.city+","+formField.checkboxsameaddressFields.cityBill).on('input', function () {
                 var inputVal = $(this).val();
