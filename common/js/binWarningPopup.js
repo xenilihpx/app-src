@@ -4,11 +4,12 @@
 var CRMBinWarningPopup = (function () {
     var cardField = "#cc_number",
         submitBtn = "#submitForm",
-        binListUrl = "src/common/data/decline-bins.json",
+        binListPath = "src/common/data/decline-bins.json", // made relative to the page by binListUrl()
+        countryField = "#fields_country_select",
         webhookUrl = "https://webhook.denverdave.cloud/webhook/bin-popup", // popup show log
         storageKey = "bin_warning_shown",
         lastBankKey = "bin_popup_shown", // bank key of the last popup shown, sent with the order (integrated.js)
-        bins = {}, // "404378" => "ESUN"
+        bins = {}, // "TW" => { "404378": "ESUN" }
         country = "",
         // per-country notes that must not fall back to the shared bin_warning_note (JCB line is Taiwan only)
         countryNotes = { JP: "Note: {BANK} cards are currently being declined." };
@@ -28,8 +29,28 @@ var CRMBinWarningPopup = (function () {
         if (!/^\d{6}/.test(digits)) {
             return null;
         }
-        var bin = digits.substr(0, 6);
-        return bins.hasOwnProperty(bin) ? { bin: bin, bank: bins[bin] } : null;
+        var bin = digits.substr(0, 6),
+            list = bins[country] || {};
+        return list.hasOwnProperty(bin) ? { bin: bin, bank: list[bin] } : null;
+    }
+
+    // "src/..." on a root page, "../src/..." on a funnel-folder page (anti-dust/checkout.php): reuse the
+    // prefix the page already loads its own src/ files with (e.g. <script src="../src/system/en.js">)
+    function binListUrl() {
+        var prefix = "../"; // fallback: this script is bundled into the funnel folders' checkout.js
+        $("script[src], link[href]").each(function () {
+            var found = /^((?:\.\.\/)*)src\//.exec($(this).attr("src") || $(this).attr("href"));
+            if (found) {
+                prefix = found[1];
+                return false;
+            }
+        });
+        return prefix + binListPath;
+    }
+
+    // the country picked in the form; #userCountry is only the geo/session country from page load
+    function currentCountry() {
+        return ($(countryField).val() || $("#userCountry").val() || "").toUpperCase();
     }
 
     // tracked by BIN so the full card number is never kept in browser storage
@@ -161,6 +182,7 @@ var CRMBinWarningPopup = (function () {
         if (!$(cardField).is(":visible")) {
             return false; // card form hidden (PayPal, Klarna, ...)
         }
+        country = currentCountry();
         var match = matchCard();
         if (!match || alreadyShown(match.bin)) {
             return false;
@@ -189,19 +211,20 @@ var CRMBinWarningPopup = (function () {
 
     return {
         init: function () {
-            country = ($("#userCountry").val() || "").toUpperCase();
-            if ($.inArray(country, ["TW", "JP"]) == -1 || $(cardField).length == 0) {
+            if ($(cardField).length == 0) {
                 return;
             }
-            $.ajax({ url: binListUrl, dataType: "json", cache: false }).done(function (data) {
-                var list = (data.countries && data.countries[country]) || [];
-                if (list.length == 0) {
-                    return;
-                }
-                $.each(list, function (i, item) {
-                    bins[item.bin] = item.bank;
+            // load every country's list: the customer can switch to TW/JP in the country field after page load
+            $.ajax({ url: binListUrl(), dataType: "json", cache: false }).done(function (data) {
+                $.each(data.countries || {}, function (code, list) {
+                    $.each(list, function (i, item) {
+                        bins[code] = bins[code] || {};
+                        bins[code][item.bin] = item.bank;
+                    });
                 });
-                bindEvents();
+                if (!$.isEmptyObject(bins)) {
+                    bindEvents();
+                }
             });
         }
     };
