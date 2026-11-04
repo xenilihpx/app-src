@@ -21,7 +21,7 @@ $br_msgs = [
     'cpf'       => $collector_sh->translate("err_cpf".$country, "Enter a valid CPF."),
 ];
 
-// 27 UF codes - option value and text are both the code
+// 27 UF codes - option value and text are both the code estado
 $br_ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'];
 ?>
 
