@@ -1,4 +1,16 @@
 {
+    "zip_cepbr": "CEP",
+    "dont_know_cepbr": "N\u00e3o sei meu CEP",
+    "streetbr": "Endere\u00e7o",
+    "p_streetbr": "Rua, avenida, travessa\u2026",
+    "numberbr": "N\u00famero",
+    "no_numberbr": "Sem n\u00famero",
+    "apt_unitbr": "Complemento",
+    "optionalbr": "(opcional)",
+    "p_apt_unitbr": "Apto, bloco, fundos\u2026",
+    "citybr": "Cidade",
+    "state_brbr": "Estado",
+    "cpf_hintbr": "Exigido pela Receita Federal para liberar sua encomenda na alf\u00e2ndega.",
     "p_select_neighborhood_mx": "Selecione seu bairro",
     "neighborhood_not_listed_mx": "Meu bairro n\u00e3o est\u00e1 na lista",
     "type_english_ph": "Por favor, preencha as seguintes informa\u00e7\u00f5es de envio em ingl\u00eas.",
@@ -537,5 +549,14 @@
     "state": "Estado\/Prov\u00edncia",
     "p_state": "Selecione o estado\/prov\u00edncia",
     "zip": "CEP",
-    "p_zip": "C\u00f3digo postal"
+    "p_zip": "C\u00f3digo postal",
+    "cep_lookingbr": "Buscando endere\u00e7o\u2026",
+    "cep_not_foundbr": "N\u00e3o encontramos este CEP. Confira o n\u00famero ou preencha o endere\u00e7o abaixo.",
+    "err_cepbr": "Informe um CEP v\u00e1lido.",
+    "err_streetbr": "Informe o endere\u00e7o.",
+    "err_numberbr": "Informe o n\u00famero.",
+    "err_bairrobr": "Informe o bairro.",
+    "err_citybr": "Informe a cidade.",
+    "err_statebr": "Selecione o estado.",
+    "err_cpfbr": "Informe um CPF v\u00e1lido."
 }

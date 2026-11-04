@@ -1961,7 +1961,13 @@ class OfferApi extends KonnektiveApi {
         }
 
         if(isset($data['apt_unit'])){
-            if(isset($data['shipAddress1']) && $data['shipAddress1']!=""){
+            if(isset($data['shipCountry']) && $data['shipCountry']=="BR"){
+                // BR: "{street}, {number} / {complement}, {bairro}" - complement is optional
+                if(isset($data['shipAddress1']) && $data['shipAddress1']!="" && trim($data['apt_unit'])!=""){
+                    $data['shipAddress1']=$data['shipAddress1']." / ". $data['apt_unit'];
+                }
+            }else if(isset($data['shipAddress1']) && $data['shipAddress1']!="" && trim($data['apt_unit'])!=""){
+                    // optional field (MX, ID, ...) - skip when empty so the address doesn't get ", ,"
                     $data['shipAddress1']=$data['shipAddress1'].", ". $data['apt_unit'];
             }
             
