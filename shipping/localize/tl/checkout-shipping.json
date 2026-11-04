@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Hal. 06600",
+    "p_address_1_new__mx": "Halimbawa: Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "Halimbawa 1234",
+    "p_interior_number_new__mx": "Hal. Apt. 4B",
+    "interior_number_ _mx": "Panloob na numero (opsyonal)",
     "cep_lookingbr": "Hinahanap ang address...",
     "cep_not_foundbr": "Hindi namin mahanap ang CEP na ito. Suriin ito o ilagay ang address sa ibaba.",
     "err_cepbr": "Ipasok ang wastong CEP.",

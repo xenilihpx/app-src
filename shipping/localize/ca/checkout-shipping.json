@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Ex. 06600",
+    "p_address_1_new__mx": "Ex. Av. Insurgentes Sud",
+    "p_exterior_number_new__mx": "Ex. 1234",
+    "p_interior_number_new__mx": "Ex. Apartament 4B",
+    "interior_number_ _mx": "N\u00famero interior (opcional)",
     "cep_lookingbr": "Cercant l'adre\u00e7a...",
     "cep_not_foundbr": "No hem pogut trobar aquest CEP. Verifiqueu-lo o ompliu l'adre\u00e7a a continuaci\u00f3.",
     "err_cepbr": "Introdueix un CEP v\u00e0lid.",

@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Par exemple : 06600",
+    "p_address_1_new__mx": "Par exemple : Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "Par exemple : 1234",
+    "p_interior_number_new__mx": "Par exemple : Appartement 4B",
+    "interior_number_ _mx": "Num\u00e9ro d'int\u00e9rieur (facultatif)",
     "cep_lookingbr": "Recherche d'adresse en cours...",
     "cep_not_foundbr": "Nous n'avons pas trouv\u00e9 ce code postal. V\u00e9rifiez-le ou compl\u00e9tez l'adresse ci-dessous.",
     "err_cepbr": "Saisissez un CEP valide.",

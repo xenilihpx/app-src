@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Bijv. 06600",
+    "p_address_1_new__mx": "Bijv. Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "Bijvoorbeeld 1234",
+    "p_interior_number_new__mx": "Bijv. App. 4B",
+    "interior_number_ _mx": "Interieurcode (optioneel)",
     "cep_lookingbr": "Adres wordt opgezocht...",
     "cep_not_foundbr": "We konden dit CEP-nummer niet vinden. Controleer het of vul hieronder het adres in.",
     "err_cepbr": "Voer een geldige CEP in.",

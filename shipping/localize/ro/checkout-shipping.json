@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "De exemplu, 06600",
+    "p_address_1_new__mx": "De exemplu, Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "De exemplu, 1234",
+    "p_interior_number_new__mx": "De exemplu, apartamentul 4B",
+    "interior_number_ _mx": "Num\u0103rul interior (op\u021bional)",
     "cep_lookingbr": "Se caut\u0103 adresa...",
     "cep_not_foundbr": "Nu am g\u0103sit acest CEP. Verifica\u021bi-l sau completa\u021bi adresa de mai jos.",
     "err_cepbr": "Introduce\u021bi un cod CEP valid.",

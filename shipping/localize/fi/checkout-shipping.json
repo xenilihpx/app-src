@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Esim. 06600",
+    "p_address_1_new__mx": "Esim. Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "Esim. 1234",
+    "p_interior_number_new__mx": "Esim. huoneisto 4B",
+    "interior_number_ _mx": "Sis\u00e4numero (valinnainen)",
     "cep_lookingbr": "Etsit\u00e4\u00e4n osoitetta...",
     "cep_not_foundbr": "Emme l\u00f6yt\u00e4neet t\u00e4t\u00e4 CEP-koodia. Tarkista se tai t\u00e4yt\u00e4 osoite alla olevaan kentt\u00e4\u00e4n.",
     "err_cepbr": "Sy\u00f6t\u00e4 kelvollinen CEP-koodi.",

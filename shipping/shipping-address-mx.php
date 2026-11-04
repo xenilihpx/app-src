@@ -17,7 +17,7 @@ $country="_mx";
 <div class="mb-3">
     <label class="p cart-input-label" for="fields_zip" label="Zip/Postal Code"><?= $collector_sh->translate("zip".$country, "Postal code"); ?></label>
     <div class="self-autocomplete">
-        <input id="fields_zip" trigger="keyup" toSearch="zipcode" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" name="zip" class="cart-input p search" value="" type="text" inputmode="numeric" maxlength="5" placeholder="<?= $collector_sh->translate("p_zip".$country, "Postal code"); ?>" required="required">
+        <input id="fields_zip" trigger="keyup" toSearch="zipcode" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" name="zip" class="cart-input p search" value="" type="text" inputmode="numeric" maxlength="5" placeholder="<?= $collector_sh->translate("p_zip_new_".$country, "E.g. 06600"); ?>" required="required">
         <div id="self-suggestions" class="self-suggestions" style="display:none;"></div>
     </div>
     <small id="state_municipality"></small>
@@ -44,7 +44,7 @@ $country="_mx";
 <div class="mb-3">
     <label class="p cart-input-label" for="address 1" label="address 1"><?=$collector_sh->translate("address_1".$country, "Street") ?></label>
     <div>
-        <input id="fields_address1" name="address 1" class="cart-input p" value="" type="text" placeholder="<?=$collector_sh->translate("p_address_1".$country, "Street"); ?>" required="required">
+        <input id="fields_address1" name="address 1" class="cart-input p" value="" type="text" placeholder="<?=$collector_sh->translate("p_address_1_new_".$country, "E.g. Av. Insurgentes Sur"); ?>" required="required">
     </div>
 </div>
 
@@ -55,15 +55,15 @@ $country="_mx";
                 <div class="mb-3">
                     <label class="p cart-input-label" for="fields_houseno"><?=$collector_sh->translate("Exterior_number ".$country, "Exterior number ") ?></label>
                     <div>
-                        <input id="fields_houseno" name="fields_houseno" class="cart-input p" value="" type="text" placeholder="<?=$collector_sh->translate("p_exterior_number ".$country, "Building / House no.") ?>" required="required" data-gtm-form-interact-field-id="1">
+                        <input id="fields_houseno" name="fields_houseno" class="cart-input p" value="" type="text" placeholder="<?=$collector_sh->translate("p_exterior_number_new_".$country, "E.g. 1234") ?>" required="required" data-gtm-form-interact-field-id="1">
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 num-in">
                 <div class="mb-3">
-                    <label class="p cart-input-label" for="fields_apt_unit"><?=$collector_sh->translate("interior_number ".$country, "Interior number ") ?></label>
+                    <label class="p cart-input-label" for="fields_apt_unit"><?=$collector_sh->translate("interior_number_ ".$country, "Interior number (optional)") ?></label>
                     <div>
-                        <input id="fields_apt_unit" name="fields_apt_unit" class="cart-input p" value="" type="text" optional placeholder="<?=$collector_sh->translate("p_interior_number ".$country, "Apt / Unit") ?>" data-gtm-form-interact-field-id="1">
+                        <input id="fields_apt_unit" name="fields_apt_unit" class="cart-input p" value="" type="text" optional placeholder="<?=$collector_sh->translate("p_interior_number_new_".$country, "E.g. Apt. 4B") ?>" data-gtm-form-interact-field-id="1">
                     </div>
                 </div>
             </div>

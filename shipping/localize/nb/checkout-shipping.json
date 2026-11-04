@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "F.eks. 06600",
+    "p_address_1_new__mx": "F.eks. Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "F.eks. 1234",
+    "p_interior_number_new__mx": "F.eks. Leilighet 4B",
+    "interior_number_ _mx": "Interi\u00f8rnummer (valgfritt)",
     "cep_lookingbr": "S\u00f8ker etter adresse...",
     "cep_not_foundbr": "Vi fant ikke denne CEP-koden. Sjekk den, eller fyll inn adressen nedenfor.",
     "err_cepbr": "Skriv inn et gyldig CEP-nummer.",

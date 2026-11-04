@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Nap\u0159. 06600",
+    "p_address_1_new__mx": "Nap\u0159. Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "Nap\u0159. 1234",
+    "p_interior_number_new__mx": "Nap\u0159. byt \u010d. 4B",
+    "interior_number_ _mx": "\u010c\u00edslo interi\u00e9ru (voliteln\u00e9)",
     "cep_lookingbr": "Vyhled\u00e1v\u00e1m adresu...",
     "cep_not_foundbr": "Tento CEP se n\u00e1m nepoda\u0159ilo naj\u00edt. Zkontrolujte jej nebo vypl\u0148te adresu n\u00ed\u017ee.",
     "err_cepbr": "Zadejte platn\u00fd k\u00f3d CEP.",

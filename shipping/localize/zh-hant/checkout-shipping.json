@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "\u4f8b\u5982\uff1a06600",
+    "p_address_1_new__mx": "\u4f8b\u5982\uff1a\u5357\u8d77\u7fa9\u8005\u5927\u9053",
+    "p_exterior_number_new__mx": "\u4f8b\u5982 1234",
+    "p_interior_number_new__mx": "\u4f8b\u5982\uff1a4B\u5ba4",
+    "interior_number_ _mx": "\u5167\u90e8\u7de8\u865f\uff08\u53ef\u9078\uff09",
     "cep_lookingbr": "\u6b63\u5728\u67e5\u8a62\u5730\u5740...",
     "cep_not_foundbr": "\u6211\u5011\u627e\u4e0d\u5230\u9019\u500b CEP\u3002\u8acb\u78ba\u8a8d\u4e00\u4e0b\uff0c\u6216\u586b\u5beb\u4e0b\u65b9\u7684\u5730\u5740\u3002",
     "err_cepbr": "\u8acb\u8f38\u5165\u6709\u6548\u7684 CEP\u3002",

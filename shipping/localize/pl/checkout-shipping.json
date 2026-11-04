@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Np. 06600",
+    "p_address_1_new__mx": "Np. Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "Np. 1234",
+    "p_interior_number_new__mx": "Np. mieszkanie 4B",
+    "interior_number_ _mx": "Numer wn\u0119trza (opcjonalnie)",
     "cep_lookingbr": "Wyszukiwanie adresu...",
     "cep_not_foundbr": "Nie uda\u0142o nam si\u0119 znale\u017a\u0107 tego kodu CEP. Sprawd\u017a go lub wpisz adres poni\u017cej.",
     "err_cepbr": "Wprowad\u017a prawid\u0142owy kod CEP.",

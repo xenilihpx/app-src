@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "\uc608: 06600",
+    "p_address_1_new__mx": "\uc608: \uc544\ubca0\ub2c8\ub2e4 \uc778\uc218\ub974\uac90\ud14c\uc2a4 \uc218\ub974",
+    "p_exterior_number_new__mx": "\uc608: 1234",
+    "p_interior_number_new__mx": "\uc608: 4B\ud638",
+    "interior_number_ _mx": "\uc2e4\ub0b4 \ubc88\ud638 (\uc120\ud0dd \uc0ac\ud56d)",
     "cep_lookingbr": "\uc8fc\uc18c\ub97c \uc870\ud68c \uc911\uc785\ub2c8\ub2e4...",
     "cep_not_foundbr": "\uc774 CEP\ub97c \ucc3e\uc744 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4. \ub2e4\uc2dc \ud655\uc778\ud574 \uc8fc\uc2dc\uac70\ub098 \uc544\ub798\uc5d0 \uc8fc\uc18c\ub97c \uc785\ub825\ud574 \uc8fc\uc138\uc694.",
     "err_cepbr": "\uc720\ud6a8\ud55c CEP\ub97c \uc785\ub825\ud558\uc2ed\uc2dc\uc624.",

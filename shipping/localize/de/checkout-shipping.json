@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Z. B. 06600",
+    "p_address_1_new__mx": "z. B. Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "Beispiel: 1234",
+    "p_interior_number_new__mx": "z. B. Wohnung 4B",
+    "interior_number_ _mx": "Innenraumnummer (optional)",
     "cep_lookingbr": "Adresse wird gesucht...",
     "cep_not_foundbr": "Wir konnten diese Postleitzahl nicht finden. Bitte \u00fcberpr\u00fcfen Sie sie oder geben Sie die Adresse unten ein.",
     "err_cepbr": "Geben Sie eine g\u00fcltige CEP ein.",

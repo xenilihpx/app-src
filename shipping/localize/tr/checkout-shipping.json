@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "\u00d6rne\u011fin: 06600",
+    "p_address_1_new__mx": "\u00d6rne\u011fin: Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "\u00d6rne\u011fin: 1234",
+    "p_interior_number_new__mx": "\u00d6rne\u011fin: 4B Daire",
+    "interior_number_ _mx": "\u0130\u00e7 numara (iste\u011fe ba\u011fl\u0131)",
     "cep_lookingbr": "Adres aran\u0131yor...",
     "cep_not_foundbr": "Bu CEP kodunu bulamad\u0131k. L\u00fctfen kontrol edin veya a\u015fa\u011f\u0131daki adresi girin.",
     "err_cepbr": "Ge\u00e7erli bir CEP girin.",

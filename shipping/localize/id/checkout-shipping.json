@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Misalnya 06600",
+    "p_address_1_new__mx": "Misalnya: Jl. Insurgentes Sur",
+    "p_exterior_number_new__mx": "Misalnya 1234",
+    "p_interior_number_new__mx": "Misalnya: Apartemen 4B",
+    "interior_number_ _mx": "Nomor interior (opsional)",
     "cep_lookingbr": "Mencari alamat...",
     "cep_not_foundbr": "Kami tidak dapat menemukan CEP ini. Silakan periksa kembali atau isi alamat di bawah ini.",
     "err_cepbr": "Masukkan CEP yang valid.",

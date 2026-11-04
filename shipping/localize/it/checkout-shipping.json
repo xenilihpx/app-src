@@ -1,4 +1,9 @@
 {
+    "p_zip_new__mx": "Ad es. 06600",
+    "p_address_1_new__mx": "Ad es. Av. Insurgentes Sur",
+    "p_exterior_number_new__mx": "Ad es. 1234",
+    "p_interior_number_new__mx": "Ad es. App. 4B",
+    "interior_number_ _mx": "Numero interno (facoltativo)",
     "cep_lookingbr": "Ricerca indirizzo in corso...",
     "cep_not_foundbr": "Non siamo riusciti a trovare questo CEP. Controlla o inserisci l'indirizzo qui sotto.",
     "err_cepbr": "Inserisci un CEP valido.",
