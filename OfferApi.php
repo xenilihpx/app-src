@@ -597,6 +597,10 @@ class OfferApi extends KonnektiveApi {
                 return $this->currencySymbol.number_format($amount, 0, ',', '.');
           }
 
+          if($this->currencySymbol=="R$"){
+                return $this->currencySymbol." ".number_format($amount, $decimal, ',', '.');
+          }
+
           if($this->countryName=="Netherlands" && $this->currencySymbol=="€"){
             return $this->currencySymbol.' '.number_format($amount, $decimal, ',', '.');
           } else if($this->currencySymbol=="€"){                    

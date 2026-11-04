@@ -1,4 +1,6 @@
 {
+    "p_select_neighborhood_mx": "Pilih lingkungan tempat tinggal Anda",
+    "neighborhood_not_listed_mx": "Lingkungan tempat tinggalku tidak tercantum",
     "invalid_province_vn": "Silakan pilih provinsi atau kota.",
     "invalid_ward_vn": "Silakan pilih sebuah kelurahan atau kecamatan.",
     "invalid_address_1_vn": "Silakan masukkan alamat Anda.",

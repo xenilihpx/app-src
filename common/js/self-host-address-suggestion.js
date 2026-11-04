@@ -578,7 +578,9 @@
                     applySuggestionValue(zipcodeField, item.zipcode);
 
                     if(item.zipcode && item.zipcode!=null && item.zipcode!=""){
-                        zipcodeField.setAttribute("disabled", "true");
+                        if(country_selected.value!="MX"){
+                            zipcodeField.setAttribute("disabled", "true");
+                        }
                         if(document.querySelector('#fields_zip_hint')){
                             document.querySelector('#fields_zip_hint').style.display="none";
                         }

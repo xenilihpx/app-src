@@ -1,4 +1,6 @@
 {
+    "p_select_neighborhood_mx": "V\u00e6lg dit kvarter",
+    "neighborhood_not_listed_mx": "Mit kvarter er ikke p\u00e5 listen",
     "invalid_province_vn": "V\u00e6lg venligst en provins eller en by.",
     "invalid_ward_vn": "V\u00e6lg venligst et distrikt eller en kommune.",
     "invalid_address_1_vn": "Indtast venligst din adresse.",

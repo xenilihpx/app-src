@@ -91,6 +91,10 @@ function formatNumber(amount, currencySymbol) {
         }else if($("#userCountry").val() === "DK"){ 
             currencySymbol =" kr.";    
             code = "dk-DK"; 
+        }else if($("#userCountry").val() === "BR"){ 
+            currencySymbol ="R$ ";    
+            code = "pt-BR"; 
+            symbolPrefix = true; 
         }else if(currencySymbol === "kr"){            
             currencySymbol =" kr";    
             code = "no-No"; 

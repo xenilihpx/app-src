@@ -1,4 +1,6 @@
 {
+    "p_select_neighborhood_mx": "Selecciona tu barrio",
+    "neighborhood_not_listed_mx": "Mi barrio no aparece en la lista",
     "invalid_province_vn": "Selecciona una provincia o una ciudad.",
     "invalid_ward_vn": "Selecciona un distrito o un municipio.",
     "invalid_address_1_vn": "Introduce tu direcci\u00f3n, por favor.",

@@ -1,4 +1,6 @@
 {
+    "p_select_neighborhood_mx": "Seleziona il tuo quartiere",
+    "neighborhood_not_listed_mx": "Il mio quartiere non \u00e8 presente nell'elenco",
     "type_english_ph": "Si prega di compilare i seguenti dati di spedizione in inglese.",
     "invalid_province_vn": "Seleziona una provincia o una citt\u00e0.",
     "invalid_ward_vn": "Seleziona un quartiere o un comune.",

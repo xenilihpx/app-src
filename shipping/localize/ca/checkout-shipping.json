@@ -1,4 +1,6 @@
 {
+    "p_select_neighborhood_mx": "Seleccioneu el vostre barri",
+    "neighborhood_not_listed_mx": "El meu barri no apareix a la llista.",
     "invalid_province_vn": "Seleccioneu una prov\u00edncia o una ciutat.",
     "invalid_ward_vn": "Seleccioneu un districte electoral o una comuna.",
     "invalid_address_1_vn": "Introdueix la teva adre\u00e7a.",

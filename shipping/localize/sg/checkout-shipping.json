@@ -1,4 +1,6 @@
 {
+    "p_select_neighborhood_mx": "Select your neighborhood",
+    "neighborhood_not_listed_mx": "My neighborhood isn't listed",
     "invalid_province_vn": "Please select a province or city.",
     "invalid_ward_vn": "Please select a ward or commune.",
     "invalid_address_1_vn": "Please enter your address.",
