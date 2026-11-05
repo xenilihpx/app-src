@@ -20,6 +20,12 @@ if (!$isCli && !in_array($serverName, ['localhost', '127.0.0.1'], true)) {
     exit('systemLangTranslator.php only runs on localhost or via CLI.');
 }
 
+// One DeepL request per target language easily runs past PHP's default 30s
+// max_execution_time when opened in a browser - lift it for this script.
+if (function_exists('set_time_limit')) {
+    @set_time_limit(0);
+}
+
 if (!$isCli) {
     header('Content-Type: text/plain');
 }

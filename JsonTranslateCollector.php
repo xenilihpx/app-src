@@ -436,6 +436,12 @@ class JsonCollector {
     }
 
     private function deepLExec(){
+        // Lift the 30s limit even when no progress bar is shown (progressTotal
+        // can be 0 while the loop below still calls DeepL), otherwise the
+        // request dies mid-translation inside DeepL's HttpClientWrapper.
+        if (function_exists('set_time_limit')) {
+            @set_time_limit(0);
+        }
         $this->progressTotal = 0;
         foreach (['lang', 'shipping'] as $namespace) {
             $this->progressTotal += count($this->data[$namespace]) * count($this->getApplicableTargetLanguages($namespace));

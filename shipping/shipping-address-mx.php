@@ -40,10 +40,10 @@ $country="_mx";
                 <div class="mb-3">
                     <label class="p cart-input-label" for="state" label="State/Province"><?= $collector_sh->translate("state".$country, "State"); ?></label>
                     <div>
-                        <input id="fields_state" name="state" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_state".$country, "State"); ?>" required="required"> 
-                        <!-- <select id="fields_state" name="state" class="cart-input p" required="required">
-                            <option value=""><?//= $collector_sh->translate("p_state".$country, "Select State"); ?></option>
-                        </select> -->
+                        
+                        <select id="fields_state" name="state" class="cart-input p" required="required">
+                            <option value=""><?= $collector_sh->translate("p_state".$country, "Select State"); ?></option>
+                        </select>
                     </div>
                 </div>
             </div>
