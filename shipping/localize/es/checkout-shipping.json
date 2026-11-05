@@ -1,6 +1,7 @@
 {
+    "zip_not_found_new2_mx": "No encontramos este código postal. Completa tu dirección a continuación.",
     "zip_required_first_mx": "Primero tienes que introducir un c\u00f3digo postal.",
-    "zip_not_found_new_mx": "No encontramos este código postal. Completa tu dirección.",
+    "zip_not_found_new_mx": "No encontramos este c\u00f3digo postal. Completa tu direcci\u00f3n.",
     "zip_searching_mx": "Buscando...",
     "zip_not_found_mx": "No hemos podido encontrar este c\u00f3digo postal. Por favor, compru\u00e9balo.",
     "p_zip_new__mx": "Ej. 06600",

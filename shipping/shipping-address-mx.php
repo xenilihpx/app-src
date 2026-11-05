@@ -23,7 +23,7 @@ $country="_mx";
     </div>
     <small id="state_municipality"
            data-searching="<?= htmlspecialchars($collector_sh->translate("zip_searching".$country, "Searching...", false), ENT_QUOTES); ?>"
-           data-not-found="<?= htmlspecialchars($collector_sh->translate("zip_not_found_new".$country, "We couldn't find this postal code. Fill in your address.", false), ENT_QUOTES); ?>"></small>
+           data-not-found="<?= htmlspecialchars($collector_sh->translate("zip_not_found_new2".$country, "We couldn't find this postal code. Fill in your address below.", false), ENT_QUOTES); ?>"></small>
 </div>
 <div class="row align-items-start mb-3" id="manual_fill" style="display:none;">
     <div class="col-sm-12">
