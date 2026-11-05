@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "You need to add a postal code first.",
+    "zip_not_found_new_mx": "We couldn't find this postal code. Fill in your address.",
     "zip_searching_mx": "Searching...",
     "zip_not_found_mx": "We couldn't find this postal code. Please check it.",
     "p_zip_new__mx": "E.g. 06600",

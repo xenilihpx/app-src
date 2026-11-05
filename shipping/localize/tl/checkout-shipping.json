@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Kailangan mo munang magdagdag ng postal code.",
+    "zip_not_found_new_mx": "Hindi namin matagpuan ang postang kodigo na ito. Punan ang iyong address.",
     "zip_searching_mx": "Nagha-hanap...",
     "zip_not_found_mx": "Hindi namin matagpuan ang postang kodigo na ito. Mangyaring suriin ito.",
     "p_zip_new__mx": "Hal. 06600",

@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Primer has d'afegir un codi postal.",
+    "zip_not_found_new_mx": "No hem pogut trobar aquest codi postal. Omple la teva adre\u00e7a.",
     "zip_searching_mx": "Cercant...",
     "zip_not_found_mx": "No hem pogut trobar aquest codi postal. Si us plau, comproveu-lo.",
     "p_zip_new__mx": "Ex. 06600",

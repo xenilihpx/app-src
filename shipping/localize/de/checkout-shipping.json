@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Sie m\u00fcssen zun\u00e4chst eine Postleitzahl eingeben.",
+    "zip_not_found_new_mx": "Diese Postleitzahl konnten wir nicht finden. Bitte geben Sie Ihre Adresse ein.",
     "zip_searching_mx": "Wird gesucht...",
     "zip_not_found_mx": "Wir konnten diese Postleitzahl nicht finden. Bitte \u00fcberpr\u00fcfen Sie sie.",
     "p_zip_new__mx": "Z. B. 06600",

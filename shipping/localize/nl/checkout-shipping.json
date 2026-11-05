@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Je moet eerst een postcode invoeren.",
+    "zip_not_found_new_mx": "We konden deze postcode niet vinden. Vul je adres in.",
     "zip_searching_mx": "Bezig met zoeken...",
     "zip_not_found_mx": "We konden deze postcode niet vinden. Controleer deze alstublieft.",
     "p_zip_new__mx": "Bijv. 06600",

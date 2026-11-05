@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Mai \u00eent\u00e2i trebuie s\u0103 introduce\u021bi un cod po\u0219tal.",
+    "zip_not_found_new_mx": "Nu am g\u0103sit acest cod po\u0219tal. Introduce\u021bi adresa dumneavoastr\u0103.",
     "zip_searching_mx": "Se caut\u0103...",
     "zip_not_found_mx": "Nu am g\u0103sit acest cod po\u0219tal. V\u0103 rug\u0103m s\u0103 \u00eel verifica\u021bi.",
     "p_zip_new__mx": "De exemplu, 06600",

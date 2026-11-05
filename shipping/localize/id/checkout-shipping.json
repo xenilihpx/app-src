@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Anda harus memasukkan kode pos terlebih dahulu.",
+    "zip_not_found_new_mx": "Kami tidak dapat menemukan kode pos ini. Silakan isi alamat Anda.",
     "zip_searching_mx": "Mencari...",
     "zip_not_found_mx": "Kami tidak dapat menemukan kode pos ini. Mohon periksa kembali.",
     "p_zip_new__mx": "Misalnya 06600",

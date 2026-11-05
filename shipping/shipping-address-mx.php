@@ -23,12 +23,41 @@ $country="_mx";
     </div>
     <small id="state_municipality"
            data-searching="<?= htmlspecialchars($collector_sh->translate("zip_searching".$country, "Searching...", false), ENT_QUOTES); ?>"
-           data-not-found="<?= htmlspecialchars($collector_sh->translate("zip_not_found".$country, "We couldn't find this postal code. Please check it.", false), ENT_QUOTES); ?>"></small>
+           data-not-found="<?= htmlspecialchars($collector_sh->translate("zip_not_found_new".$country, "We couldn't find this postal code. Fill in your address.", false), ENT_QUOTES); ?>"></small>
+</div>
+<div class="row align-items-start mb-3" id="manual_fill" style="display:none;">
+    <div class="col-sm-12">
+        <div class="row mb-n3 align-items-start ">
+            <div class="col-sm-6 pr-sm-2  ">
+                <div class="mb-3 ">
+                    <label class="p cart-input-label" for="city" label="Town/City"><?=$collector_sh->translate("town_city".$country, "Municipality / borough"); ?></label>
+                    <div>
+                        <input id="fields_city" name="city" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_town_city".$country, "Municipality / borough"); ?>" required="required">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 num-in">
+                <div class="mb-3">
+                    <label class="p cart-input-label" for="state" label="State/Province"><?= $collector_sh->translate("state".$country, "State"); ?></label>
+                    <div>
+                        <input id="fields_state" name="state" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_state".$country, "State"); ?>" required="required"> 
+                        <!-- <select id="fields_state" name="state" class="cart-input p" required="required">
+                            <option value=""><?//= $collector_sh->translate("p_state".$country, "Select State"); ?></option>
+                        </select> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="mb-3">
     <label class="p cart-input-label" for="fields_neighborhood" label="neighborhood"><?=$collector_sh->translate("neighborhood".$country, "Neighborhood (colonia)"); ?></label>
-    <div>
+    <!-- A disabled <select> swallows clicks, so pointer-events:none lets this wrapper
+         catch them and show the "postal code first" error (see script below). -->
+    <style>#fields_neighborhood_drop:disabled { pointer-events: none; }</style>
+    <div id="fields_neighborhood_drop_wrap"
+         data-zip-required="<?= htmlspecialchars($collector_sh->translate("zip_required_first".$country, "You need to add a postal code first.", false), ENT_QUOTES); ?>">
         <!-- Populated with every colonia of the selected postal code (see script below).
              The chosen colonia is copied into #fields_neighborhood (the submitted field);
              "not listed" reveals #fields_neighborhood so the shopper can type it instead. -->
@@ -81,30 +110,7 @@ $country="_mx";
     </div>
 </div>
 
-<div class="row align-items-start mb-3" style="display:none;">
-    <div class="col-sm-12">
-        <div class="row mb-n3 align-items-start ">
-            <div class="col-sm-6 pr-sm-2  ">
-                <div class="mb-3 ">
-                    <label class="p cart-input-label" for="city" label="Town/City"><?=$collector_sh->translate("town_city".$country, "Municipality / borough"); ?></label>
-                    <div>
-                        <input id="fields_city" name="city" class="cart-input p" value="" type="text" placeholder="<?= $collector_sh->translate("p_town_city".$country, "Municipality / borough"); ?>" required="required">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 num-in">
-                <div class="mb-3">
-                    <label class="p cart-input-label" for="state" label="State/Province"><?= $collector_sh->translate("state".$country, "State"); ?></label>
-                    <div>
-                        <select id="fields_state" name="state" class="cart-input p" required="required">
-                            <option value=""><?= $collector_sh->translate("p_state".$country, "Select State"); ?></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- <div class="mb-3">
     <label class="p cart-input-label" for="fields_tax_id" label="tax_id"><?=$collector_sh->translate("tax_id".$country, "RFC or CURP (optional)"); ?></label>
@@ -245,9 +251,19 @@ $country="_mx";
     var zipCache = {};
     var lookedUpZip = '';
 
+    var manualFill = document.getElementById('manual_fill');
+
+    // City/state inputs stay hidden while the lookup fills them; shown only
+    // when the postal code isn't found so the shopper can type them in.
+    function showManualFill(show) {
+        if (manualFill) manualFill.style.display = show ? '' : 'none';
+    }
+
     function applyZipResult(result) {
         setCityState(result.city, result.state);
-        if (!result.colonias.length) stateMunicipality.textContent = stateMunicipality.dataset.notFound;
+        var notFound = !result.colonias.length;
+        if (notFound) stateMunicipality.textContent = stateMunicipality.dataset.notFound;
+        showManualFill(notFound);
         renderNeighborhoods(result.colonias);
     }
 
@@ -308,6 +324,7 @@ $country="_mx";
         lookedUpZip = '';
         resetNeighborhood();
         setCityState('', '');
+        showManualFill(false);
 
         if (digits.length === 5) {
             lookedUpZip = digits;
@@ -317,6 +334,39 @@ $country="_mx";
 
     neighborhoodSelect.addEventListener('change', function () {
         syncNeighborhood(true);
+    });
+
+    // ---- "Postal code first" error ----------------------------------------
+    // Clicking the colonia dropdown with no postal code shows an error under
+    // it; the error goes away as soon as the postal code has any value.
+    var dropWrap = document.getElementById('fields_neighborhood_drop_wrap');
+    var zipRequiredErr = null;
+
+    function hideZipRequiredError() {
+        if (zipRequiredErr && zipRequiredErr.parentNode) zipRequiredErr.parentNode.removeChild(zipRequiredErr);
+        zipRequiredErr = null;
+        zipField.classList.remove('error');
+    }
+
+    if (dropWrap) {
+        dropWrap.addEventListener('click', function () {
+            if ((zipField.value || '').trim() !== '') return;
+            if (!zipRequiredErr) {
+                zipRequiredErr = document.createElement('small');
+                zipRequiredErr.className = 'error-message';
+                zipRequiredErr.textContent = dropWrap.dataset.zipRequired;
+                neighborhoodSelect.parentNode.insertBefore(zipRequiredErr, neighborhoodSelect.nextSibling);
+            }
+            zipField.classList.add('error');
+            zipField.focus();
+        });
+    }
+
+    zipField.addEventListener('input', function () {
+        if ((zipField.value || '').trim() !== '') hideZipRequiredError();
+    });
+    zipField.addEventListener('change', function () {
+        if ((zipField.value || '').trim() !== '') hideZipRequiredError();
     });
 
     // Anything typed by hand is the shopper's own value, not a dropdown copy

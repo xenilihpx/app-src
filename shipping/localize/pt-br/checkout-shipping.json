@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Voc\u00ea precisa adicionar um CEP primeiro.",
+    "zip_not_found_new_mx": "N\u00e3o conseguimos encontrar esse CEP. Insira seu endere\u00e7o.",
     "zip_searching_mx": "Pesquisando...",
     "zip_not_found_mx": "N\u00e3o conseguimos encontrar esse CEP. Verifique-o, por favor.",
     "p_zip_new__mx": "Por exemplo, 06600",

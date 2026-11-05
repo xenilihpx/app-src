@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Nejprve je t\u0159eba zadat PS\u010c.",
+    "zip_not_found_new_mx": "Toto PS\u010c se n\u00e1m nepoda\u0159ilo naj\u00edt. Zadejte svou adresu.",
     "zip_searching_mx": "Hled\u00e1m...",
     "zip_not_found_mx": "Toto PS\u010c se n\u00e1m nepoda\u0159ilo naj\u00edt. Zkontrolujte ho pros\u00edm.",
     "p_zip_new__mx": "Nap\u0159. 06600",

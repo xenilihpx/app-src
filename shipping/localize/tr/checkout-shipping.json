@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "\u00d6ncelikle bir posta kodu girmeniz gerekiyor.",
+    "zip_not_found_new_mx": "Bu posta kodunu bulamad\u0131k. Adresinizi girin.",
     "zip_searching_mx": "Aran\u0131yor...",
     "zip_not_found_mx": "Bu posta kodunu bulamad\u0131k. L\u00fctfen kontrol edin.",
     "p_zip_new__mx": "\u00d6rne\u011fin: 06600",

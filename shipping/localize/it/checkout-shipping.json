@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Devi prima inserire un codice postale.",
+    "zip_not_found_new_mx": "Non siamo riusciti a trovare questo codice postale. Inserisci il tuo indirizzo.",
     "zip_searching_mx": "Ricerca in corso...",
     "zip_not_found_mx": "Non siamo riusciti a trovare questo codice postale. Ti preghiamo di verificarlo.",
     "p_zip_new__mx": "Ad es. 06600",

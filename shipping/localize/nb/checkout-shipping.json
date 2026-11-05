@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "Du m\u00e5 legge til et postnummer f\u00f8rst.",
+    "zip_not_found_new_mx": "Vi fant ikke dette postnummeret. Fyll inn adressen din.",
     "zip_searching_mx": "S\u00f8ker...",
     "zip_not_found_mx": "Vi fant ikke dette postnummeret. Vennligst sjekk det.",
     "p_zip_new__mx": "F.eks. 06600",

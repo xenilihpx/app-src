@@ -1,4 +1,6 @@
 {
+    "zip_required_first_mx": "El\u0151sz\u00f6r meg kell adnia egy ir\u00e1ny\u00edt\u00f3sz\u00e1mot.",
+    "zip_not_found_new_mx": "Nem tal\u00e1ltuk ezt az ir\u00e1ny\u00edt\u00f3sz\u00e1mot. K\u00e9rj\u00fck, adja meg a c\u00edm\u00e9t!",
     "zip_searching_mx": "Keres\u00e9s...",
     "zip_not_found_mx": "Nem tal\u00e1ltuk ezt az ir\u00e1ny\u00edt\u00f3sz\u00e1mot. K\u00e9rj\u00fck, ellen\u0151rizze!",
     "p_zip_new__mx": "P\u00e9ld\u00e1ul: 06600",
