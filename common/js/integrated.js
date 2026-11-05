@@ -2409,16 +2409,33 @@
                     },function (msg) {                           
                         $(submitBtn).removeAttr('disabled', false);
                         form_obj.showMsg(msg);
-                          
-                                if($("input.error").length!=0){                                  
-                                    $("input.error:first").focus();
-                                }else if($("select.error").length!=0){
-                                    $("select.error:first").focus();
-                                }
+                        form_obj.focusFirstError();
                     });
 
                     e.preventDefault();
                 });
+            }
+        }
+
+        //Focus the first element (in page order) that has the .error class. Hidden ones
+        //(e.g. a field inside a display:none row) can't take focus, so they're skipped;
+        //a non-focusable .error wrapper hands focus to the first field inside it.
+        form_obj.focusFirstError=function () {
+            var focusable = 'input:not([type=hidden]), select, textarea, button, [tabindex]:not([tabindex="-1"])';
+            var target = null;
+
+            $(".error").each(function () {
+                var $el = $(this);
+                if (!$el.is(":visible")) return; //keep looking
+                var $field = $el.is(focusable) ? $el : $el.find(focusable).filter(":visible").first();
+                if ($field.length && !$field.prop("disabled")) {
+                    target = $field[0];
+                    return false; //stop at the first one
+                }
+            });
+
+            if (target) {
+                target.focus();
             }
         }
 
