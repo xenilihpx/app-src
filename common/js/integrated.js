@@ -261,30 +261,32 @@
         }
 
         //close modals events
+        //Esc, a click on the overlay and the X all close the error dialog the same way.
+        //Clicking the X also bubbles to the overlay, so only the first call does anything.
+        form_obj.closeErrorDialog = function(){
+            if ($('#error_handler_overlay').length == 0) return;
+            $('#error_handler_overlay').remove();
+            form_obj.redirectToNextPage();
+            form_obj.errorMsgInUrl();
+            form_obj.paypalOnError();
+            form_obj.focusFirstError(); //take the shopper to the field that needs fixing
+        }
+
         form_obj.closeModalEvents= function(){
             	$(window).keydown(function(e) {
-                    if (e.which === 27 && $('#error_handler_overlay').length) {
-                        $('#error_handler_overlay').remove();
-                        form_obj.redirectToNextPage();
-                        form_obj.errorMsgInUrl();
-                        form_obj.paypalOnError();
+                    if (e.which === 27) {
+                        form_obj.closeErrorDialog();
                     }
                 });
 
                 $(document).off('click', '#error_handler_overlay');
                 $(document).on('click', '#error_handler_overlay', function() {
-                    $(this).remove();
-                    form_obj.redirectToNextPage();
-                    form_obj.errorMsgInUrl();
-                    form_obj.paypalOnError();
+                    form_obj.closeErrorDialog();
                 });
 
                 $(document).off('click', '#error_handler_overlay_close');
                 $(document).on('click', '#error_handler_overlay_close', function() {
-                    $('#error_handler_overlay').remove();
-                    form_obj.redirectToNextPage();
-                    form_obj.errorMsgInUrl();
-                    form_obj.paypalOnError();
+                    form_obj.closeErrorDialog();
                 });
 
                 $(document).on('click', '#app_common_modal_close', function() {
@@ -2408,8 +2410,7 @@
                         }
                     },function (msg) {                           
                         $(submitBtn).removeAttr('disabled', false);
-                        form_obj.showMsg(msg);
-                        form_obj.focusFirstError();
+                        form_obj.showMsg(msg); //the first .error field is focused when this dialog closes
                     });
 
                     e.preventDefault();
