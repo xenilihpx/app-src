@@ -1,4 +1,6 @@
 {
+    "zip_searching_mx": "Ricerca in corso...",
+    "zip_not_found_mx": "Non siamo riusciti a trovare questo codice postale. Ti preghiamo di verificarlo.",
     "p_zip_new__mx": "Ad es. 06600",
     "p_address_1_new__mx": "Ad es. Av. Insurgentes Sur",
     "p_exterior_number_new__mx": "Ad es. 1234",

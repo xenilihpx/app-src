@@ -16,11 +16,14 @@ $country="_mx";
 
 <div class="mb-3">
     <label class="p cart-input-label" for="fields_zip" label="Zip/Postal Code"><?= $collector_sh->translate("zip".$country, "Postal code"); ?></label>
-    <div class="self-autocomplete">
-        <input id="fields_zip" trigger="keyup" toSearch="zipcode" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" name="zip" class="cart-input p search" value="" type="text" inputmode="numeric" maxlength="5" placeholder="<?= $collector_sh->translate("p_zip_new_".$country, "E.g. 06600"); ?>" required="required">
-        <div id="self-suggestions" class="self-suggestions" style="display:none;"></div>
+    <div>
+        <!-- No suggestion list: one exact lookup per complete 5-digit code (see script below)
+             fills the colonia dropdown plus #fields_city and #fields_state. -->
+        <input id="fields_zip" autocomplete="postal-code" autocapitalize="off" autocorrect="off" spellcheck="false" name="zip" class="cart-input p" value="" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="<?= $collector_sh->translate("p_zip_new_".$country, "E.g. 06600"); ?>" required="required">
     </div>
-    <small id="state_municipality"></small>
+    <small id="state_municipality"
+           data-searching="<?= htmlspecialchars($collector_sh->translate("zip_searching".$country, "Searching...", false), ENT_QUOTES); ?>"
+           data-not-found="<?= htmlspecialchars($collector_sh->translate("zip_not_found".$country, "We couldn't find this postal code. Please check it.", false), ENT_QUOTES); ?>"></small>
 </div>
 
 <div class="mb-3">
@@ -115,23 +118,44 @@ $country="_mx";
 <script>
 (function () {
     var zipField = document.getElementById('fields_zip');
-    var suggestionsBox = document.getElementById('self-suggestions');
     var stateMunicipality = document.getElementById('state_municipality');
-    if (!zipField || !suggestionsBox || !stateMunicipality) return;
+    var cityField = document.getElementById('fields_city');
+    var stateField = document.getElementById('fields_state');
+    if (!zipField || !stateMunicipality || !cityField || !stateField) return;
 
-    function updateStateMunicipality() {
-        var cityField = document.getElementById('fields_city');
-        var stateField = document.getElementById('fields_state');
-        var city = cityField ? (cityField.value || '').trim() : '';
-        var state = '';
-        if (stateField) {
-            if (stateField.tagName === 'SELECT') {
-                var opt = stateField.options[stateField.selectedIndex];
-                state = (opt && opt.value) ? opt.text.trim() : '';
-            } else {
-                state = (stateField.value || '').trim();
+    function clearFieldError(field) {
+        field.classList.remove('error');
+        var err = document.querySelector('#' + field.id + ' + span.error-message');
+        if (err) err.remove();
+    }
+
+    // Put the state on the <select>: reuse a matching option, else add one
+    function setState(state) {
+        if (stateField.tagName !== 'SELECT') {
+            stateField.value = state;
+        } else if (!state) {
+            stateField.selectedIndex = 0;
+        } else {
+            var match = null, key = state.toLowerCase();
+            for (var i = 0; i < stateField.options.length; i++) {
+                var o = stateField.options[i];
+                if (o.value && (o.value.toLowerCase() === key || o.text.trim().toLowerCase() === key)) { match = o; break; }
             }
+            if (!match) {
+                match = new Option(state, state);
+                stateField.add(match);
+            }
+            match.selected = true;
         }
+        stateField.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function setCityState(city, state) {
+        cityField.value = city;
+        cityField.dispatchEvent(new Event('change', { bubbles: true }));
+        setState(state);
+        if (city) clearFieldError(cityField);
+        if (state) clearFieldError(stateField);
         stateMunicipality.textContent = [city, state].filter(Boolean).join(', ');
     }
 
@@ -215,7 +239,21 @@ $country="_mx";
         syncNeighborhood(false);
     }
 
-    function loadNeighborhoods(zip) {
+    // ---- Postal code lookup ----------------------------------------------
+    // Exactly one request per complete 5-digit code; answers are cached so
+    // re-entering a code already looked up doesn't hit the API again.
+    var zipCache = {};
+    var lookedUpZip = '';
+
+    function applyZipResult(result) {
+        setCityState(result.city, result.state);
+        if (!result.colonias.length) stateMunicipality.textContent = stateMunicipality.dataset.notFound;
+        renderNeighborhoods(result.colonias);
+    }
+
+    function lookupZip(zip) {
+        if (zipCache[zip]) { applyZipResult(zipCache[zip]); return; }
+
         var countrySelect = document.getElementById('fields_country_select');
         var seq = ++neighborhoodSeq;
         var apiPath = (window.location.pathname.toLowerCase().indexOf('/mobile') !== -1) ? '../' : '';
@@ -224,31 +262,57 @@ $country="_mx";
             + '&country=' + encodeURIComponent(countrySelect ? countrySelect.value.toLowerCase() : 'mx');
         if (document.documentElement.lang) url += '&lang=' + encodeURIComponent(document.documentElement.lang);
 
+        stateMunicipality.textContent = stateMunicipality.dataset.searching;
+
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.timeout = 15000;
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState !== 4 || seq !== neighborhoodSeq) return;
-            var colonias = [];
+        xhr.onload = function () {
+            if (seq !== neighborhoodSeq) return;   // zip changed meanwhile
+            var result = { colonias: [], city: '', state: '' };
+            var ok = false;
             try {
                 var data = JSON.parse(xhr.responseText);
+                ok = xhr.status === 200 && data.success !== false;
                 var seen = {};
                 (data.suggestions || []).forEach(function (s) {
+                    if (s.zipcode !== zip) return;  // exact code only
+                    if (!result.city && s.city) result.city = s.city.trim();
+                    if (!result.state && s.state) result.state = s.state.trim();
                     var name = (s.neighborhood || '').trim();
-                    if (s.zipcode === zip && name && !seen[name.toLowerCase()]) {
+                    if (name && !seen[name.toLowerCase()]) {
                         seen[name.toLowerCase()] = true;
-                        colonias.push(name);
+                        result.colonias.push(name);
                     }
                 });
-            } catch (err) { /* fall through with no colonias */ }
+            } catch (err) { ok = false; }
 
-            colonias.sort(function (a, b) { return a.localeCompare(b, 'es', { sensitivity: 'base' }); });
-            renderNeighborhoods(colonias);
+            result.colonias.sort(function (a, b) { return a.localeCompare(b, 'es', { sensitivity: 'base' }); });
+            if (ok) zipCache[zip] = result;           // failed requests can be retried
+            applyZipResult(result);
         };
         xhr.ontimeout = xhr.onerror = function () {
-            if (seq === neighborhoodSeq) renderNeighborhoods([]);
+            if (seq !== neighborhoodSeq) return;
+            lookedUpZip = '';                         // allow a retry of the same code
+            applyZipResult({ colonias: [], city: '', state: '' });
         };
         xhr.send();
+    }
+
+    function onZipChange() {
+        // Digits only - also cleans pasted/autofilled values like "06 600"
+        var digits = (zipField.value || '').replace(/\D/g, '').slice(0, 5);
+        if (digits !== zipField.value) zipField.value = digits;
+        if (digits === lookedUpZip) return;
+
+        lookedUpZip = '';
+        resetNeighborhood();
+        setCityState('', '');
+
+        if (digits.length === 5) {
+            lookedUpZip = digits;
+            lookupZip(digits);
+        }
     }
 
     neighborhoodSelect.addEventListener('change', function () {
@@ -260,22 +324,12 @@ $country="_mx";
         neighborhoodField.dataset.fromDrop = '';
     });
 
-    // A suggestion row's own click handler fills fields_zip/fields_city/fields_state;
-    // this bubbles up afterwards, so read the values once that has run.
-    suggestionsBox.addEventListener('click', function (e) {
-        if (e.target === suggestionsBox || e.target.classList.contains('status')) return;
-        setTimeout(function () {
-            updateStateMunicipality();
-            var zip = (zipField.value || '').trim();
-            if (zip) loadNeighborhoods(zip); else resetNeighborhood();
-        }, 0);
-    });
+    // 'input' covers typing and paste; 'change' catches browser autofill
+    zipField.addEventListener('input', onZipChange);
+    zipField.addEventListener('change', onZipChange);
 
-    // Typing a new zip invalidates the previous lookup
-    zipField.addEventListener('input', function () {
-        stateMunicipality.textContent = '';
-        resetNeighborhood();
-    });
+    // A code already present when the form is shown (e.g. restored on back)
+    if (zipField.value) onZipChange();
 })();
 </script>
 

@@ -1,4 +1,6 @@
 {
+    "zip_searching_mx": "Pesquisando...",
+    "zip_not_found_mx": "N\u00e3o conseguimos encontrar esse CEP. Verifique-o, por favor.",
     "p_zip_new__mx": "Por exemplo, 06600",
     "p_address_1_new__mx": "Por exemplo: Av. Insurgentes Sul",
     "p_exterior_number_new__mx": "Por exemplo, 1234",

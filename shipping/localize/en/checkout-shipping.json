@@ -1,4 +1,6 @@
 {
+    "zip_searching_mx": "Searching...",
+    "zip_not_found_mx": "We couldn't find this postal code. Please check it.",
     "p_zip_new__mx": "E.g. 06600",
     "p_address_1_new__mx": "E.g. Av. Insurgentes Sur",
     "p_exterior_number_new__mx": "E.g. 1234",

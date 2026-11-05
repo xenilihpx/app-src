@@ -1,4 +1,6 @@
 {
+    "zip_searching_mx": "\u6b63\u5728\u641c\u5c0b...",
+    "zip_not_found_mx": "\u6211\u5011\u627e\u4e0d\u5230\u9019\u500b\u90f5\u905e\u5340\u865f\u3002\u8acb\u78ba\u8a8d\u4e00\u4e0b\u3002",
     "p_zip_new__mx": "\u4f8b\u5982\uff1a06600",
     "p_address_1_new__mx": "\u4f8b\u5982\uff1a\u5357\u8d77\u7fa9\u8005\u5927\u9053",
     "p_exterior_number_new__mx": "\u4f8b\u5982 1234",

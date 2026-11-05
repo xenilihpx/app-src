@@ -1,4 +1,6 @@
 {
+    "zip_searching_mx": "Wird gesucht...",
+    "zip_not_found_mx": "Wir konnten diese Postleitzahl nicht finden. Bitte \u00fcberpr\u00fcfen Sie sie.",
     "p_zip_new__mx": "Z. B. 06600",
     "p_address_1_new__mx": "z. B. Av. Insurgentes Sur",
     "p_exterior_number_new__mx": "Beispiel: 1234",

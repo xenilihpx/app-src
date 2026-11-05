@@ -1,4 +1,6 @@
 {
+    "zip_searching_mx": "Cercant...",
+    "zip_not_found_mx": "No hem pogut trobar aquest codi postal. Si us plau, comproveu-lo.",
     "p_zip_new__mx": "Ex. 06600",
     "p_address_1_new__mx": "Ex. Av. Insurgentes Sud",
     "p_exterior_number_new__mx": "Ex. 1234",
