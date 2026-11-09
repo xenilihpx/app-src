@@ -7,7 +7,7 @@
     "p_zip_new__mx": "E.g. 06600",
     "p_address_1_new__mx": "E.g. Av. Insurgentes Sur",
     "p_exterior_number_new__mx": "E.g. 1234",
-    "p_interior_number_new__mx": "E.g. Apt. 4B",
+    "p_interior_number_new__mx": "E.g. Dept. 4B",
     "interior_number_ _mx": "Interior number (optional)",
     "cep_lookingbr": "Looking up address...",
     "cep_not_foundbr": "We couldn't find this CEP. Check it or fill in the address below.",

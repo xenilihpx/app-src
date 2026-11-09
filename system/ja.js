@@ -109,5 +109,6 @@ window.i18nData={
         "bin_warning_use_different_card_JP": "別のカードを使う",
         "bin_warning_bank_ESUN": "玉山銀行",
         "bin_warning_bank_TAISHIN": "台新銀行",
+        "bin_warning_bank_TBB": "台湾企業銀行",
         "bin_warning_bank_DOCOMO": "NTTドコモ"
 }

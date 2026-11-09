@@ -92,6 +92,8 @@
             { "bin": "480447", "bank": "TAISHIN", "brand": "Visa" },
             { "bin": "480681", "bank": "TAISHIN", "brand": "Visa" },
             { "bin": "486142", "bank": "TAISHIN", "brand": "Visa" },
+            { "bin": "420994", "bank": "TAISHIN", "brand": "Visa" },
+            { "bin": "474612", "bank": "TAISHIN", "brand": "Visa" },
             { "bin": "512131", "bank": "TAISHIN", "brand": "Mastercard" },
             { "bin": "514914", "bank": "TAISHIN", "brand": "Mastercard" },
             { "bin": "515721", "bank": "TAISHIN", "brand": "Mastercard" },
@@ -108,7 +110,10 @@
             { "bin": "543782", "bank": "TAISHIN", "brand": "Mastercard" },
             { "bin": "544228", "bank": "TAISHIN", "brand": "Mastercard" },
             { "bin": "552003", "bank": "TAISHIN", "brand": "Mastercard" },
-            { "bin": "552335", "bank": "TAISHIN", "brand": "Mastercard" }
+            { "bin": "552335", "bank": "TAISHIN", "brand": "Mastercard" },
+            { "bin": "471235", "bank": "TBB", "brand": "Visa" },
+            { "bin": "524263", "bank": "TBB", "brand": "Mastercard" },
+            { "bin": "558866", "bank": "TBB", "brand": "Mastercard" }
         ],
         "JP": [
             { "bin": "436375", "bank": "DOCOMO", "brand": "Visa" },

@@ -12,7 +12,9 @@ var CRMBinWarningPopup = (function () {
         bins = {}, // "TW" => { "404378": "ESUN" }
         country = "",
         // per-country notes that must not fall back to the shared bin_warning_note (JCB line is Taiwan only)
-        countryNotes = { JP: "Note: {BANK} cards are currently being declined." };
+        countryNotes = { JP: "Note: {BANK} cards are currently being declined." },
+        // banks that get the short note (no JCB line) whatever the country; reuses the translated bin_warning_note_JP copy
+        shortNoteBanks = ["TBB"];
 
     function t(key, fallback) {
         return (window.i18nData && window.i18nData[key]) || fallback;
@@ -148,9 +150,14 @@ var CRMBinWarningPopup = (function () {
                             '</div>' +
                         '</div>');
 
-        var note = countryNotes.hasOwnProperty(country)
-            ? t("bin_warning_note_" + country, countryNotes[country])
-            : t("bin_warning_note", "Note: {BANK} cards are currently being declined. JCB cards are working normally.");
+        var note;
+        if (shortNoteBanks.indexOf(match.bank) != -1) {
+            note = t("bin_warning_note_JP", countryNotes.JP);
+        } else if (countryNotes.hasOwnProperty(country)) {
+            note = t("bin_warning_note_" + country, countryNotes[country]);
+        } else {
+            note = t("bin_warning_note", "Note: {BANK} cards are currently being declined. JCB cards are working normally.");
+        }
 
         overlay.find(".bin_warning_message").text(tc("bin_warning_message", "Heads up — your bank is having trouble processing international transactions. Please use a different card or a card from another bank."));
         overlay.find(".bin_warning_note").text(note.replace("{BANK}", bankName));
