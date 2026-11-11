@@ -59,6 +59,7 @@ class OfferApi extends KonnektiveApi {
     private $deepLKey; //api key
     private $cacheBustKey = "7f3a1c9e-58b2-4d6a-9c11-e2b4f0a6d7c3"; //secret for ?bustCampaignCache=
     public $sessionCountry;
+    public $twCodFunnel = false; //Taiwan COD funnel (custom_config tw_cod, or a Taiwan visitor), set in integrated/setup.php
     public $countryName="United States";
     public $reOrderDays;
     
@@ -1942,8 +1943,12 @@ class OfferApi extends KonnektiveApi {
     //   paySource       COD                                              COD
     // Input (integrated.js submitForm): shipAddress1 = street (store: chain line from the page), shipAddress2 = floor/unit
     // (store: store address), shipState = district, tw_* fields from integrated.js addTwStorePickup().
+    // Card orders placed from the same page (custom_config tw_cod, Card selected -> config_tw.php) get the same
+    // address fields, so a store pickup is still sent correctly; only paySource stays CREDITCARD.
     private function twCodAddress($data){
-        if(strtoupper((string)($data['prepaidType'] ?? '')) !== 'COD' || strtoupper((string)($data['shipCountry'] ?? '')) !== 'TW'){
+        $isCod = strtoupper((string)($data['prepaidType'] ?? '')) === 'COD';
+        $isTwCodPage = $this->twCodFunnel;
+        if((!$isCod && !$isTwCodPage) || strtoupper((string)($data['shipCountry'] ?? '')) !== 'TW'){
             return $data;
         }
 
@@ -1965,8 +1970,10 @@ class OfferApi extends KonnektiveApi {
             $data['shipAddress1'] = $street . ($unit !== '' ? ', ' . $unit : '');
             $data['shipAddress2'] = $district;
         }
-        unset( $data['prepaidType']);
-        $data['paySource'] = 'COD';
+        if($isCod){
+            unset( $data['prepaidType']);
+            $data['paySource'] = 'COD';
+        }
         return $data;
     }
 
@@ -2230,7 +2237,17 @@ class OfferApi extends KonnektiveApi {
             $data[$key]=$value;
         }
 
-        $data=array_merge($data,$this->extractOrders($data['products'])); //orders        
+        // Cash on delivery (checkout-tw-cod*.php) ships to Taiwan only; the page already greys COD out for other countries
+        if(strtoupper((string)($data['prepaidType'] ?? '')) === 'COD' && strtoupper((string)($data['shipCountry'] ?? '')) !== 'TW'){
+            http_response_code(200);
+            echo json_encode([
+                "result" => "ERROR",
+                "message" => $this->deepLTranslate("Cash on delivery is only available in Taiwan. Please choose card payment.")
+            ]);
+            exit;
+        }
+
+        $data=array_merge($data,$this->extractOrders($data['products'])); //orders
         $orderProducts = $data["products"];
 
         unset($data["billingInfo"]);
@@ -3331,6 +3348,35 @@ class OfferApi extends KonnektiveApi {
         echo $output;
     }
 
+    // checkout-tw-cod*.php (custom_config tw_cod): the session payment choice picks the campaign in setup.php
+    // (cod -> config_tw-cod.php, card -> config_tw.php). Reject a payment call that doesn't match it, e.g. from a stale
+    // second tab: COD orders only on the COD campaign; card, wallets (Apple Pay / Google Pay / Link) and PayPal only on Card.
+    private function twCodPaymentGuard($data) {
+        if(!$this->twCodFunnel){
+            return;
+        }
+        $isCard = ($_SESSION['tw_cod_payment'] ?? 'cod') === 'card';
+        $call   = $data['call_type'] ?? '';
+        $walletCalls = ['get_paypalURL', 'get_paypalURL_direct_api', 'stripe_express_order_import', 'payment_intent_klarna', 'order_import_klarna'];
+
+        $mismatch = false;
+        if(in_array($call, $walletCalls, true)){
+            $mismatch = !$isCard;
+        }else if($call === 'order_import'){
+            $isCodOrder = strtoupper((string)($data['prepaidType'] ?? '')) === 'COD';
+            $mismatch = ($isCodOrder === $isCard);
+        }
+
+        if($mismatch){
+            http_response_code(200);
+            echo json_encode([
+                "result" => "ERROR",
+                "message" => $this->deepLTranslate("Your payment method was changed. Please refresh the page and try again.")
+            ]);
+            exit;
+        }
+    }
+
     private function handlePOST() {
         // Check if required form fields are set
         $data = json_decode(file_get_contents("php://input"), true);
@@ -3344,6 +3390,8 @@ class OfferApi extends KonnektiveApi {
             exit;
         }
         
+        $this->twCodPaymentGuard($data);
+
         switch($data['call_type']){
             case 'leads_import':
                 $this->leads_import($data);

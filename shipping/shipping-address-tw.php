@@ -38,6 +38,7 @@ $twT = [
     'id_err_family' => $collector_sh->translate("tw_id_err_family".$country, "FamilyMart store number is 6 digits starting with 0."),
     'id_err_hilife' => $collector_sh->translate("tw_id_err_hilife".$country, "Hi-Life store number is 4 digits."),
     'mobile_err'    => $collector_sh->translate("tw_mobile_err".$country, "Store pickup needs a Taiwan mobile number (10 digits starting with 09)."),
+    'home_only'     => $collector_sh->translate("tw_home_only_card".$country, "Store pickup is only available with cash on delivery."),
 ];
 $twH = function ($k) use ($twT) { return htmlspecialchars($twT[$k], ENT_QUOTES, 'UTF-8'); };
 $twHomeSvg  = '<svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>';
@@ -78,7 +79,7 @@ input:not([type=checkbox]):not([type=radio]):disabled {
 }
 
 /* Delivery type tabs + store pickup */
-#twDeliveryTypeWrap[hidden], #twStoreBlock[hidden], #twHomeBlock[hidden], .tw-store-wrap [hidden] { display: none !important; }
+#twDeliveryTypeWrap[hidden], #twStoreBlock[hidden], #twHomeBlock[hidden], .tw-store-wrap [hidden], #twHomeOnlyNote[hidden] { display: none !important; }
 .tw-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
 .tw-tab { border: 1px solid #d6d6d6; background: #fff; padding: 10px 4px; cursor: pointer; font: inherit; color: #222;
     font-size: 13px; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 64px; justify-content: center; }
@@ -92,6 +93,10 @@ input:not([type=checkbox]):not([type=radio]):disabled {
 .tw-tab .tw-logo-hilife img { height: 24px; }   /* ~4:1 heart + 萊爾富 */
 .tw-tab[aria-selected=true] { border: 2px solid #2b6cb0; background: #f2f7fd; padding: 9px 3px; }
 .tw-tab:focus-visible { outline: 2px solid #4a90d9; }
+/* Home delivery only (TW.setHomeOnly, e.g. card payment): store tabs greyed out and not clickable */
+.tw-tab:disabled { cursor: not-allowed; background: #f5f5f5; border-color: #e3e3e3; color: #999; }
+.tw-tab:disabled .tw-logo { opacity: .35; filter: grayscale(1); }
+.tw-homeonly-note { margin: -8px 0 16px; font-size: 12px; color: #777; }
 .tw-store-search { margin-bottom: 0 !important; }
 .tw-store-list { border: 1px solid #d6d6d6; border-top: 0; max-height: 264px; overflow-y: auto; background: #fff; }
 /* Error states (same look as the TW COD mock): red border, white field, small dark-red message under it */
@@ -130,6 +135,7 @@ input:not([type=checkbox]):not([type=radio]):disabled {
         <button type="button" class="tw-tab" role="tab" data-type="FAMILY" aria-selected="false"><span class="tw-logo tw-logo-img tw-logo-family"><?= $twLogo('tw-familymart.svg', $twT['family']); ?></span><?//= $twH('family'); ?></button>
         <button type="button" class="tw-tab" role="tab" data-type="HILIFE" aria-selected="false"><span class="tw-logo tw-logo-img tw-logo-hilife"><?= $twLogo('tw-hilife.svg', $twT['hilife']); ?></span><?//= $twH('hilife'); ?></button>
     </div>
+    <p class="tw-homeonly-note" id="twHomeOnlyNote" hidden><?= $twH('home_only'); ?></p>
     <input type="hidden" id="tw_delivery_type" name="tw_delivery_type" value="HOME">
     <!-- Checkout Champ custom fields (tw_store_*): set by TW.fill() on submit, empty for HOME.
          integrated.js addTwStorePickup() adds them to the order; OfferApi::customFields() sends them as custom_order_tw_*. -->
@@ -575,9 +581,33 @@ input:not([type=checkbox]):not([type=radio]):disabled {
         Object.keys(f).forEach(function (k) { var el = $id(k); if (el) el.value = f[k]; });
     }
 
+    // ---- home delivery only ----
+    // TW.setHomeOnly(true) disables the store pickup tabs and switches to HOME (checkout-tw-cod-v2.php calls it while
+    // Card is the payment method: store pickup is cash on delivery only). The flag is data-tw-home-only="1" on the
+    // page's [data-tw-store-pickup] form, so it survives this partial being re-loaded over AJAX (country change) and
+    // the page can set it before the partial exists.
+    function pickupForm() { return document.querySelector('[data-tw-store-pickup]'); }
+    function homeOnly() { var f = pickupForm(); return !!(f && f.getAttribute('data-tw-home-only') === '1'); }
+    function applyHomeOnly() {
+        var on = homeOnly();
+        Array.prototype.forEach.call(document.querySelectorAll('.tw-tab'), function (b) {
+            b.disabled = on && b.getAttribute('data-type') !== 'HOME';
+        });
+        var note = $id('twHomeOnlyNote');
+        if (note) note.hidden = !on;
+        if (on && type() !== 'HOME') selectType('HOME');
+    }
+    TW.setHomeOnly = function (on) {
+        var f = pickupForm();
+        if (f) { if (on) f.setAttribute('data-tw-home-only', '1'); else f.removeAttribute('data-tw-home-only'); }
+        applyHomeOnly();
+    };
+    TW.applyHomeOnly = applyHomeOnly;
+
     // ---- per-render setup ----
     TW.reload = loadStores;   // called by the county/city + district value setters above
     if (enabled()) $id('twDeliveryTypeWrap').hidden = false;
+    applyHomeOnly();          // first, so the tabs are locked even if anything below fails
     selectType('HOME');
 
     // ---- document-level listeners, registered once ----
@@ -586,7 +616,7 @@ input:not([type=checkbox]):not([type=radio]):disabled {
 
     document.addEventListener('click', function (e) {
         var tab = e.target.closest && e.target.closest('.tw-tab');
-        if (tab) { if (tab.getAttribute('data-type') !== type()) selectType(tab.getAttribute('data-type')); return; }
+        if (tab) { if (!tab.disabled && tab.getAttribute('data-type') !== type()) selectType(tab.getAttribute('data-type')); return; }
         if (e.target.closest && e.target.closest('#twChangeStore')) { unpick(); $id('twStoreSearch').focus(); return; }
 
         // Runs in the capture phase, before the shared #submitForm handler in integrated.js:
