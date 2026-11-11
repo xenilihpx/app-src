@@ -1560,7 +1560,7 @@ class OfferApi extends KonnektiveApi {
 
     public function leads_import($data){   
         $data["campaignId"] = $this->campaignId; 
-        $data['sessionId'] = $_SESSION['session_id_'.$this->campaignId];
+        //$data['sessionId'] = $_SESSION['session_id_'.$this->campaignId];
         $data['custom_order_language']=$this->targetLanguage; //send to api the selected language
         $resp=$this->import_lead($data);
         $resp_decode = json_decode($resp);
@@ -1569,6 +1569,7 @@ class OfferApi extends KonnektiveApi {
             $_SESSION['order_id_'.$this->campaignId] = $resp_decode->message->orderId;  
             echo $resp;
         } else if($resp_decode->result=="ERROR"){
+           // echo $resp;
             //$this->messageCheck($resp_decode->message,$resp_decode->result);
         }
     }
@@ -1929,6 +1930,46 @@ class OfferApi extends KonnektiveApi {
             return $resp_decode;
     }
 
+    // Taiwan cash-on-delivery order (checkout-tw-cod.php, prepaidType COD): COC address fields per delivery type.
+    //   field           HOME                                             store pickup (711 / FAMILY / HILIFE)
+    //   shipAddress1    {street_address}, {unit}  (", {unit}" skipped    {chain} {tw_store_name}（{tw_store_id}）, chain = 7-ELEVEN / 全家 / 萊爾富
+    //                   when empty)                                      e.g. 全家 台中惠中店（004114）; "（…）" skipped when the typed store has no number
+    //   shipAddress2    district                                         tw_store_address; if empty, district
+    //   shipCity        city                                             city
+    //   shipState       empty                                            empty
+    //   shipPostalCode  zip3                                             zip3
+    //   shipCountry     TW                                               TW
+    //   paySource       COD                                              COD
+    // Input (integrated.js submitForm): shipAddress1 = street (store: chain line from the page), shipAddress2 = floor/unit
+    // (store: store address), shipState = district, tw_* fields from integrated.js addTwStorePickup().
+    private function twCodAddress($data){
+        if(strtoupper((string)($data['prepaidType'] ?? '')) !== 'COD' || strtoupper((string)($data['shipCountry'] ?? '')) !== 'TW'){
+            return $data;
+        }
+
+        $district = trim((string)($data['shipState'] ?? ''));
+        $type     = strtoupper(trim((string)($data['tw_delivery_type'] ?? 'HOME')));
+        $chains   = ['711' => '7-ELEVEN', 'FAMILY' => '全家', 'HILIFE' => '萊爾富'];
+
+        if(isset($chains[$type])){
+            $name    = trim((string)($data['tw_store_name'] ?? ''));
+            $storeId = trim((string)($data['tw_store_id'] ?? ''));        //text, leading zeros kept
+            $address = trim((string)($data['tw_store_address'] ?? ''));
+            if($name !== ''){
+                $data['shipAddress1'] = $chains[$type] . ' ' . $name . ($storeId !== '' ? '（' . $storeId . '）' : '');
+            }
+            $data['shipAddress2'] = ($address !== '') ? $address : $district;
+        } else {
+            $street = trim((string)($data['shipAddress1'] ?? ''));
+            $unit   = trim((string)($data['shipAddress2'] ?? ''));
+            $data['shipAddress1'] = $street . ($unit !== '' ? ', ' . $unit : '');
+            $data['shipAddress2'] = $district;
+        }
+        unset( $data['prepaidType']);
+        $data['paySource'] = 'COD';
+        return $data;
+    }
+
     private function customFields($data){
 
         if(isset($data['cpf'])){
@@ -2106,6 +2147,29 @@ class OfferApi extends KonnektiveApi {
             $data['custom_order_bin_popup_shown']= $data['binPopupShown'];
         }
 
+        //Taiwan delivery type + convenience-store pickup (shipping-address-tw.php -> integrated.js addTwStorePickup)
+        //  tw_delivery_type  HOME | 711 | FAMILY | HILIFE
+        //  tw_store_id       text, leading zeros kept (e.g. 004114); empty for HOME, may be empty when typed
+        //  tw_store_name     empty for HOME
+        //  tw_store_address  empty for HOME
+        //  tw_store_manual   empty for HOME, 0 = picked from the list, 1 = typed
+        if(isset($data['tw_delivery_type'])){
+            $twType = strtoupper(trim((string)$data['tw_delivery_type']));
+            if(!in_array($twType, ['HOME', '711', 'FAMILY', 'HILIFE'], true)){
+                $twType = 'HOME';
+            }
+            $twStore = ($twType !== 'HOME');
+            $twText = function($key, $max) use ($data, $twStore){
+                return $twStore ? mb_substr(trim((string)($data[$key] ?? '')), 0, $max) : '';
+            };
+            $data['custom_order_tw_delivery_type'] = $twType;
+            $data['custom_order_tw_store_id']      = $twText('tw_store_id', 10);
+            $data['custom_order_tw_store_name']    = $twText('tw_store_name', 100);
+            $data['custom_order_tw_store_address'] = $twText('tw_store_address', 200);
+            $data['custom_order_tw_store_manual']  = $twStore ? ((string)($data['tw_store_manual'] ?? '') === '1' ? '1' : '0') : '';
+            unset($data['tw_delivery_type'], $data['tw_store_id'], $data['tw_store_name'], $data['tw_store_address'], $data['tw_store_manual']);
+        }
+
         if(isset($_SESSION["custom_config"])){
             $data['custom_order_custom_config']= $_SESSION["custom_config"];
         }
@@ -2175,7 +2239,8 @@ class OfferApi extends KonnektiveApi {
 
         $data['custom_order_track_url']=$_SESSION['first_landpage_'.$this->campaignId]; //track url 
         $data['custom_order_language']=$this->targetLanguage; //send to api the selected language
-
+        
+        $data=$this->twCodAddress($data); //Taiwan COD (checkout-tw-cod.php): COC address fields + paySource COD
         $data=$this->customFields($data);
         $resp=$this->import_order($data);
         $resp_decode = json_decode($resp);
@@ -2331,9 +2396,10 @@ class OfferApi extends KonnektiveApi {
         unset($data["products"]);
         unset($data["shippingInfo"]);
 
-        $data['custom_order_track_url']=$_SESSION['first_landpage_'.$this->campaignId]; //track url 
+        $data['custom_order_track_url']=$_SESSION['first_landpage_'.$this->campaignId]; //track url
         $data['custom_order_language']=$this->targetLanguage; //send to api the selected language
-      
+
+        
         $data=$this->customFields($data);
         $resp=$this->import_order($data);
         $resp_decode = json_decode($resp);

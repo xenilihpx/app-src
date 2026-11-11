@@ -2333,6 +2333,7 @@
                         }
 
                         form_obj.addBinPopupShown(model);
+                        form_obj.addTwStorePickup(model);
 
                         if($(formField.city).is('[value_id]')){
                             model.shippingInfo.shipCity=$(formField.city).attr("value_id");
@@ -2357,6 +2358,9 @@
                                 model.cardMonth= ((typeof $(formField.month).val() !="undefined") ? $(formField.month).val().trim() : $(formField.exp_date).val().split('/')[0].trim());
                                 model.cardYear= ((typeof $(formField.year).val() !="undefined") ?$(formField.year).val().trim() : $(formField.exp_date).val().split('/')[1].trim());
                                 model.cardSecurityCode= $(formField.cvv).val().trim();
+                            }else if($("#checkoutPaymentType").val()=="cod"){
+                                model.call_type= "order_import";   
+                                model.prepaidType= $("#checkoutPaymentType").val().toUpperCase();
                             } else {
                                 model.call_type= "order_import_prepaid";
                                 model.prepaidType= $("#checkoutPaymentType").val().toUpperCase();
@@ -4130,6 +4134,26 @@
                     model.binPopupShown=sessionStorage.getItem("bin_popup_shown");
                 }
             } catch (e) {}
+            return model;
+        }
+
+        //Taiwan delivery type + convenience-store pickup (src/shipping/shipping-address-tw.php),
+        //sent as COC order custom fields tw_delivery_type, tw_store_id, tw_store_name, tw_store_address, tw_store_manual (OfferApi::customFields)
+        //  HOME:              HOME, empty, empty, empty, empty
+        //  store from list:   711|FAMILY|HILIFE, store_id (text, leading zeros kept), store_name, store_address, 0
+        //  store typed:       711|FAMILY|HILIFE, as typed, as typed, as typed, 1
+        form_obj.addTwStorePickup=function(model){
+            if ($("#tw_delivery_type").length==0 || $(formField.country).val()!="TW") {
+                return model;
+            }
+            var type=$("#tw_delivery_type").val() || "HOME";
+            var isStore=(type!="HOME");
+            var field=function(id){ return isStore ? String($("#"+id).val() || "").trim() : ""; };
+            model.tw_delivery_type=type;
+            model.tw_store_id=field("tw_store_id");
+            model.tw_store_name=field("tw_store_name");
+            model.tw_store_address=field("tw_store_address");
+            model.tw_store_manual=field("tw_store_manual");
             return model;
         }
 
