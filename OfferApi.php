@@ -3364,7 +3364,7 @@ class OfferApi extends KonnektiveApi {
             $mismatch = !$isCard;
         }else if($call === 'order_import'){
             $isCodOrder = strtoupper((string)($data['prepaidType'] ?? '')) === 'COD';
-            $mismatch = ($isCodOrder === $isCard);
+            $mismatch =isset($data['cardNumber']) ? false : ($isCodOrder === $isCard);
         }
 
         if($mismatch){
