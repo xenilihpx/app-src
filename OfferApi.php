@@ -3390,7 +3390,7 @@ class OfferApi extends KonnektiveApi {
             exit;
         }
         
-        $this->twCodPaymentGuard($data);
+        //$this->twCodPaymentGuard($data);
 
         switch($data['call_type']){
             case 'leads_import':
