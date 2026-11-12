@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Voer de straatnaam, het huisnummer en het nummer in (moet het teken \u865f bevatten).",
+    "tw_mobile_err_home_tw": "Voer een Taiwanese mobiele telefoonnummer in (10 cijfers, beginnend met 09).",
     "tw_home_only_card_tw": "Afhalen in de winkel is alleen mogelijk bij betaling onder rembours.",
     "tw_delivery_type_label_tw": "Leveringswijze",
     "tw_delivery_home_tw": "Thuisbezorging",

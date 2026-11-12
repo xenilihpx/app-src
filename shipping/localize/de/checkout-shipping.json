@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Geben Sie die Stra\u00dfe, die Hausnummer und die Nummer ein (muss \u201e\u865f\u201c enthalten).",
+    "tw_mobile_err_home_tw": "Geben Sie eine taiwanesische Handynummer ein (10 Ziffern, beginnend mit 09).",
     "tw_home_only_card_tw": "Die Abholung im Gesch\u00e4ft ist nur bei Zahlung per Nachnahme m\u00f6glich.",
     "tw_delivery_type_label_tw": "Lieferart",
     "tw_delivery_home_tw": "Lieferung nach Hause",

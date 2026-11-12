@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Skriv inn gate, gateavsnitt og nummer (m\u00e5 inneholde \u865f).",
+    "tw_mobile_err_home_tw": "Skriv inn et taiwansk mobilnummer (10 siffer som begynner med 09).",
     "tw_home_only_card_tw": "Henting i butikk er kun mulig ved betaling ved levering.",
     "tw_delivery_type_label_tw": "Leveringsm\u00e5te",
     "tw_delivery_home_tw": "Hjemlevering",

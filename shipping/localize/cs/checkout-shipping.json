@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Zadejte n\u00e1zev ulice, \u010d\u00edslo ulice a \u010d\u00edslo domu (mus\u00ed obsahovat znak \u865f).",
+    "tw_mobile_err_home_tw": "Zadejte taiwansk\u00e9 mobiln\u00ed \u010d\u00edslo (10 \u010d\u00edslic za\u010d\u00ednaj\u00edc\u00edch \u010d\u00edslic\u00ed 09).",
     "tw_home_only_card_tw": "Osobn\u00ed odb\u011br v obchod\u011b je mo\u017en\u00fd pouze p\u0159i platb\u011b na dob\u00edrku.",
     "tw_delivery_type_label_tw": "Zp\u016fsob doru\u010den\u00ed",
     "tw_delivery_home_tw": "Doru\u010den\u00ed dom\u016f",

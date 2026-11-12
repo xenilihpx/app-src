@@ -52,7 +52,9 @@
                             'phoneBill': '#fields_phone_bill',
                         },
                         'agreeterms': '#fields_agree',
-                        'marketingoptin': '#fields_marketing' //checkbox for allow marketing sms
+                        'marketingoptin': '#fields_marketing', //checkbox for allow marketing sms
+                        'emailoptin': '#fields_email_marketing', //checkbox for allow email marketing
+                        'contactoptin': '#fields_sms_marketing', //checkbox for allow sms marketing
                     },
             differentBillingContainer = '#billingAddress',
             submitBtn = '#submitForm',
@@ -2231,6 +2233,8 @@
                             sourceValue4: cartData.c4,
                             sourceValue5: cartData.c5,
                             marketingOptIn : ($(formField.marketingoptin).is(':checked') ? 'true' : 'false'),
+                            contactOptIn : ($(formField.contactoptin).is(':checked') ? 'true' : 'false'),
+                            emailOptIn : ($(formField.emailoptin).is(':checked') ? 'true' : 'false'),
                             shipProfileId: (($("#ShipProfileId").length == 1 && $("#ShipProfileId").val() != "")? parseInt($("#ShipProfileId").val()) :""),
                             couponCode: cartData.couponCode,
                            
@@ -2995,6 +2999,8 @@
                                         sourceValue5: cartData.c5,
                                         testmode: getQueryStringByName("testmode"),
                                         marketingOptIn : ($(formField.marketingoptin).is(':checked') ? 'true' : 'false'),
+                                        contactOptIn : ($(formField.contactoptin).is(':checked') ? 'true' : 'false'),
+                                        emailOptIn : ($(formField.emailoptin).is(':checked') ? 'true' : 'false'),
                                         couponCode: cartData.couponCode
                                     };
 
@@ -3808,6 +3814,8 @@
                         sourceValue4: cartData.c4 || '',
                         sourceValue5: cartData.c5 || '',
                         marketingOptIn: ($(formField.marketingoptin).is(':checked') ? 'true' : 'false'),
+                        contactOptIn : ($(formField.contactoptin).is(':checked') ? 'true' : 'false'),
+                        emailOptIn : ($(formField.emailoptin).is(':checked') ? 'true' : 'false'),
                         shipProfileId: ($("#ShipProfileId").val() || ""),
                         couponCode: cartData.couponCode || '',
                         currency: $("#prodCurrency").val() || 'usd',

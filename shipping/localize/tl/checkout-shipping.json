@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Ipasok ang kalsada, linya, at numero (kailangang isama ang \u865f).",
+    "tw_mobile_err_home_tw": "Ipasok ang isang Taiwan na numero ng mobile (10 digit na nagsisimula sa 09).",
     "tw_home_only_card_tw": "Ang pagkuha sa tindahan ay maaari lamang kung bayad sa paghahatid.",
     "tw_delivery_type_label_tw": "Uri ng paghahatid",
     "tw_delivery_home_tw": "Paghatid sa bahay",

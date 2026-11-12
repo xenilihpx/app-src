@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Cadde, \u015ferit ve numaray\u0131 girin (\u865f karakterini i\u00e7ermelidir).",
+    "tw_mobile_err_home_tw": "Tayvan cep telefonu numaras\u0131 girin (09 ile ba\u015flayan 10 haneli).",
     "tw_home_only_card_tw": "Ma\u011fazadan teslim alma se\u00e7ene\u011fi yaln\u0131zca kap\u0131da \u00f6deme ile kullan\u0131labilir.",
     "tw_delivery_type_label_tw": "Teslimat t\u00fcr\u00fc",
     "tw_delivery_home_tw": "Eve teslimat",

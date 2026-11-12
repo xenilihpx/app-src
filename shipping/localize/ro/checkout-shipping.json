@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Introduce\u021bi numele str\u0103zii, banda de circula\u021bie \u0219i num\u0103rul (trebuie s\u0103 includ\u0103 caracterul \u865f).",
+    "tw_mobile_err_home_tw": "Introduce\u021bi un num\u0103r de telefon mobil din Taiwan (10 cifre, \u00eencep\u00e2nd cu 09).",
     "tw_home_only_card_tw": "Ridicarea din magazin este disponibil\u0103 numai cu plata la livrare.",
     "tw_delivery_type_label_tw": "Tipul livr\u0103rii",
     "tw_delivery_home_tw": "Livrare la domiciliu",

@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Introduce la calle, el n\u00famero y el n\u00famero de casa (debe incluir el \u865f).",
+    "tw_mobile_err_home_tw": "Introduce un n\u00famero de m\u00f3vil de Taiw\u00e1n (10 d\u00edgitos que empiecen por 09).",
     "tw_home_only_card_tw": "La recogida en tienda solo est\u00e1 disponible con pago contra reembolso.",
     "tw_delivery_type_label_tw": "Tipo de entrega",
     "tw_delivery_home_tw": "Entrega a domicilio",

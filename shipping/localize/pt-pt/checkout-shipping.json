@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Introduza o nome da rua, a via e o n\u00famero (deve incluir o \u865f).",
+    "tw_mobile_err_home_tw": "Introduza um n\u00famero de telem\u00f3vel de Taiwan (10 d\u00edgitos, come\u00e7ando por 09).",
     "tw_home_only_card_tw": "A recolha na loja s\u00f3 est\u00e1 dispon\u00edvel com pagamento \u00e0 entrega.",
     "tw_delivery_type_label_tw": "Tipo de entrega",
     "tw_delivery_home_tw": "Entrega ao domic\u00edlio",

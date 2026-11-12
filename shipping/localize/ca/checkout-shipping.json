@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Introdu\u00efu el nom de la via, el carrer i el n\u00famero (cal incloure \u865f).",
+    "tw_mobile_err_home_tw": "Introdueix un n\u00famero de m\u00f2bil de Taiwan (10 d\u00edgits que comencen per 09).",
     "tw_home_only_card_tw": "El recolliment a la botiga nom\u00e9s est\u00e0 disponible amb pagament en efectiu a la entrega.",
     "tw_delivery_type_label_tw": "Tipus de lliurament",
     "tw_delivery_home_tw": "Entrega a domicili",

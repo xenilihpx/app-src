@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Wprowad\u017a nazw\u0119 ulicy, numer pasu ruchu i numer (musi zawiera\u0107 znak \u865f).",
+    "tw_mobile_err_home_tw": "Wprowad\u017a tajwa\u0144ski numer telefonu kom\u00f3rkowego (10 cyfr, zaczynaj\u0105cy si\u0119 od 09).",
     "tw_home_only_card_tw": "Odbi\u00f3r w sklepie jest mo\u017cliwy wy\u0142\u0105cznie przy p\u0142atno\u015bci got\u00f3wk\u0105 przy odbiorze.",
     "tw_delivery_type_label_tw": "Spos\u00f3b dostawy",
     "tw_delivery_home_tw": "Dostawa do domu",

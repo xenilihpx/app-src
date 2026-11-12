@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Masukkan nama jalan, jalur, dan nomor (harus menyertakan \u865f).",
+    "tw_mobile_err_home_tw": "Masukkan nomor ponsel Taiwan (10 digit yang diawali dengan 09).",
     "tw_home_only_card_tw": "Pengambilan di toko hanya tersedia dengan pembayaran tunai saat pengiriman.",
     "tw_delivery_type_label_tw": "Jenis pengiriman",
     "tw_delivery_home_tw": "Pengiriman ke rumah",

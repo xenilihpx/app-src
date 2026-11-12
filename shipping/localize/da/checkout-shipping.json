@@ -1,4 +1,6 @@
 {
+    "tw_addr1_number_err_tw": "Indtast gadenavn, vejdel og nummer (skal indeholde \u865f).",
+    "tw_mobile_err_home_tw": "Indtast et taiwansk mobilnummer (10 cifre, der begynder med 09).",
     "tw_home_only_card_tw": "Afhentning i butikken er kun mulig ved betaling ved levering.",
     "tw_delivery_type_label_tw": "Leveringsform",
     "tw_delivery_home_tw": "Hjemmelevering",

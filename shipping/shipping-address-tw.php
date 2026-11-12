@@ -38,6 +38,8 @@ $twT = [
     'id_err_family' => $collector_sh->translate("tw_id_err_family".$country, "FamilyMart store number is 6 digits starting with 0."),
     'id_err_hilife' => $collector_sh->translate("tw_id_err_hilife".$country, "Hi-Life store number is 4 digits."),
     'mobile_err'    => $collector_sh->translate("tw_mobile_err".$country, "Store pickup needs a Taiwan mobile number (10 digits starting with 09)."),
+    'mobile_err_home' => $collector_sh->translate("tw_mobile_err_home".$country, "Enter a Taiwan mobile number (10 digits starting with 09)."),
+    'addr_no_err'   => $collector_sh->translate("tw_addr1_number_err".$country, "Enter road, lane and number (must include 號)."),
     'home_only'     => $collector_sh->translate("tw_home_only_card".$country, "Store pickup is only available with cash on delivery."),
 ];
 $twH = function ($k) use ($twT) { return htmlspecialchars($twT[$k], ENT_QUOTES, 'UTF-8'); };
@@ -194,7 +196,8 @@ input:not([type=checkbox]):not([type=radio]):disabled {
     <div>
         <input id="fields_address1" name="address 1"
           onErrorEmpty="<?=$collector_sh->translate("on_error_address1_empty".$country, "Enter road, lane and number.");?>"
-          onErrorValue="<?=$collector_sh->translate("on_error_address1_".$country, "Enter your address in Traditional Chinese.");?>"  class="cart-input p" value="" type="text" placeholder="例：信義路五段7號" required="required">
+          onErrorValue="<?=$collector_sh->translate("on_error_address1_".$country, "Enter your address in Traditional Chinese.");?>"
+          onErrorNumber="<?= $twH('addr_no_err'); ?>"  class="cart-input p" value="" type="text" placeholder="例：信義路五段7號" required="required">
     </div>
 </div>
 
@@ -223,7 +226,7 @@ input:not([type=checkbox]):not([type=radio]):disabled {
     <label class="tw-check"><input type="checkbox" id="twManual"> <?= $twH('not_listed'); ?></label>
     <div class="tw-manual" id="twManualBlock" hidden>
         <?php
-        // "Store number (optional)" / "門市店號（選填）": show a trailing bracketed part in grey, as in the mock
+        // "Store number (optional)" / "門市店號（非必填）": show a trailing bracketed part in grey, as in the mock
         $twOptLabel = function ($k) use ($twH) {
             return preg_replace('/\s*([（(][^（()）]*[)）])\s*$/u', ' <span class="tw-opt">$1</span>', $twH($k));
         };
@@ -332,6 +335,10 @@ input:not([type=checkbox]):not([type=radio]):disabled {
         var empty = address1.value.trim() == '';
         if (empty) {
             inlineError(address1, null, false, address1.getAttribute("onErrorEmpty"));
+        } else if (valid && address1.getAttribute('data-tw-need-no') === '1') {
+            // house number (號) is checked on submit (home delivery); once that has run, blur keeps checking it
+            // so the message doesn't disappear before the number is added
+            inlineError(address1, null, address1.value.indexOf('號') !== -1, address1.getAttribute("onErrorNumber"));
         } else {
             inlineError(address1, null, valid, address1.getAttribute("onErrorValue"));
             if(!valid) {
@@ -422,8 +429,10 @@ input:not([type=checkbox]):not([type=radio]):disabled {
         setStoreFields('', '', '', '');   // a store is only kept once it's validated on submit (TW.fill)
         if (t === 'HOME') {
             if (TW.state.filled) { setAddr('', ''); TW.state.filled = false; }
-            inlineError($id('fields_phone'), phoneAnchor(), true, '');
         }
+        // the mobile check applies to every type, only the wording differs: refresh a message that's already showing
+        var phone = $id('fields_phone');
+        if (phone && phone.classList.contains('error') && phone.value.trim() !== '') validatePhone();
         TW.state.lastArea = '';
         loadStores();
         document.dispatchEvent(new CustomEvent('tw:deliverytype', { detail: { type: t } }));
@@ -521,27 +530,58 @@ input:not([type=checkbox]):not([type=radio]):disabled {
         var n = el.value.replace(/\D/g, '').replace(/^886/, '');
         return iso === 'tw' && /^0?9\d{8}$/.test(n);
     }
-    function validatePhone() { return inlineError($id('fields_phone'), phoneAnchor(), mobileOk(), txt('mobile_err')); }
+    function mobileErr() { return isStore() ? txt('mobile_err') : txt('mobile_err_home'); }
+    function validatePhone() { return inlineError($id('fields_phone'), phoneAnchor(), mobileOk(), mobileErr()); }
+    // Home delivery address: same rules and messages as the blur checks in the first script
+    // (Address required + Traditional Chinese, Floor/unit optional but Traditional Chinese when entered),
+    // plus, on submit only: Address must include the house number 號 (信義路五段 fails, 信義路五段7號 passes).
+    var HAN_RE = /[一-鿿]/;
+    function addr1Ok(v) { return v !== '' && HAN_RE.test(v) && v.indexOf('號') !== -1; }
+    function addr1Msg() {
+        var el = $id('fields_address1');
+        if (!el) return '';
+        var v = el.value.trim();
+        if (v === '') return el.getAttribute('onErrorEmpty') || '';
+        if (!HAN_RE.test(v)) return el.getAttribute('onErrorValue') || '';
+        return txt('addr_no_err');
+    }
+    function validateAddr1() {
+        var el = $id('fields_address1');
+        if (!el) return true;
+        el.setAttribute('data-tw-need-no', '1');   // from now on the blur check in the first script also checks 號
+        return inlineError(el, null, addr1Ok(el.value.trim()), addr1Msg());
+    }
+    function addr2Msg() { var el = $id('fields_address2'); return el ? el.getAttribute('onErrorValue') || '' : ''; }
+    function validateAddr2() {
+        var el = $id('fields_address2');
+        if (!el) return true;
+        var v = el.value.trim();
+        return inlineError(el, null, v === '' || HAN_RE.test(v), addr2Msg());
+    }
     function clearStoreErrors() {
         if (!$id('twStoreBlock')) return;
         Array.prototype.forEach.call($id('twStoreBlock').querySelectorAll('.error-message'), function (e) { e.parentNode.removeChild(e); });
         Array.prototype.forEach.call($id('twStoreBlock').querySelectorAll('.error'), function (e) { e.classList.remove('error'); });
         Array.prototype.forEach.call($id('twStoreBlock').querySelectorAll('.tw-invalid'), function (e) { e.classList.remove('tw-invalid'); });
     }
-    // Validates the store fields (and the mobile number) and shows their inline errors.
-    // TW.errors holds the messages that failed, for the submit popup.
+    // Validates the store fields or, for home delivery, the address fields (plus the mobile number for both)
+    // and shows their inline errors. TW.errors holds the messages that failed, for the submit popup.
     TW.validate = function () {
         TW.errors = [];
-        if (!isStore()) return true;
+        if (!enabled()) return true;
         var check = function (ok, msg) { if (!ok) TW.errors.push(msg); return ok; };
-        if ($id('twManual').checked) {
+        if (!isStore()) {
+            var m1 = addr1Msg();   // read first: the message depends on the value
+            check(validateAddr1(), m1);
+            check(validateAddr2(), addr2Msg());
+        } else if ($id('twManual').checked) {
             check(validateStoreId(), idErr());
             check(validateStoreName(), txt('name_err'));
             check(validateStoreAddr(), txt('addr_err'));
         } else {
             check(validatePicked(), txt('store_err'));
         }
-        check(validatePhone(), txt('mobile_err'));
+        check(validatePhone(), mobileErr());
         return TW.errors.length === 0;
     };
 
@@ -561,7 +601,7 @@ input:not([type=checkbox]):not([type=radio]):disabled {
             });
             return;
         }
-        var err = document.querySelector('#twStoreBlock .error-message, .iti + .error-message');
+        var err = document.querySelector('#twStoreBlock .error-message, #twHomeBlock .error-message, .iti + .error-message');
         if (err) err.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
     // Writes the store into the address fields the shared submit code sends (shipAddress1 / shipAddress2).
@@ -620,21 +660,21 @@ input:not([type=checkbox]):not([type=radio]):disabled {
         if (e.target.closest && e.target.closest('#twChangeStore')) { unpick(); $id('twStoreSearch').focus(); return; }
 
         // Runs in the capture phase, before the shared #submitForm handler in integrated.js:
-        // invalid store fields stop the click there, so the order is never submitted.
-        if (e.target.closest && e.target.closest('#submitForm') && isStore()) {
+        // invalid store / home address fields stop the click there, so the order is never submitted.
+        if (e.target.closest && e.target.closest('#submitForm') && enabled()) {
             if (!TW.validate()) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 showSubmitErrors();
                 return;
             }
-            TW.fill();
+            if (isStore()) TW.fill();
         }
     }, true);
 
-    // Backup for a native form submit (e.g. a script calling requestSubmit): never let invalid store fields through.
+    // Backup for a native form submit (e.g. a script calling requestSubmit): never let invalid store / home fields through.
     document.addEventListener('submit', function (e) {
-        if (isStore() && e.target.querySelector && e.target.querySelector('#twStoreBlock') && !TW.validate()) {
+        if (enabled() && e.target.querySelector && e.target.querySelector('#twStoreBlock') && !TW.validate()) {
             e.preventDefault();
             e.stopImmediatePropagation();
             showSubmitErrors();
@@ -657,14 +697,19 @@ input:not([type=checkbox]):not([type=radio]):disabled {
         if (e.target.id === 'twStoreId' && e.target.classList.contains('error')) validateStoreId();
         if (e.target.id === 'twStoreName' && e.target.classList.contains('error')) validateStoreName();
         if (e.target.id === 'twStoreAddr' && e.target.classList.contains('error')) validateStoreAddr();
-        if (e.target.id === 'fields_phone' && isStore() && e.target.classList.contains('error') && mobileOk()) validatePhone();
+        if (e.target.id === 'fields_phone' && enabled() && e.target.classList.contains('error') && mobileOk()) validatePhone();
+        if (enabled() && !isStore() && e.target.classList.contains('error')) {
+            if (e.target.id === 'fields_address1' && addr1Ok(e.target.value.trim())) validateAddr1();   // clear once fixed
+            if (e.target.id === 'fields_address2') validateAddr2();
+        }
     });
     document.addEventListener('blur', function (e) {
-        if (!isStore()) return;
+        if (!enabled()) return;
+        if (e.target.id === 'fields_phone' && e.target.value.trim() !== '') validatePhone();
+        if (!isStore()) return;   // home address fields are checked on blur by the first script
         if (e.target.id === 'twStoreId') validateStoreId();
         if (e.target.id === 'twStoreName') validateStoreName();
         if (e.target.id === 'twStoreAddr') validateStoreAddr();
-        if (e.target.id === 'fields_phone' && e.target.value.trim() !== '') validatePhone();
     }, true);
 
     // County/city and district are set by the suggestion script without change events: poll for changes.
