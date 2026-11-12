@@ -3348,35 +3348,6 @@ class OfferApi extends KonnektiveApi {
         echo $output;
     }
 
-    // checkout-tw-cod*.php (custom_config tw_cod): the session payment choice picks the campaign in setup.php
-    // (cod -> config_tw-cod.php, card -> config_tw.php). Reject a payment call that doesn't match it, e.g. from a stale
-    // second tab: COD orders only on the COD campaign; card, wallets (Apple Pay / Google Pay / Link) and PayPal only on Card.
-    private function twCodPaymentGuard($data) {
-        if(!$this->twCodFunnel){
-            return;
-        }
-        $isCard = ($_SESSION['tw_cod_payment'] ?? 'cod') === 'card';
-        $call   = $data['call_type'] ?? '';
-        $walletCalls = ['get_paypalURL', 'get_paypalURL_direct_api', 'stripe_express_order_import', 'payment_intent_klarna', 'order_import_klarna'];
-
-        $mismatch = false;
-        if(in_array($call, $walletCalls, true)){
-            $mismatch = !$isCard;
-        }else if($call === 'order_import'){
-            $isCodOrder = strtoupper((string)($data['prepaidType'] ?? '')) === 'COD';
-            $mismatch =isset($data['cardNumber']) ? false : ($isCodOrder === $isCard);
-        }
-
-        if($mismatch){
-            http_response_code(200);
-            echo json_encode([
-                "result" => "ERROR",
-                "message" => $this->deepLTranslate("Your payment method was changed. Please refresh the page and try again.")
-            ]);
-            exit;
-        }
-    }
-
     private function handlePOST() {
         // Check if required form fields are set
         $data = json_decode(file_get_contents("php://input"), true);
@@ -3390,7 +3361,7 @@ class OfferApi extends KonnektiveApi {
             exit;
         }
         
-        //$this->twCodPaymentGuard($data);
+        
 
         switch($data['call_type']){
             case 'leads_import':
