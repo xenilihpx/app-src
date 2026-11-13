@@ -1,4 +1,5 @@
 {
+    "type_english_jp": "Please fill in the following shipping information in Japanese.",
     "tw_mobile_err_home_tw": "Enter a Taiwan mobile number (10 digits starting with 09).",
     "tw_home_only_card_tw": "Store pickup is only available with cash on delivery.",
     "zip_not_found_new2_mx": "We couldn't find this postal code. Fill in your address below.",
@@ -609,7 +610,7 @@
     "tw_store_err_tw": "Select a pickup store.",
     "tw_store_not_listed_tw": "My store isn't listed",
     "tw_store_number_tw": "Store number (optional)",
-    "tw_addr1_number_err_tw": "Enter road, lane and number (must include 號).",
+    "tw_addr1_number_err_tw": "Enter road, lane and number (must include \u865f).",
     "tw_store_name_tw": "Store name",
     "tw_store_name_err_tw": "Enter the store name.",
     "tw_store_addr_err_tw": "Enter the store address.",
