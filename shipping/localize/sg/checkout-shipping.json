@@ -1,4 +1,5 @@
 {
+    "type_english_jp": "Please fill in the following shipping information in Japanese.",
     "tw_addr1_number_err_tw": "Enter road, lane and number (must include \u865f).",
     "tw_mobile_err_home_tw": "Enter a Taiwan mobile number (10 digits starting with 09).",
     "tw_home_only_card_tw": "Store pickup is only available with cash on delivery.",
