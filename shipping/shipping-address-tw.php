@@ -38,7 +38,8 @@ $twT = [
     'id_err_family' => $collector_sh->translate("tw_id_err_family".$country, "FamilyMart store number is 6 digits starting with 0."),
     'id_err_hilife' => $collector_sh->translate("tw_id_err_hilife".$country, "Hi-Life store number is 4 digits."),
     'mobile_err'    => $collector_sh->translate("tw_mobile_err".$country, "Convenience store pickup with cash payment requires a mobile number. Please do not enter a landline number."),
-    'mobile_err_home' => $collector_sh->translate("tw_mobile_err_home".$country, "Enter a Taiwan mobile number (10 digits starting with 09)."),
+    'mobile_err_len' => $collector_sh->translate("tw_mobile_err_len".$country, "Please enter a Taiwan mobile number, e.g. 0912 345 678 or 912 345 678."),
+    'mobile_err_home' =>$collector_sh->translate("tw_mobile_err_home".$country, "Enter a Taiwan mobile number (10 digits starting with 09)."),
     'addr_no_err'   => $collector_sh->translate("tw_addr1_number_err".$country, "Enter road, lane and number (must include 號)."),
     'home_only'     => $collector_sh->translate("tw_home_only_card".$country, "Store pickup is only available with cash on delivery."),
 ];
@@ -519,6 +520,8 @@ input:not([type=checkbox]):not([type=radio]):disabled {
     }
     function validateStoreName() { return inlineError($id('twStoreName'), null, val('twStoreName') !== '', txt('name_err')); }
     function validateStoreAddr() { return inlineError($id('twStoreAddr'), null, val('twStoreAddr') !== '', txt('addr_err')); }
+    // Phone digits without the +886 country code (0912 345 678 / +886 912 345 678 -> 0912345678 / 912345678)
+    function phoneDigits() { var el = $id('fields_phone'); return el ? el.value.replace(/\D/g, '').replace(/^886/, '') : ''; }
     function mobileOk() {
         var el = $id('fields_phone');
         if (!el) return true;
@@ -527,10 +530,14 @@ input:not([type=checkbox]):not([type=radio]):disabled {
             var inst = window.intlTelInputGlobals && window.intlTelInputGlobals.getInstance(el);
             if (inst) iso = (inst.getSelectedCountryData().iso2 || '').toLowerCase();
         } catch (e) {}
-        var n = el.value.replace(/\D/g, '').replace(/^886/, '');
-        return iso === 'tw' && /^0?9\d{8}$/.test(n);
+        return iso === 'tw' && /^0?9\d{8}$/.test(phoneDigits());
     }
-    function mobileErr() { return isStore() ? txt('mobile_err') : txt('mobile_err_home'); }
+    // Store pickup: a number starting with 09 / 9 that fails is a mobile with too few or too many digits
+    // (e.g. 091234567, 09123456789), so it gets its own message; anything else (a landline) keeps mobile_err.
+    function mobileErr() {
+        if (!isStore()) return txt('mobile_err_home');
+        return /^0?9/.test(phoneDigits()) ? txt('mobile_err_len') : txt('mobile_err');
+    }
     // Home delivery accepts landline and mobile numbers: never show a phone error there. Store pickup needs a mobile.
     function validatePhone() { return inlineError($id('fields_phone'), phoneAnchor(), isStore() ? mobileOk() : true, mobileErr()); }
     // Home delivery address: same rules and messages as the blur checks in the first script
