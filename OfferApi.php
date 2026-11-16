@@ -2632,6 +2632,66 @@ class OfferApi extends KonnektiveApi {
                 return;        
             }
 
+            // ---------------------------------------------------------------------
+            // STEP 1: Import the order into Checkout Champ FIRST.
+            // If the CRM import fails, stop here and do NOT charge the customer in Stripe.
+            // ---------------------------------------------------------------------
+            $data["campaignId"] = $this->campaignId;
+            $data['userAgent']=$_SERVER['HTTP_USER_AGENT'];
+            // skipQA is intentionally not set: the order waits in QA until the Stripe charge
+            // result is known, then it is APPROVED (charged) or DECLINED (charge failed).
+            $data=array_merge($data,$this->extractOrders($data['products'])); //orders
+            $orderProducts = $data["products"];
+            $data['address1']= $this->checkEmptyValues(trim($data['address1']), trim($data['shipAddress1']));
+            $data['address2']= $this->checkEmptyValues(trim($data['address2']), trim($data['shipAddress2']));
+            $data['city']=  $this->checkEmptyValues(trim($data['city']), trim($data['shipCity']));
+            $data['state']= $this->checkEmptyValues(trim($data['state']), trim($data['shipState']));
+            $data['postalCode']=  $this->checkEmptyValues(trim($data['postalCode']),trim($data['shipPostalCode']));
+            $data['country']= $this->checkEmptyValues(trim($data['country']), trim($data['shipCountry']));
+
+            $data['shipAddress1']= $this->checkEmptyValues(trim($data['shipAddress1']), trim($data['address1']));
+            $data['shipAddress2']= $this->checkEmptyValues(trim($data['shipAddress2']), trim($data['address2']));
+            $data['shipCity']=  $this->checkEmptyValues(trim($data['shipCity']), trim($data['city']));
+            $data['shipState']= $this->checkEmptyValues(trim($data['shipState']), trim($data['state']));
+            $data['shipPostalCode']=  $this->checkEmptyValues(trim($data['shipPostalCode']),trim($data['postalCode']));
+            $data['shipCountry']= $this->checkEmptyValues(trim($data['shipCountry']), trim($data['country']));
+
+            $data['shipFirstName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipFirstName']))? trim($data['firstName']) : trim($data['shipFirstName'])), trim($data['firstName']));
+            $data['shipLastName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipLastName']))? trim($data['lastName']) : trim($data['shipLastName'])), trim($data['lastName']));
+
+            $data['custom_order_track_url']=$_SESSION['first_landpage_'.$this->campaignId]; //track url
+            $data['custom_order_language']=$this->targetLanguage; //send to api the selected language
+
+            //SessionId
+            $data['sessionId'] = $_SESSION['session_id_'.$this->campaignId];
+
+            unset($data["billingInfo"]);
+            unset($data["products"]);
+            unset($data["shippingInfo"]);
+
+            // Checkout Champ has no Link pay source; import it as PREPAID
+            // while the session keeps LINK for the upsell pages
+            $importData = $data;
+            if($data['paySource'] == 'LINK'){
+                $importData['paySource'] = 'PREPAID';
+            }
+            $resp=$this->import_order($importData);
+            $resp_decode = json_decode($resp);
+
+            if(!isset($resp_decode->result) || $resp_decode->result != "SUCCESS" || empty($resp_decode->message->orderId)){
+                // CRM import failed: the customer is NOT charged in Stripe
+                $this->messageCheck($resp_decode->message ?? "Unable to create order. Please try again.", "ERROR");
+                return;
+            }
+
+            $cocOrderId = $resp_decode->message->orderId;
+            $cocCustomerId = $resp_decode->message->customerId;
+            $checkDup_order = $this->check_duplicate_order($cocCustomerId); //check previous
+
+            // ---------------------------------------------------------------------
+            // STEP 2: Charge the customer in Stripe.
+            // Any failure from here on marks the Checkout Champ order as DECLINED.
+            // ---------------------------------------------------------------------
             \Stripe\Stripe::setApiKey($secretKey);
 
             try {
@@ -2660,7 +2720,7 @@ class OfferApi extends KonnektiveApi {
                                 'country'     => $data['shipCountry']
                             ]
                         ]
-                    ]);          
+                    ]);
 
                     $intentParams = [
                             'amount' => $this->to_cents($data['amount'], $data['currency']), // $49.99
@@ -2675,8 +2735,9 @@ class OfferApi extends KonnektiveApi {
                             'customer' =>  $customer->id,
                             'metadata' => [
                                 'campaignId'   => (string)$this->campaignId,
+                                'orderId'      => (string)$cocOrderId, // Checkout Champ order id
                                 'paySource'    => $data['paySource'],
-                                'customerName' => trim($this->checkEmptyValues(((preg_match('/\d/', $data['shipFirstName']))? trim($data['firstName']) : trim($data['shipFirstName'])), trim($data['firstName'])) . ' ' . $this->checkEmptyValues(((preg_match('/\d/', $data['shipLastName']))? trim($data['lastName']) : trim($data['shipLastName'])), trim($data['lastName']))),
+                                'customerName' => trim($data['shipFirstName'].' '.$data['shipLastName']),
                                 'emailAddress' => $data['emailAddress'],
                                 'phoneNumber'  => $data['phoneNumber']
                             ]
@@ -2694,198 +2755,139 @@ class OfferApi extends KonnektiveApi {
                         ];
                     }
                     $paymentIntent = \Stripe\PaymentIntent::create($intentParams);
-                    
-                    if ($paymentIntent->status === 'succeeded') {
-                    
-                               $data["campaignId"] = $this->campaignId; 
-                               $data['userAgent']=$_SERVER['HTTP_USER_AGENT']; 
-                               $data['skipQA']=  true;  
-                               //$data['externalOrderId'] = $paymentIntent->id;                             
-                               //$data['externalOrderId'] = $charge->id;
-                               $data=array_merge($data,$this->extractOrders($data['products'])); //orders        
-                               $orderProducts = $data["products"];
-			                   $data['address1']= $this->checkEmptyValues(trim($data['address1']), trim($data['shipAddress1']));
-                               $data['address2']= $this->checkEmptyValues(trim($data['address2']), trim($data['shipAddress2']));
-                               $data['city']=  $this->checkEmptyValues(trim($data['city']), trim($data['shipCity']));
-                               $data['state']= $this->checkEmptyValues(trim($data['state']), trim($data['shipState']));
-                               $data['postalCode']=  $this->checkEmptyValues(trim($data['postalCode']),trim($data['shipPostalCode']));
-                               $data['country']= $this->checkEmptyValues(trim($data['country']), trim($data['shipCountry'])); 
-                               
-                               $data['shipAddress1']= $this->checkEmptyValues(trim($data['shipAddress1']), trim($data['address1']));
-                               $data['shipAddress2']= $this->checkEmptyValues(trim($data['shipAddress2']), trim($data['address2']));
-                               $data['shipCity']=  $this->checkEmptyValues(trim($data['shipCity']), trim($data['city']));
-                               $data['shipState']= $this->checkEmptyValues(trim($data['shipState']), trim($data['state']));
-                               $data['shipPostalCode']=  $this->checkEmptyValues(trim($data['shipPostalCode']),trim($data['postalCode']));
-                               $data['shipCountry']= $this->checkEmptyValues(trim($data['shipCountry']), trim($data['country']));
 
-                               $data['shipFirstName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipFirstName']))? trim($data['firstName']) : trim($data['shipFirstName'])), trim($data['firstName']));
-                               $data['shipLastName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipLastName']))? trim($data['lastName']) : trim($data['shipLastName'])), trim($data['lastName']));
-
-                               $data['custom_order_track_url']=$_SESSION['first_landpage_'.$this->campaignId]; //track url
-                               $data['custom_order_language']=$this->targetLanguage; //send to api the selected language
-                               
-                               //SessionId and OrderId
-                               $data['sessionId'] = $_SESSION['session_id_'.$this->campaignId];
-                                //if(isset($_SESSION['order_id_'.$this->campaignId])){
-                                //   $data['orderId']=$_SESSION['order_id_'.$this->campaignId];
-                                //} 
-
-                               unset($data["billingInfo"]);
-                               unset($data["products"]);
-                               unset($data["shippingInfo"]);
-
-                               // Checkout Champ has no Link pay source; the charge is already captured in Stripe,
-                               // so import it as PREPAID while the session keeps LINK for the upsell pages
-                               $importData = $data;
-                               if($data['paySource'] == 'LINK'){
-                                   $importData['paySource'] = 'PREPAID';
-                               }
-                               $resp=$this->import_order($importData);
-                               $resp_decode = json_decode($resp);
-                               $checkDup_order = $this->check_duplicate_order($resp_decode->message->customerId); //check previous
-
-                                if($resp_decode->result=="SUCCESS"){
-                                    unset($_SESSION['order_data_'.$this->campaignId]); //clear order data first
-
-                                    //add note to customer
-                                    $this->customer_add_note(
-                                        array(
-                                            "customerId" =>$resp_decode->message->customerId,
-                                            "message" => $resp_decode->message->orderId." created using Stripe Express Checkout. Generated Stripe Customer id: ".$customer->id.
-                                                                                        ", Payment Type: ".$data["paySource"].
-                                                                                        ", Payment Intent Id: ". $paymentIntent->id
-                                        )
-                                    );
-                                    
-                                    $_SESSION['order_data_'.$this->campaignId] =[
-                                        "campaignId" => $this->campaignId,
-                                        "emailAddress" => $resp_decode->message->emailAddress,
-                                        "firstName" => $resp_decode->message->firstName,
-                                        "lastName" => $resp_decode->message->lastName,
-                                        "walletCustomerId" => $customer->id, //stripe customer id
-                                        "walletPaymentIntentId" => $paymentIntent->id, //stripe payment id
-                                        "walletPaymentMethodId" => $data['paymentMethodId'], //stripe confirmation token
-                                        "mainProductQty" => $data['mainProductQty'],
-                                        "mainProductId" => $data['mainProductId'],
-                                        "mainProductPrice" => $data['mainProductPrice'],
-                                        "orderId" => $resp_decode->message->orderId,
-                                        "customerId" => $resp_decode->message->customerId, //used to note upsell declines
-                                        "paySource" => $data['paySource'],
-                                        "orderProducts" => $orderProducts,
-                                        "items"=>  $resp_decode->message->items,
-                                        "couponCode"=> $data['couponCode'],
-                                        "shipProfileId"=> $data['shipProfileId'],
-                                        "marketingOptIn"=> $data['marketingOptIn']
-                                    ];
-
-                                    unset($_SESSION['token']); //clear token in every successful purchase     
-                                    $resp_decode->message->nextPage = "/".$this->upsells[0]['page'].".php";
-                                    $resp_decode->message->addOnTotal = $data['addOnTotal'];
-                                    $resp_decode->message->testmode = $data['testmode'];
-                                    $resp_decode->message->country_code = $_SESSION['sessionCountry'];
-                                    $resp_decode->message->custom_config = $_SESSION['custom_config'];
-                                    
-                                    if(!isset($data['testmode'])){
-                                        unset($resp_decode->message->testmode);
-                                    }
-
-                                    if(!isset($data['lang'])){
-                                        unset($resp_decode->message->lang);
-                                    } else if(isset($_SESSION['lang'])){
-                                        $resp_decode->message->lang = $_SESSION['lang'];
-                                    } else if($data['lang']!="") {
-                                        $resp_decode->message->lang = $data['lang'];
-                                    }else{
-                                        $resp_decode->message->lang = $this->targetLanguage;
-                                    }
-                                     
-                                }
-                              
-                                if($resp_decode->result=="ERROR"){
-                                    //charged in Stripe but the CRM import failed, keep a record for manual follow up
-                                    //$this->logWalletImportError("order", $importData, $resp, $paymentIntent, $customer->id);
-                                    $this->messageCheck($resp_decode->message,$resp_decode->result);
-                                }else{
-                                    $resp_decode=$this->logDuplicateOrder($checkDup_order,$resp_decode);//log duplicate
-                                    echo json_encode([
-                                        "result" => $resp_decode->result,
-                                        "message" => $resp_decode->message
-                                    ]);              
-                                }
-                    } else{
-                            // Not captured (e.g. requires_action / requires_payment_method), log as decline in Checkout Champ
-                            $this->stripeExpressDeclineImport($data, "Payment status: ".$paymentIntent->status, $paymentIntent->id, $customer->id);
+                    if ($paymentIntent->status !== 'succeeded') {
+                            // Not captured (e.g. requires_action / requires_payment_method), mark the CRM order declined
+                            $this->stripeExpressDeclineOrder($cocOrderId, $cocCustomerId, $data['paySource'], "Payment status: ".$paymentIntent->status, $paymentIntent->id, $customer->id);
+                            return;
                     }
+
             } catch (\Stripe\Exception\CardException $e) {
                     // Stripe throws on a declined Apple Pay / Google Pay / Link charge when confirm=true
                     $declinedIntent = $e->getError()->payment_intent ?? null;
-                    $this->stripeExpressDeclineImport(
-                        $data,
+                    $this->stripeExpressDeclineOrder(
+                        $cocOrderId,
+                        $cocCustomerId,
+                        $data['paySource'],
                         $e->getMessage().($e->getDeclineCode() ? " (".$e->getDeclineCode().")" : ""),
                         $declinedIntent->id ?? "",
                         isset($customer) ? $customer->id : ""
                     );
+                    return;
             } catch (Exception $e) {
-                 echo json_encode([
-                        "result" => "ERROR",
-                        "message" => $this->deepLTranslate($e->getMessage())
-                ]);
+                    // Any other Stripe failure (API error, invalid request, network...) also declines the CRM order
+                    $this->stripeExpressDeclineOrder(
+                        $cocOrderId,
+                        $cocCustomerId,
+                        $data['paySource'],
+                        $e->getMessage(),
+                        isset($paymentIntent) ? $paymentIntent->id : "",
+                        isset($customer) ? $customer->id : ""
+                    );
+                    return;
             }
+
+            // ---------------------------------------------------------------------
+            // STEP 3: Stripe charge succeeded, approve the Checkout Champ order.
+            // ---------------------------------------------------------------------
+            $approveResp = $this->order_qa([
+                'orderId' => $cocOrderId,
+                'action'  => 'APPROVE'
+            ]);
+            $approveDecode = json_decode($approveResp);
+            if(!isset($approveDecode->result) || $approveDecode->result != "SUCCESS"){
+                // Customer is charged in Stripe but the CRM order is still stuck in QA.
+                // Log it to the Stripe Wallets Logs for manual approval; the checkout itself continues
+                // because the payment and the CRM order both exist.
+                error_log("stripeExpressOrderImport: order_qa APPROVE failed for order ".$cocOrderId.
+                          ", PaymentIntent ".$paymentIntent->id.": ".($approveResp ?: "empty response"));
+                $this->logWalletImportError(
+                    "order_approve",
+                    array_merge($importData, ['orderId' => $cocOrderId]),
+                    $approveResp ?: json_encode(["result" => "ERROR", "message" => "Empty response from order/qa APPROVE"]),
+                    $paymentIntent,
+                    $customer->id
+                );
+            }
+
+            unset($_SESSION['order_data_'.$this->campaignId]); //clear order data first
+
+            //add note to customer
+            $this->customer_add_note(
+                array(
+                    "customerId" => $cocCustomerId,
+                    "message" => $cocOrderId." created using Stripe Express Checkout. Generated Stripe Customer id: ".$customer->id.
+                                                                ", Payment Type: ".$data["paySource"].
+                                                                ", Payment Intent Id: ". $paymentIntent->id
+                )
+            );
+
+            $_SESSION['order_data_'.$this->campaignId] =[
+                "campaignId" => $this->campaignId,
+                "emailAddress" => $resp_decode->message->emailAddress,
+                "firstName" => $resp_decode->message->firstName,
+                "lastName" => $resp_decode->message->lastName,
+                "walletCustomerId" => $customer->id, //stripe customer id
+                "walletPaymentIntentId" => $paymentIntent->id, //stripe payment id
+                "walletPaymentMethodId" => $data['paymentMethodId'], //stripe confirmation token
+                "mainProductQty" => $data['mainProductQty'],
+                "mainProductId" => $data['mainProductId'],
+                "mainProductPrice" => $data['mainProductPrice'],
+                "orderId" => $cocOrderId,
+                "customerId" => $cocCustomerId, //used to note upsell declines
+                "paySource" => $data['paySource'],
+                "orderProducts" => $orderProducts,
+                "items"=>  $resp_decode->message->items,
+                "couponCode"=> $data['couponCode'],
+                "shipProfileId"=> $data['shipProfileId'],
+                "marketingOptIn"=> $data['marketingOptIn']
+            ];
+
+            unset($_SESSION['token']); //clear token in every successful purchase
+            $resp_decode->message->nextPage = "/".$this->upsells[0]['page'].".php";
+            $resp_decode->message->addOnTotal = $data['addOnTotal'];
+            $resp_decode->message->testmode = $data['testmode'];
+            $resp_decode->message->country_code = $_SESSION['sessionCountry'];
+            $resp_decode->message->custom_config = $_SESSION['custom_config'];
+
+            if(!isset($data['testmode'])){
+                unset($resp_decode->message->testmode);
+            }
+
+            if(!isset($data['lang'])){
+                unset($resp_decode->message->lang);
+            } else if(isset($_SESSION['lang'])){
+                $resp_decode->message->lang = $_SESSION['lang'];
+            } else if($data['lang']!="") {
+                $resp_decode->message->lang = $data['lang'];
+            }else{
+                $resp_decode->message->lang = $this->targetLanguage;
+            }
+
+            $resp_decode=$this->logDuplicateOrder($checkDup_order,$resp_decode);//log duplicate
+            echo json_encode([
+                "result" => $resp_decode->result,
+                "message" => $resp_decode->message
+            ]);
     }
 
-    // Import a declined Stripe Express (Apple Pay / Google Pay / Link) order into Checkout Champ and mark it declined
-    private function stripeExpressDeclineImport($data, $declineReason, $paymentIntentId, $stripeCustomerId){
+    // Mark an already imported Stripe Express (Apple Pay / Google Pay / Link) Checkout Champ order
+    // as DECLINED when the Stripe charge failed, and record the reason as a customer note
+    private function stripeExpressDeclineOrder($orderId, $customerId, $paySource, $declineReason, $paymentIntentId, $stripeCustomerId){
 
-            $data["campaignId"] = $this->campaignId;
-            $data['sessionId'] = $_SESSION['session_id_'.$this->campaignId];
-            $data['userAgent']=$_SERVER['HTTP_USER_AGENT'];
-            $data=array_merge($data,$this->extractOrders($data['products'])); //orders
+            // Order QA Decline
+            $this->order_qa([
+                'orderId'  => $orderId,
+                'action'   => 'DECLINE'
+            ]);
 
-            $data['address1']= $this->checkEmptyValues(trim($data['address1']), trim($data['shipAddress1']));
-            $data['address2']= $this->checkEmptyValues(trim($data['address2']), trim($data['shipAddress2']));
-            $data['city']=  $this->checkEmptyValues(trim($data['city']), trim($data['shipCity']));
-            $data['state']= $this->checkEmptyValues(trim($data['state']), trim($data['shipState']));
-            $data['postalCode']=  $this->checkEmptyValues(trim($data['postalCode']),trim($data['shipPostalCode']));
-            $data['country']= $this->checkEmptyValues(trim($data['country']), trim($data['shipCountry']));
-
-            $data['shipAddress1']= $this->checkEmptyValues(trim($data['shipAddress1']), trim($data['address1']));
-            $data['shipAddress2']= $this->checkEmptyValues(trim($data['shipAddress2']), trim($data['address2']));
-            $data['shipCity']=  $this->checkEmptyValues(trim($data['shipCity']), trim($data['city']));
-            $data['shipState']= $this->checkEmptyValues(trim($data['shipState']), trim($data['state']));
-            $data['shipPostalCode']=  $this->checkEmptyValues(trim($data['shipPostalCode']),trim($data['postalCode']));
-            $data['shipCountry']= $this->checkEmptyValues(trim($data['shipCountry']), trim($data['country']));
-
-            $data['shipFirstName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipFirstName']))? trim($data['firstName']) : trim($data['shipFirstName'])), trim($data['firstName']));
-            $data['shipLastName']= $this->checkEmptyValues(((preg_match('/\d/', $data['shipLastName']))? trim($data['lastName']) : trim($data['shipLastName'])), trim($data['lastName']));
-
-            $data['custom_order_track_url']=$_SESSION['first_landpage_'.$this->campaignId]; //track url
-            $data['custom_order_language']=$this->targetLanguage;
-
-            unset($data["billingInfo"]);
-            unset($data["products"]);
-            unset($data["shippingInfo"]);
-
-            $paySource = $data['paySource'];
-            if($data['paySource'] == 'LINK'){
-                $data['paySource'] = 'PREPAID'; // Checkout Champ has no Link pay source
-            }
-
-            $importDec = json_decode($this->import_order($data));
-            if(isset($importDec->result) && $importDec->result=="SUCCESS"){
-                // Order QA Decline
-                $this->order_qa([
-                    'orderId'  => $importDec->message->orderId,
-                    'action'   => 'DECLINE'
-                ]);
-
-                $this->customer_add_note([
-                    "customerId" => $importDec->message->customerId,
-                    "message" => $importDec->message->orderId." declined using Stripe Express Checkout. Stripe Customer id: ".$stripeCustomerId.
-                                ", Payment Type: ".$paySource.
-                                ", Payment Intent Id: ".$paymentIntentId.
-                                ", Reason: ".$declineReason
-                ]);
-            }
+            $this->customer_add_note([
+                "customerId" => $customerId,
+                "message" => $orderId." declined using Stripe Express Checkout. Stripe Customer id: ".$stripeCustomerId.
+                            ", Payment Type: ".$paySource.
+                            ", Payment Intent Id: ".$paymentIntentId.
+                            ", Reason: ".$declineReason
+            ]);
 
             echo json_encode([
                         "result" => "ERROR",
