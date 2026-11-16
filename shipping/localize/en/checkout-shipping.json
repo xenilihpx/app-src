@@ -619,5 +619,5 @@
     "tw_id_err_711_tw": "Store number is 6 digits.",
     "tw_id_err_family_tw": "FamilyMart store number is 6 digits starting with 0.",
     "tw_id_err_hilife_tw": "Hi-Life store number is 4 digits.",
-    "tw_mobile_err_tw": "Store pickup needs a Taiwan mobile number (10 digits starting with 09)."
+    "tw_mobile_err_tw": "Convenience store pickup with payment requires a mobile number. Please do not enter a landline number."
 }

@@ -37,7 +37,7 @@ $twT = [
     'id_err_711'    => $collector_sh->translate("tw_id_err_711".$country, "Store number is 6 digits."),
     'id_err_family' => $collector_sh->translate("tw_id_err_family".$country, "FamilyMart store number is 6 digits starting with 0."),
     'id_err_hilife' => $collector_sh->translate("tw_id_err_hilife".$country, "Hi-Life store number is 4 digits."),
-    'mobile_err'    => $collector_sh->translate("tw_mobile_err".$country, "Store pickup needs a Taiwan mobile number (10 digits starting with 09)."),
+    'mobile_err'    => $collector_sh->translate("tw_mobile_err".$country, "Convenience store pickup with payment requires a mobile number. Please do not enter a landline number."),
     'mobile_err_home' => $collector_sh->translate("tw_mobile_err_home".$country, "Enter a Taiwan mobile number (10 digits starting with 09)."),
     'addr_no_err'   => $collector_sh->translate("tw_addr1_number_err".$country, "Enter road, lane and number (must include 號)."),
     'home_only'     => $collector_sh->translate("tw_home_only_card".$country, "Store pickup is only available with cash on delivery."),
@@ -531,7 +531,8 @@ input:not([type=checkbox]):not([type=radio]):disabled {
         return iso === 'tw' && /^0?9\d{8}$/.test(n);
     }
     function mobileErr() { return isStore() ? txt('mobile_err') : txt('mobile_err_home'); }
-    function validatePhone() { return inlineError($id('fields_phone'), phoneAnchor(), mobileOk(), mobileErr()); }
+    // Home delivery accepts landline and mobile numbers: never show a phone error there. Store pickup needs a mobile.
+    function validatePhone() { return inlineError($id('fields_phone'), phoneAnchor(), isStore() ? mobileOk() : true, mobileErr()); }
     // Home delivery address: same rules and messages as the blur checks in the first script
     // (Address required + Traditional Chinese, Floor/unit optional but Traditional Chinese when entered),
     // plus, on submit only: Address must include the house number 號 (信義路五段 fails, 信義路五段7號 passes).
