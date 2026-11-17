@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Voer de naam van de winkel in.",
     "tw_store_address_tw": "Adres van de winkel",
     "tw_store_addr_err_tw": "Voer het adres van de winkel in.",
-    "tw_store_hint_tw": "We sturen je een sms zodra je pakket in de winkel is aangekomen. Neem een identiteitsbewijs mee: de naam van de ontvanger moet hierop overeenkomen.",
+    "tw_store_hint_tw": "We sturen je een sms zodra je pakket in de winkel is aangekomen.\nZelf ophalen: Neem een identiteitsbewijs mee dat overeenkomt met de naam van de ontvanger.\nOphalen door iemand anders: Geef de naam van de ontvanger, de laatste 3 cijfers van diens mobiele nummer of het trackingnummer door (\u00e9\u00e9n ervan is voldoende).",
     "tw_id_err_711_tw": "Het winkelnummer bestaat uit 6 cijfers.",
     "tw_id_err_family_tw": "Het winkelnummer van FamilyMart bestaat uit 6 cijfers die beginnen met 0.",
     "tw_id_err_hilife_tw": "Het Hi-Life-winkelnummer bestaat uit 4 cijfers.",

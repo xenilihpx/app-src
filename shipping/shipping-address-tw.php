@@ -137,7 +137,7 @@ input:not([type=checkbox]):not([type=radio]):disabled {
 .tw-check { display: flex; align-items: center; gap: 8px; font-size: 14px; margin: 12px 0; cursor: pointer; font-weight: 400; }
 .tw-check input { width: 16px; height: 16px; margin: 0; }
 .tw-manual { border-left: 3px solid #d6d6d6; padding-left: 12px; }
-.tw-hint { font-size: 12px; color: #777; margin-top: 4px; white-space: pre-line; line-height: 20px; }
+.tw-hint { font-size: 13px; color: #777; margin-top: 4px; white-space: pre-line; line-height: 20px; }
 @media (max-width: 480px) { .tw-tabs { grid-template-columns: repeat(2, 1fr); } }
 </style>
 

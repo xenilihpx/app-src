@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Zadejte n\u00e1zev obchodu.",
     "tw_store_address_tw": "Adresa obchodu",
     "tw_store_addr_err_tw": "Zadejte adresu obchodu.",
-    "tw_store_hint_tw": "Jakmile bal\u00ed\u010dek doraz\u00ed do prodejny, po\u0161leme v\u00e1m SMS. P\u0159ineste si doklad toto\u017enosti: jm\u00e9no p\u0159\u00edjemce se mus\u00ed shodovat s \u00fadajem v dokladu.",
+    "tw_store_hint_tw": "Jakmile bal\u00ed\u010dek doraz\u00ed do prodejny, po\u0161leme v\u00e1m SMS.\nOsobn\u00ed vyzvednut\u00ed: P\u0159ineste si doklad toto\u017enosti, kter\u00fd odpov\u00edd\u00e1 jm\u00e9nu p\u0159\u00edjemce.\nVyzvednut\u00ed jinou osobou: Uve\u010fte jm\u00e9no p\u0159\u00edjemce, posledn\u00ed 3 \u010d\u00edslice jeho mobiln\u00edho \u010d\u00edsla nebo \u010d\u00edslo z\u00e1silky (sta\u010d\u00ed jedno z nich).",
     "tw_id_err_711_tw": "\u010c\u00edslo prodejny m\u00e1 6 \u010d\u00edslic.",
     "tw_id_err_family_tw": "\u010c\u00edslo prodejny FamilyMart se skl\u00e1d\u00e1 ze 6 \u010d\u00edslic za\u010d\u00ednaj\u00edc\u00edch \u010d\u00edslic\u00ed 0.",
     "tw_id_err_hilife_tw": "\u010c\u00edslo prodejny Hi-Life m\u00e1 4 \u010d\u00edslice.",

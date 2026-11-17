@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Ipasok ang pangalan ng tindahan.",
     "tw_store_address_tw": "Address ng tindahan",
     "tw_store_addr_err_tw": "Ipasok ang address ng tindahan.",
-    "tw_store_hint_tw": "Ite-text ka namin kapag nakarating na ang iyong parcel sa tindahan. Magdala ng ID: dapat magtugma ang pangalan ng tatanggap sa ID.",
+    "tw_store_hint_tw": "Ite-text ka namin kapag nakarating na ang iyong parcel sa tindahan.\nSariling pag-pickup: Magdala ng ID na tugma sa pangalan ng tatanggap.\nPag-pickup ng ibang tao: Ibigay ang pangalan ng tatanggap, huling 3 digit ng kanyang mobile number, o tracking number (kahit isa lang).",
     "tw_id_err_711_tw": "Ang numero ng tindahan ay anim na digit.",
     "tw_id_err_family_tw": "Ang numero ng tindahan ng FamilyMart ay anim na digit na nagsisimula sa 0.",
     "tw_id_err_hilife_tw": "Ang numero ng tindahan ng Hi-Life ay apat na digit.",

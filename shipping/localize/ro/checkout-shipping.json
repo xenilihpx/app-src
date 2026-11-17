@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Introduce\u021bi numele magazinului.",
     "tw_store_address_tw": "Adresa magazinului",
     "tw_store_addr_err_tw": "Introduce\u021bi adresa magazinului.",
-    "tw_store_hint_tw": "\u00ce\u021bi vom trimite un SMS c\u00e2nd coletul t\u0103u ajunge la magazin. Adu un act de identitate: numele destinatarului trebuie s\u0103 corespund\u0103 cu cel din act.",
+    "tw_store_hint_tw": "\u00ce\u021bi vom trimite un SMS c\u00e2nd coletul t\u0103u ajunge la magazin.\nRidicare personal\u0103: Adu un act de identitate care corespunde numelui destinatarului.\nRidicare de c\u0103tre alt\u0103 persoan\u0103: Furnizeaz\u0103 numele destinatarului, ultimele 3 cifre ale num\u0103rului s\u0103u de mobil sau num\u0103rul de urm\u0103rire (este suficient unul).",
     "tw_id_err_711_tw": "Num\u0103rul magazinului are 6 cifre.",
     "tw_id_err_family_tw": "Num\u0103rul magazinului FamilyMart este format din 6 cifre \u0219i \u00eencepe cu 0.",
     "tw_id_err_hilife_tw": "Num\u0103rul magazinului Hi-Life are 4 cifre.",

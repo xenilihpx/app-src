@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Saisissez le nom du magasin.",
     "tw_store_address_tw": "Adresse du magasin",
     "tw_store_addr_err_tw": "Saisissez l'adresse du magasin.",
-    "tw_store_hint_tw": "Nous vous enverrons un SMS d\u00e8s que votre colis sera arriv\u00e9 en magasin. N'oubliez pas de vous munir d'une pi\u00e8ce d'identit\u00e9 : le nom du destinataire doit y figurer.",
+    "tw_store_hint_tw": "Nous vous enverrons un SMS d\u00e8s que votre colis sera arriv\u00e9 en magasin.\nRetrait en personne : pr\u00e9sentez une pi\u00e8ce d'identit\u00e9 au nom du destinataire.\nRetrait par une autre personne : indiquez le nom du destinataire, les 3 derniers chiffres de son num\u00e9ro de mobile ou le num\u00e9ro de suivi (un seul suffit).",
     "tw_id_err_711_tw": "Le num\u00e9ro de magasin comporte 6 chiffres.",
     "tw_id_err_family_tw": "Le num\u00e9ro d'un magasin FamilyMart est compos\u00e9 de 6 chiffres commen\u00e7ant par 0.",
     "tw_id_err_hilife_tw": "Le num\u00e9ro de magasin Hi-Life comporte 4 chiffres.",

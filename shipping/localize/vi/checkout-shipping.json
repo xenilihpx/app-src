@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "H\u00e3y nh\u1eadp t\u00ean c\u1eeda h\u00e0ng.",
     "tw_store_address_tw": "\u0110\u1ecba ch\u1ec9 c\u1eeda h\u00e0ng",
     "tw_store_addr_err_tw": "H\u00e3y nh\u1eadp \u0111\u1ecba ch\u1ec9 c\u1eeda h\u00e0ng.",
-    "tw_store_hint_tw": "Ch\u00fang t\u00f4i s\u1ebd nh\u1eafn tin cho b\u1ea1n khi b\u01b0u ki\u1ec7n c\u1ee7a b\u1ea1n \u0111\u1ebfn c\u1eeda h\u00e0ng. H\u00e3y mang theo gi\u1ea5y t\u1edd t\u00f9y th\u00e2n: t\u00ean ng\u01b0\u1eddi nh\u1eadn ph\u1ea3i tr\u00f9ng kh\u1edbp v\u1edbi th\u00f4ng tin tr\u00ean gi\u1ea5y t\u1edd \u0111\u00f3.",
+    "tw_store_hint_tw": "Ch\u00fang t\u00f4i s\u1ebd nh\u1eafn tin cho b\u1ea1n khi b\u01b0u ki\u1ec7n \u0111\u1ebfn c\u1eeda h\u00e0ng.\nT\u1ef1 nh\u1eadn h\u00e0ng: Mang theo gi\u1ea5y t\u1edd t\u00f9y th\u00e2n tr\u00f9ng kh\u1edbp v\u1edbi t\u00ean ng\u01b0\u1eddi nh\u1eadn.\nNh\u1edd ng\u01b0\u1eddi kh\u00e1c nh\u1eadn: Cung c\u1ea5p t\u00ean ng\u01b0\u1eddi nh\u1eadn, 3 s\u1ed1 cu\u1ed1i s\u1ed1 \u0111i\u1ec7n tho\u1ea1i di \u0111\u1ed9ng c\u1ee7a ng\u01b0\u1eddi nh\u1eadn ho\u1eb7c m\u00e3 v\u1eadn \u0111\u01a1n (ch\u1ec9 c\u1ea7n m\u1ed9t trong s\u1ed1 \u0111\u00f3).",
     "tw_id_err_711_tw": "S\u1ed1 c\u1eeda h\u00e0ng g\u1ed3m 6 ch\u1eef s\u1ed1.",
     "tw_id_err_family_tw": "S\u1ed1 c\u1eeda h\u00e0ng FamilyMart g\u1ed3m 6 ch\u1eef s\u1ed1, b\u1eaft \u0111\u1ea7u b\u1eb1ng s\u1ed1 0.",
     "tw_id_err_hilife_tw": "S\u1ed1 c\u1eeda h\u00e0ng Hi-Life g\u1ed3m 4 ch\u1eef s\u1ed1.",

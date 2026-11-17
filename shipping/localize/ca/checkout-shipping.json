@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Introdueix el nom de la botiga.",
     "tw_store_address_tw": "Adre\u00e7a de la botiga",
     "tw_store_addr_err_tw": "Introdueix l'adre\u00e7a de la botiga.",
-    "tw_store_hint_tw": "Et enviarem un missatge de text quan el teu paquet arribi a la botiga. Porta un document d'identitat: el nom del destinatari ha de coincidir-hi.",
+    "tw_store_hint_tw": "T'enviarem un SMS quan el teu paquet arribi a la botiga.\nRecollida personal: porta un document d'identitat que coincideixi amb el nom del destinatari.\nRecollida per una altra persona: indica el nom del destinatari, els 3 \u00faltims d\u00edgits del seu m\u00f2bil o el n\u00famero de seguiment (nom\u00e9s cal un).",
     "tw_id_err_711_tw": "El n\u00famero de botiga t\u00e9 6 d\u00edgits.",
     "tw_id_err_family_tw": "El n\u00famero de botiga de FamilyMart \u00e9s de 6 d\u00edgits i comen\u00e7a amb 0.",
     "tw_id_err_hilife_tw": "El n\u00famero de botiga Hi-Life t\u00e9 4 d\u00edgits.",

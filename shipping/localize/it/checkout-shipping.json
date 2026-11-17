@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Inserisci il nome del negozio.",
     "tw_store_address_tw": "Indirizzo del negozio",
     "tw_store_addr_err_tw": "Inserisci l'indirizzo del negozio.",
-    "tw_store_hint_tw": "Ti invieremo un SMS quando il tuo pacco arriver\u00e0 in negozio. Porta con te un documento d\u2019identit\u00e0: il nome del destinatario deve corrispondere a quello riportato sul documento.",
+    "tw_store_hint_tw": "Ti invieremo un SMS quando il tuo pacco arriver\u00e0 in negozio.\nRitiro personale: porta un documento d\u2019identit\u00e0 che corrisponda al nome del destinatario.\nRitiro da parte di un\u2019altra persona: fornisci il nome del destinatario, le ultime 3 cifre del suo numero di cellulare o il numero di tracciamento (ne basta uno).",
     "tw_id_err_711_tw": "Il numero del negozio \u00e8 composto da 6 cifre.",
     "tw_id_err_family_tw": "Il numero del negozio FamilyMart \u00e8 composto da 6 cifre che iniziano con lo 0.",
     "tw_id_err_hilife_tw": "Il numero del negozio Hi-Life \u00e8 composto da 4 cifre.",

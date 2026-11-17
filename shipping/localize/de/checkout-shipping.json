@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Geben Sie den Namen des Gesch\u00e4fts ein.",
     "tw_store_address_tw": "Adresse des Gesch\u00e4fts",
     "tw_store_addr_err_tw": "Geben Sie die Adresse des Gesch\u00e4fts ein.",
-    "tw_store_hint_tw": "Wir schicken dir eine SMS, sobald dein Paket in der Filiale eingetroffen ist. Bitte bring einen Ausweis mit: Der Name des Empf\u00e4ngers muss mit dem Ausweis \u00fcbereinstimmen.",
+    "tw_store_hint_tw": "Wir schicken dir eine SMS, sobald dein Paket in der Filiale angekommen ist.\nSelbstabholung: Bring einen Ausweis mit, der auf den Namen des Empf\u00e4ngers lautet.\nAbholung durch eine andere Person: Gib den Namen des Empf\u00e4ngers, die letzten 3 Ziffern seiner Handynummer oder die Sendungsnummer an (eine Angabe gen\u00fcgt).",
     "tw_id_err_711_tw": "Die Filialnummer besteht aus 6 Ziffern.",
     "tw_id_err_family_tw": "Die Filialnummer von FamilyMart besteht aus 6 Ziffern und beginnt mit einer 0.",
     "tw_id_err_hilife_tw": "Die Hi-Life-Filialnummer besteht aus 4 Ziffern.",

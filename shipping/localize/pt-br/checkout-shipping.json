@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Digite o nome da loja.",
     "tw_store_address_tw": "Endere\u00e7o da loja",
     "tw_store_addr_err_tw": "Insira o endere\u00e7o da loja.",
-    "tw_store_hint_tw": "Enviaremos uma mensagem de texto quando seu pacote chegar \u00e0 loja. Traga um documento de identidade: o nome do destinat\u00e1rio deve corresponder ao que consta no documento.",
+    "tw_store_hint_tw": "Enviaremos uma mensagem de texto quando seu pacote chegar \u00e0 loja.\nRetirada pessoal: traga um documento de identidade que corresponda ao nome do destinat\u00e1rio.\nRetirada por outra pessoa: informe o nome do destinat\u00e1rio, os 3 \u00faltimos d\u00edgitos do celular dele ou o c\u00f3digo de rastreamento (basta um).",
     "tw_id_err_711_tw": "O n\u00famero da loja tem 6 d\u00edgitos.",
     "tw_id_err_family_tw": "O n\u00famero da loja FamilyMart tem 6 d\u00edgitos e come\u00e7a com 0.",
     "tw_id_err_hilife_tw": "O n\u00famero da loja Hi-Life tem 4 d\u00edgitos.",

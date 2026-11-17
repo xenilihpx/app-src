@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Kirjoita kaupan nimi.",
     "tw_store_address_tw": "Myym\u00e4l\u00e4n osoite",
     "tw_store_addr_err_tw": "Sy\u00f6t\u00e4 myym\u00e4l\u00e4n osoite.",
-    "tw_store_hint_tw": "L\u00e4het\u00e4mme sinulle tekstiviestin, kun pakettisi saapuu myym\u00e4l\u00e4\u00e4n. Ota mukaan henkil\u00f6llisyystodistus: vastaanottajan nimen on vastattava siin\u00e4 olevaa nime\u00e4.",
+    "tw_store_hint_tw": "L\u00e4het\u00e4mme sinulle tekstiviestin, kun pakettisi saapuu myym\u00e4l\u00e4\u00e4n.\nItsenouto: Ota mukaan henkil\u00f6llisyystodistus, jonka nimi vastaa vastaanottajan nime\u00e4.\nToisen henkil\u00f6n nouto: Ilmoita vastaanottajan nimi, h\u00e4nen matkapuhelinnumeronsa 3 viimeist\u00e4 numeroa tai seurantanumero (yksi riitt\u00e4\u00e4).",
     "tw_id_err_711_tw": "Myym\u00e4l\u00e4n numero on 6-numeroinen.",
     "tw_id_err_family_tw": "FamilyMart-myym\u00e4l\u00e4n numero on 6-numeroinen ja alkaa numerolla 0.",
     "tw_id_err_hilife_tw": "Hi-Life-myym\u00e4l\u00e4n numero on nelinumeroinen.",

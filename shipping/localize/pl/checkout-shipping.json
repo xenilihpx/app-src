@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Wpisz nazw\u0119 sklepu.",
     "tw_store_address_tw": "Adres sklepu",
     "tw_store_addr_err_tw": "Wprowad\u017a adres sklepu.",
-    "tw_store_hint_tw": "Wy\u015blemy Ci SMS-a, gdy Twoja przesy\u0142ka dotrze do sklepu. Prosimy o zabranie ze sob\u0105 dokumentu to\u017csamo\u015bci: nazwisko odbiorcy musi si\u0119 z nim zgadza\u0107.",
+    "tw_store_hint_tw": "Wy\u015blemy Ci SMS-a, gdy Twoja przesy\u0142ka dotrze do sklepu.\nOdbi\u00f3r osobisty: Zabierz dokument to\u017csamo\u015bci zgodny z imieniem i nazwiskiem odbiorcy.\nOdbi\u00f3r przez inn\u0105 osob\u0119: Podaj imi\u0119 i nazwisko odbiorcy, 3 ostatnie cyfry jego numeru telefonu kom\u00f3rkowego lub numer przesy\u0142ki (wystarczy jedno z nich).",
     "tw_id_err_711_tw": "Numer sklepu sk\u0142ada si\u0119 z 6 cyfr.",
     "tw_id_err_family_tw": "Numer sklepu FamilyMart sk\u0142ada si\u0119 z 6 cyfr, zaczynaj\u0105cych si\u0119 od 0.",
     "tw_id_err_hilife_tw": "Numer sklepu Hi-Life sk\u0142ada si\u0119 z 4 cyfr.",

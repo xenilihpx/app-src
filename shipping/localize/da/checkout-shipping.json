@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Indtast butikkens navn.",
     "tw_store_address_tw": "Butikkens adresse",
     "tw_store_addr_err_tw": "Indtast butikkens adresse.",
-    "tw_store_hint_tw": "Vi sender dig en sms, n\u00e5r din pakke ankommer til butikken. Medbring et ID-kort: Modtagerens navn skal stemme overens med det.",
+    "tw_store_hint_tw": "Vi sender dig en sms, n\u00e5r din pakke ankommer til butikken.\nEgen afhentning: Medbring ID, der stemmer overens med modtagerens navn.\nAfhentning af en anden person: Oplys modtagerens navn, de sidste 3 cifre i modtagerens mobilnummer eller trackingnummeret (\u00e9t af dem er nok).",
     "tw_id_err_711_tw": "Butiksnummeret best\u00e5r af 6 cifre.",
     "tw_id_err_family_tw": "FamilyMart-butiksnummeret best\u00e5r af 6 cifre, der begynder med 0.",
     "tw_id_err_hilife_tw": "Hi-Life-butiksnummeret best\u00e5r af 4 cifre.",

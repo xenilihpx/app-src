@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Masukkan nama toko.",
     "tw_store_address_tw": "Alamat toko",
     "tw_store_addr_err_tw": "Masukkan alamat toko.",
-    "tw_store_hint_tw": "Kami akan mengirimkan pesan kepada Anda saat paket Anda tiba di toko. Harap bawa kartu identitas: nama penerima harus sesuai dengan yang tertera di kartu identitas tersebut.",
+    "tw_store_hint_tw": "Kami akan mengirimkan SMS saat paket Anda tiba di toko.\nAmbil sendiri: Bawa kartu identitas yang sesuai dengan nama penerima.\nDiambil oleh orang lain: Berikan nama penerima, 3 digit terakhir nomor ponselnya, atau nomor resi (cukup salah satu).",
     "tw_id_err_711_tw": "Nomor toko terdiri dari 6 digit.",
     "tw_id_err_family_tw": "Nomor toko FamilyMart terdiri dari 6 digit yang diawali dengan angka 0.",
     "tw_id_err_hilife_tw": "Nomor toko Hi-Life terdiri dari 4 digit.",

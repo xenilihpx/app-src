@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Introduce el nombre de la tienda.",
     "tw_store_address_tw": "Direcci\u00f3n de la tienda",
     "tw_store_addr_err_tw": "Introduce la direcci\u00f3n de la tienda.",
-    "tw_store_hint_tw": "Te enviaremos un mensaje de texto cuando tu paquete llegue a la tienda. Trae un documento de identidad: el nombre del destinatario debe coincidir con el que figura en \u00e9l.",
+    "tw_store_hint_tw": "Te enviaremos un mensaje de texto cuando tu paquete llegue a la tienda.\nRecogida personal: trae un documento de identidad que coincida con el nombre del destinatario.\nRecogida por otra persona: indica el nombre del destinatario, los 3 \u00faltimos d\u00edgitos de su m\u00f3vil o el n\u00famero de seguimiento (basta con uno).",
     "tw_id_err_711_tw": "El n\u00famero de tienda tiene 6 d\u00edgitos.",
     "tw_id_err_family_tw": "El n\u00famero de tienda de FamilyMart consta de 6 d\u00edgitos y empieza por 0.",
     "tw_id_err_hilife_tw": "El n\u00famero de tienda de Hi-Life tiene 4 d\u00edgitos.",

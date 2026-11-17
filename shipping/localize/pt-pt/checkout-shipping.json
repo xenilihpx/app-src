@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Introduza o nome da loja.",
     "tw_store_address_tw": "Morada da loja",
     "tw_store_addr_err_tw": "Introduza a morada da loja.",
-    "tw_store_hint_tw": "Enviaremos uma mensagem quando a sua encomenda chegar \u00e0 loja. Traga um documento de identifica\u00e7\u00e3o: o nome do destinat\u00e1rio deve corresponder ao que consta no documento.",
+    "tw_store_hint_tw": "Enviaremos uma mensagem quando a sua encomenda chegar \u00e0 loja.\nLevantamento pessoal: traga um documento de identifica\u00e7\u00e3o que corresponda ao nome do destinat\u00e1rio.\nLevantamento por outra pessoa: indique o nome do destinat\u00e1rio, os 3 \u00faltimos d\u00edgitos do telem\u00f3vel do destinat\u00e1rio ou o n\u00famero de seguimento (basta um).",
     "tw_id_err_711_tw": "O n\u00famero da loja tem 6 d\u00edgitos.",
     "tw_id_err_family_tw": "O n\u00famero da loja FamilyMart \u00e9 composto por 6 d\u00edgitos e come\u00e7a por 0.",
     "tw_id_err_hilife_tw": "O n\u00famero da loja Hi-Life tem 4 d\u00edgitos.",

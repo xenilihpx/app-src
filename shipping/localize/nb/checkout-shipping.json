@@ -24,7 +24,7 @@
     "tw_store_name_err_tw": "Skriv inn butikkens navn.",
     "tw_store_address_tw": "Butikkens adresse",
     "tw_store_addr_err_tw": "Skriv inn butikkens adresse.",
-    "tw_store_hint_tw": "Vi sender deg en SMS n\u00e5r pakken din ankommer butikken. Ta med legitimasjon: mottakerens navn m\u00e5 stemme overens med det som st\u00e5r p\u00e5 legitimasjonen.",
+    "tw_store_hint_tw": "Vi sender deg en SMS n\u00e5r pakken din ankommer butikken.\nEgen henting: Ta med legitimasjon som samsvarer med mottakerens navn.\nHenting av en annen person: Oppgi mottakerens navn, de 3 siste sifrene i mobilnummeret til mottakeren eller sporingsnummeret (ett av dem holder).",
     "tw_id_err_711_tw": "Butikknummeret best\u00e5r av 6 sifre.",
     "tw_id_err_family_tw": "FamilyMart-butikknummeret best\u00e5r av 6 sifre som begynner med 0.",
     "tw_id_err_hilife_tw": "Hi-Life-butikknummeret best\u00e5r av 4 sifre.",
