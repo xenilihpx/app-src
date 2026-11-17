@@ -2967,7 +2967,7 @@ class OfferApi extends KonnektiveApi {
                                 $data["campaignId"] = $this->campaignId;   
                                 $data['orderId'] =  $_SESSION['order_data_'.$this->campaignId]['orderId'];  
                                 $data['externalOrderId'] = $paymentIntent->id;                               
-                                $data['skipQA']=  true;
+                                $data['skipQA']=  0;
                                 $data=array_merge($data,$this->extractOrders($data['products'])); //orders  
                                 $orderProducts = $data["products"];
                                 
