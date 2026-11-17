@@ -33,7 +33,7 @@ $twT = [
     'name_err'      => $collector_sh->translate("tw_store_name_err".$country, "Enter the store name."),
     'store_address' => $collector_sh->translate("tw_store_address".$country, "Store address"),
     'addr_err'      => $collector_sh->translate("tw_store_addr_err".$country, "Enter the store address."),
-    'hint'          => $collector_sh->translate("tw_store_hint".$country, "We'll text you when your parcel reaches the store. Bring ID: the recipient name must match it."),
+    'hint'          => $collector_sh->translate("tw_store_hint".$country, "We'll text you when your parcel arrives at the store.\nSelf-pickup: Bring an ID matching the recipient's name.\nPickup by someone else: Provide the recipient's name, last 3 digits of their mobile number, or tracking number (any one)."),
     'id_err_711'    => $collector_sh->translate("tw_id_err_711".$country, "Store number is 6 digits."),
     'id_err_family' => $collector_sh->translate("tw_id_err_family".$country, "FamilyMart store number is 6 digits starting with 0."),
     'id_err_hilife' => $collector_sh->translate("tw_id_err_hilife".$country, "Hi-Life store number is 4 digits."),
@@ -44,6 +44,17 @@ $twT = [
     'home_only'     => $collector_sh->translate("tw_home_only_card".$country, "Store pickup is only available with cash on delivery."),
 ];
 $twH = function ($k) use ($twT) { return htmlspecialchars($twT[$k], ENT_QUOTES, 'UTF-8'); };
+// Store-pickup hint has a "Label: rest of the line" layout on its 2nd/3rd lines (e.g. "Self-pickup: ...",
+// "本人取件：..."); each line is escaped on its own and only the leading "Label:"/"Label：" gets wrapped
+// in <strong>, so the translated text can never inject arbitrary HTML.
+$twHintHtml = function () use ($twT) {
+    $lines = explode("\n", $twT['hint']);
+    $lines = array_map(function ($line) {
+        $escaped = htmlspecialchars($line, ENT_QUOTES, 'UTF-8');
+        return preg_replace('/^([^:：]+[:：])/u', '<strong>$1</strong>', $escaped);
+    }, $lines);
+    return implode('<br/>', $lines);
+};
 $twHomeSvg  = '<svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>';
 
 // Absolute URL of this folder (src/shipping/), worked out from the file's location, so the logos and the store
@@ -126,7 +137,7 @@ input:not([type=checkbox]):not([type=radio]):disabled {
 .tw-check { display: flex; align-items: center; gap: 8px; font-size: 14px; margin: 12px 0; cursor: pointer; font-weight: 400; }
 .tw-check input { width: 16px; height: 16px; margin: 0; }
 .tw-manual { border-left: 3px solid #d6d6d6; padding-left: 12px; }
-.tw-hint { font-size: 12px; color: #777; margin-top: 4px; }
+.tw-hint { font-size: 12px; color: #777; margin-top: 4px; white-space: pre-line; line-height: 20px; }
 @media (max-width: 480px) { .tw-tabs { grid-template-columns: repeat(2, 1fr); } }
 </style>
 
@@ -245,7 +256,7 @@ input:not([type=checkbox]):not([type=radio]):disabled {
             <input type="text" id="twStoreAddr" class="cart-input p" placeholder="例：台北市信義區信義路五段 7 號" autocomplete="off">
         </div>
     </div>
-    <div class="tw-hint"><?= $twH('hint'); ?></div>
+    <div class="tw-hint"><?= $twHintHtml(); ?></div>
 </div>
 
 
