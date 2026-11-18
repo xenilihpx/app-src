@@ -3525,6 +3525,15 @@
             return (Number.isFinite(value) && !Number.isInteger(value));
         }
 
+        // Delivery time shown in the Apple Pay / Google Pay sheet: Taiwan 7 days, every other country 2-14 days
+        form_obj.getDeliveryEstimate = function () {
+            var tw = ($("#userCountry").val() || "").toUpperCase() === "TW";
+            return {
+                maximum: { unit: 'day', value: tw ? 7 : 14 },
+                minimum: { unit: 'day', value: tw ? 7 : 2 }
+            };
+        };
+
         form_obj.getStripeAmount =function(){
                 var stripeLineItems = [];//line items to display product price, name, discounts, shipping price to the customer during wallet pop-up 
                     var options = {
@@ -3559,10 +3568,7 @@
                                         id: 'standard-shipping',
                                         displayName: 'Standard Shipping',
                                         amount: shippingPrice,  // amount in cents
-                                        deliveryEstimate: {
-                                            maximum: { unit: 'day', value: 7 },
-                                            minimum: { unit: 'day', value: 5 }
-                                        }
+                                        deliveryEstimate: form_obj.getDeliveryEstimate()
                                     };
                                 }
                                 else {
@@ -3570,10 +3576,7 @@
                                         id: 'free-shipping',
                                         displayName: 'Free Shipping',
                                         amount: 0,  // amount in cents
-                                        deliveryEstimate: {
-                                            maximum: { unit: 'day', value: 7 },
-                                            minimum: { unit: 'day', value: 5 }
-                                        }
+                                        deliveryEstimate: form_obj.getDeliveryEstimate()
                                     };
                                 }
 
@@ -3643,10 +3646,7 @@
                                         id: 'standard-shipping',
                                         displayName: 'Standard Shipping',
                                         amount: shippingPrice,  // amount in cents
-                                        deliveryEstimate: {
-                                            maximum: { unit: 'day', value: 7 },
-                                            minimum: { unit: 'day', value: 5 }
-                                        }
+                                        deliveryEstimate: form_obj.getDeliveryEstimate()
                                     };
                                 }
                 else {
@@ -3654,10 +3654,7 @@
                                         id: 'free-shipping',
                                         displayName: 'Free Shipping',
                                         amount: 0,  // amount in cents
-                                        deliveryEstimate: {
-                                            maximum: { unit: 'day', value: 7 },
-                                            minimum: { unit: 'day', value: 5 }
-                                        }
+                                        deliveryEstimate: form_obj.getDeliveryEstimate()
                                     };
                             }
 
