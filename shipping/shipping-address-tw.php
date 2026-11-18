@@ -145,7 +145,7 @@ input:not([type=checkbox]):not([type=radio]):disabled {
 .tw-hint { font-size: 13px; color: #777; margin-top: 4px; white-space: pre-line; line-height: 20px; }
 /* 。、 (see $twHintHtml() above) sit too high in their own glyph box; nudging them down with position
    lines them up with the rest of the text. The colon and parens are left alone - they don't need this. */
-.tw-hint .punct { position: relative; top: 0.4em; }
+.tw-hint .punct { position: relative; top: 0.3em; }
 @media (max-width: 480px) { .tw-tabs { grid-template-columns: repeat(2, 1fr); } }
 </style>
 
