@@ -3528,9 +3528,10 @@
         // Delivery time shown in the Apple Pay / Google Pay sheet: Taiwan 7 days, every other country 2-14 days
         form_obj.getDeliveryEstimate = function () {
             var tw = ($("#userCountry").val() || "").toUpperCase() === "TW";
+            if (tw) return "7 Days"; // plain text, so the sheet reads "7 Days" instead of "7 to 7 days"
             return {
-                maximum: { unit: 'day', value: tw ? 7 : 14 },
-                minimum: { unit: 'day', value: tw ? 7 : 2 }
+                maximum: { unit: 'day', value: 14 },
+                minimum: { unit: 'day', value: 2 }
             };
         };
 
