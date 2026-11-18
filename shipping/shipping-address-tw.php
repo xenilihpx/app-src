@@ -51,7 +51,11 @@ $twHintHtml = function () use ($twT) {
     $lines = explode("\n", $twT['hint']);
     $lines = array_map(function ($line) {
         $escaped = htmlspecialchars($line, ENT_QUOTES, 'UTF-8');
-        return preg_replace('/^([^:：]+[:：])/u', '<strong>$1</strong>', $escaped);
+        $escaped = preg_replace('/^([^:：]+[:：])/u', '<strong>$1</strong>', $escaped);
+        // 。、（） sit too high in their own glyph box (every font tested, not a font-fallback issue) -
+        // nudge them down so they line up with the surrounding text. The colon is intentionally left
+        // alone here - it doesn't have the same problem and shouldn't be touched.
+        return preg_replace('/([。、（）])/u', '<span class="punct">$1</span>', $escaped);
     }, $lines);
     return implode('<br/>', $lines);
 };
@@ -138,6 +142,9 @@ input:not([type=checkbox]):not([type=radio]):disabled {
 .tw-check input { width: 16px; height: 16px; margin: 0; }
 .tw-manual { border-left: 3px solid #d6d6d6; padding-left: 12px; }
 .tw-hint { font-size: 13px; color: #777; margin-top: 4px; white-space: pre-line; line-height: 20px; }
+/* 。、（） (see $twHintHtml() above) sit too high in their own glyph box; nudging them down with
+   position lines them up with the rest of the text. The colon is left alone - it doesn't need this. */
+.tw-hint .punct { position: relative; top: 0.4em; }
 @media (max-width: 480px) { .tw-tabs { grid-template-columns: repeat(2, 1fr); } }
 </style>
 
