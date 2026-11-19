@@ -2963,38 +2963,38 @@ class OfferApi extends KonnektiveApi {
                 return;
             }
 
-            // ---------------------------------------------------------------------
-            // STEP 1: Import the upsell into Checkout Champ FIRST.
-            // If the CRM import fails, stop here and do NOT charge the customer in Stripe.
-            // skipQA = 0: the upsell waits in QA until the Stripe charge result is known,
-            // then it is APPROVED (charged) or DECLINED (charge failed).
-            // ---------------------------------------------------------------------
+            // Checkout Champ upsale payload, built now but only sent AFTER Stripe has charged the customer
             $data["campaignId"] = $this->campaignId;
             $data['orderId'] = $orderData['orderId'];
-            $data['skipQA'] = 0;
             $data = array_merge($data, $this->extractOrders($data['products'])); //orders
             $orderProducts = $data["products"];
             unset($data["products"]);
-
-            $resp = $this->import_upsale($data);
-            $resp_decode = json_decode($resp);
-
-            if (!isset($resp_decode->result) || $resp_decode->result != "SUCCESS" || empty($resp_decode->message->orderId)) {
-                // CRM import failed: the customer is NOT charged in Stripe
-                error_log("stripeExpressUpsellImport: upsale/import failed for order ".$orderData['orderId'].": ".($resp ?: "empty response"));
-                $this->messageCheck($resp_decode->message ?? "Unable to process your order. Please try again.", "ERROR");
-                return;
-            }
-
-            $upsellOrderId = $resp_decode->message->orderId;
-            $upsellCustomerId = $resp_decode->message->customerId ?? $orderData['customerId'];
             $declineData = array_merge($data, ["products" => $orderProducts]); // decline note lists the upsell products
 
+            // Copy of the upsale payload stored on the PaymentIntent (metadata cocUpsale), so stripe-webhook.php
+            // can import the upsell itself if the payment is still processing at checkout and succeeds later.
+            // Stripe metadata values are limited to 500 characters.
+            $cocUpsale = ['campaignId' => $this->campaignId, 'orderId' => $orderData['orderId']];
+            foreach ($data as $key => $value) {
+                if (preg_match('/^(product|variant)\d+_/', $key)) {
+                    $cocUpsale[$key] = $value;
+                }
+            }
+            $cocUpsaleJson = json_encode($cocUpsale);
+            if (strlen($cocUpsaleJson) > 500) {
+                error_log("stripeExpressUpsellImport: upsale payload too long for Stripe metadata (".strlen($cocUpsaleJson)." chars), webhook import unavailable for order ".$orderData['orderId']);
+                $cocUpsaleJson = '';
+            }
+
             // ---------------------------------------------------------------------
-            // STEP 2: Charge the customer in Stripe.
-            // Any failure from here on marks the Checkout Champ upsell as DECLINED.
+            // STEP 1: CHARGE the customer in Stripe FIRST.
+            // Only a charge that SUCCEEDED is imported into Checkout Champ. A declined / canceled /
+            // failed / still processing payment is NOT imported (declines are only recorded as a customer note).
             // ---------------------------------------------------------------------
             \Stripe\Stripe::setApiKey($secretKey);
+            // Retry network failures automatically; the SDK sends an idempotency key with each retry,
+            // so a lost response can never create a second charge
+            \Stripe\Stripe::setMaxNetworkRetries(2);
 
             try {
                     $paymentIntent = \Stripe\PaymentIntent::create([
@@ -3008,36 +3008,35 @@ class OfferApi extends KonnektiveApi {
                         'customer' => $orderData['walletCustomerId'],
                         'confirm' => true,
                         'metadata' => [
-                            'campaignId'  => (string)$this->campaignId,
-                            'orderId'     => (string)$upsellOrderId, // Checkout Champ upsell order id
-                            'mainOrderId' => (string)$orderData['orderId'],
-                            'cocCustomerId' => (string)$upsellCustomerId, // Checkout Champ customer id (webhook notes)
-                            'paySource'   => (string)($orderData['paySource'] ?? ''),
-                            'page'        => (string)($data['page'] ?? '')
+                            'campaignId'    => (string)$this->campaignId,
+                            'mainOrderId'   => (string)$orderData['orderId'],
+                            'cocCustomerId' => (string)($orderData['customerId'] ?? ''), // Checkout Champ customer id (webhook notes)
+                            'paySource'     => (string)($orderData['paySource'] ?? ''),
+                            'page'          => (string)($data['page'] ?? ''),
+                            'productIds'    => implode(',', $requestedProductIds),
+                            'cocUpsale'     => $cocUpsaleJson // upsale payload for the webhook (pending payments only)
                         ]
                     ]);
 
-                    // succeeded -> approve, processing -> pending (stays in QA), anything else -> decline
+                    // succeeded -> approve, processing -> pending, anything else (declined / canceled) -> decline
                     $paymentResult = $this->stripeExpressResolvePaymentIntent($paymentIntent);
                     if ($paymentResult['action'] === 'decline') {
-                            $this->stripeExpressUpsellDeclineOrder($upsellOrderId, $declineData, $paymentResult['reason'], $paymentIntent->id);
+                            $this->stripeExpressUpsellDeclineImport($declineData, $paymentResult['reason'], $paymentIntent->id);
                             return;
                     }
 
             } catch (\Stripe\Exception\CardException $e) {
                     // Stripe throws on a declined Apple Pay / Google Pay / Link charge when confirm=true
                     $declinedIntent = $e->getError()->payment_intent ?? null;
-                    $this->stripeExpressUpsellDeclineOrder(
-                        $upsellOrderId,
+                    $this->stripeExpressUpsellDeclineImport(
                         $declineData,
                         $e->getMessage().($e->getDeclineCode() ? " (".$e->getDeclineCode().")" : ""),
                         $declinedIntent->id ?? ""
                     );
                     return;
             } catch (\Exception $e) {
-                    // Any other Stripe failure (API error, invalid request, network...) also declines the CRM upsell
-                    $this->stripeExpressUpsellDeclineOrder(
-                        $upsellOrderId,
+                    // Any other Stripe failure (API error, invalid request, network...): not imported either
+                    $this->stripeExpressUpsellDeclineImport(
                         $declineData,
                         $e->getMessage(),
                         isset($paymentIntent) ? $paymentIntent->id : ""
@@ -3045,55 +3044,152 @@ class OfferApi extends KonnektiveApi {
                     return;
             }
 
-            // ---------------------------------------------------------------------
-            // STEP 3: Stripe charge succeeded, approve the Checkout Champ upsell.
-            // A processing (asynchronous) payment is not approved yet: the upsell stays in QA.
-            // ---------------------------------------------------------------------
+            $logData = array_merge($data, ['paySource' => $orderData['paySource'] ?? null]);
+
             if ($paymentResult['action'] === 'pending') {
-                $this->stripeExpressPendingOrder(
+                // Payment still processing: NOT charged yet, so it is NOT imported into Checkout Champ now.
+                // The PaymentIntent is flagged cocImportPending=1: stripe-webhook.php imports + APPROVES the upsell
+                // on payment_intent.succeeded, and imports nothing on payment_intent.payment_failed / canceled.
+                $webhookImport = ($cocUpsaleJson !== '');
+                if ($webhookImport) {
+                    try {
+                        \Stripe\PaymentIntent::update($paymentIntent->id, ['metadata' => ['cocImportPending' => '1']]);
+                    } catch (\Exception $e) {
+                        // the webhook also flags it on payment_intent.processing (backup)
+                        error_log("stripeExpressUpsellImport: failed to flag PaymentIntent ".$paymentIntent->id." cocImportPending=1: ".$e->getMessage());
+                    }
+                }
+                $pendingAction = $webhookImport
+                    ? "The Stripe webhook imports and approves the upsell automatically once the payment succeeds, nothing is imported if it fails."
+                    : "Import the upsell manually once the Stripe payment succeeds, do nothing if it fails.";
+
+                error_log("stripeExpressUpsellImport: PaymentIntent ".$paymentIntent->id." is processing for order ".$orderData['orderId'].
+                          ", upsell not imported yet. ".$pendingAction);
+                $this->logWalletImportError(
                     "upsell_pending",
-                    $upsellOrderId,
-                    $upsellCustomerId,
-                    $orderData['paySource'] ?? '',
-                    $paymentResult['reason'],
-                    array_merge($data, ['orderId' => $upsellOrderId, 'paySource' => $orderData['paySource'] ?? null]),
+                    $logData,
+                    json_encode(["result" => "PENDING", "message" => $paymentResult['reason'].". Not imported into Checkout Champ yet. ".$pendingAction]),
                     $paymentIntent,
                     $orderData['walletCustomerId']
                 );
+                if (!empty($orderData['customerId'])) {
+                    $this->customer_add_note([
+                        "customerId" => $orderData['customerId'],
+                        "message" => "Upsell payment PROCESSING in Stripe for order: ".$orderData['orderId'].", not imported yet. ".$pendingAction." Stripe Customer id: ".$orderData['walletCustomerId'].
+                                    ", Payment Type: ".$orderData['paySource'].
+                                    ", Payment Intent Id: ".$paymentIntent->id.
+                                    ", Products: ".implode(", ", $requestedProductIds).
+                                    ", Amount: ".$data['amount']." ".$data['currency']
+                    ]);
+                }
+                $this->stripeExpressUpsellMarkTaken($requestedProductIds);
+                $resp_decode = (object)["result" => "SUCCESS", "message" => (object)["orderId" => $orderData['orderId']]];
             } else {
-                $approveResp = $this->order_qa([
-                    'orderId' => $upsellOrderId,
-                    'action'  => 'APPROVE'
-                ]);
-                $approveDecode = json_decode($approveResp);
-                if (!isset($approveDecode->result) || $approveDecode->result != "SUCCESS") {
-                    // Customer is charged in Stripe but the CRM upsell is still stuck in QA.
-                    // Log it for manual approval; the funnel continues because the payment and the CRM upsell both exist.
-                    error_log("stripeExpressUpsellImport: order_qa APPROVE failed for upsell order ".$upsellOrderId.
-                              ", PaymentIntent ".$paymentIntent->id.": ".($approveResp ?: "empty response"));
+                // ---------------------------------------------------------------------
+                // STEP 2: Stripe charge SUCCEEDED, import the upsell into Checkout Champ (into QA, skipQA = 0)
+                // and APPROVE it. The import is retried; if it still fails the charge is REFUNDED,
+                // so the customer is never charged for an upsell that is not in Checkout Champ.
+                // ---------------------------------------------------------------------
+                $data['skipQA'] = 0;
+                $data['externalOrderId'] = $paymentIntent->id;
+
+                $maxAttempts = 3;
+                $importOk = false;
+                for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
+                    $resp = $this->import_upsale($data);
+                    $resp_decode = json_decode($resp);
+                    if (isset($resp_decode->result) && $resp_decode->result == "SUCCESS" && !empty($resp_decode->message->orderId)) {
+                        $importOk = true;
+                        break;
+                    }
+                    error_log("stripeExpressUpsellImport: upsale/import attempt ".$attempt."/".$maxAttempts." failed for order ".$orderData['orderId'].
+                              ", PaymentIntent ".$paymentIntent->id.": ".($resp ?: "empty response"));
+                    if ($attempt < $maxAttempts) {
+                        sleep($attempt);
+                    }
+                }
+
+                if (!$importOk) {
+                    $released = $this->stripeExpressReleasePayment($paymentIntent); // refund
+
+                    if ($released !== null) {
+                        error_log("stripeExpressUpsellImport: upsale/import failed for order ".$orderData['orderId'].
+                                  ", PaymentIntent ".$paymentIntent->id." ".$released);
+                        if (!empty($orderData['customerId'])) {
+                            $this->customer_add_note([
+                                "customerId" => $orderData['customerId'],
+                                "message" => "Upsell NOT completed for order: ".$orderData['orderId'].", Checkout Champ import failed, Stripe payment ".$released.". ".
+                                            "If this upsell still shows in Checkout Champ, decline it in QA. Stripe Customer id: ".$orderData['walletCustomerId'].
+                                            ", Payment Type: ".$orderData['paySource'].
+                                            ", Payment Intent Id: ".$paymentIntent->id.
+                                            ", Products: ".implode(", ", $requestedProductIds).
+                                            ", Amount: ".$data['amount']." ".$data['currency'].
+                                            ", Checkout Champ: ".json_encode($resp_decode->message ?? $resp)
+                            ]);
+                        }
+                        $this->messageCheck($resp_decode->message ?? "Unable to process your order. Please try again.", "ERROR");
+                        return;
+                    }
+
+                    // Last resort, the refund failed: log it for manual follow up and keep the funnel going
                     $this->logWalletImportError(
-                        "upsell_approve",
-                        array_merge($data, ['orderId' => $upsellOrderId, 'paySource' => $orderData['paySource'] ?? null]),
-                        $approveResp ?: json_encode(["result" => "ERROR", "message" => "Empty response from order/qa APPROVE"]),
+                        "upsell",
+                        $logData,
+                        $resp ?: json_encode(["result" => "ERROR", "message" => "Empty response from upsale/import"]),
                         $paymentIntent,
                         $orderData['walletCustomerId']
                     );
+                    if (!empty($orderData['customerId'])) {
+                        $this->customer_add_note([
+                            "customerId" => $orderData['customerId'],
+                            "message" => "Upsell CHARGED in Stripe, Checkout Champ import AND automatic refund failed for order: ".$orderData['orderId'].", import or refund it manually. Stripe Customer id: ".$orderData['walletCustomerId'].
+                                        ", Payment Type: ".$orderData['paySource'].
+                                        ", Payment Intent Id: ".$paymentIntent->id.
+                                        ", Products: ".implode(", ", $requestedProductIds).
+                                        ", Amount: ".$data['amount']." ".$data['currency']
+                        ]);
+                    }
+                    $this->stripeExpressUpsellMarkTaken($requestedProductIds);
+                    $resp_decode = (object)["result" => "SUCCESS", "message" => (object)["orderId" => $orderData['orderId']]];
+                } else {
+                    $upsellOrderId = $resp_decode->message->orderId;
+                    $upsellCustomerId = $resp_decode->message->customerId ?? $orderData['customerId'];
+
+                    // Charged in Stripe and imported into Checkout Champ: approve the upsell in QA
+                    $approveResp = $this->order_qa([
+                        'orderId' => $upsellOrderId,
+                        'action'  => 'APPROVE'
+                    ]);
+                    $approveDecode = json_decode($approveResp);
+                    if (!isset($approveDecode->result) || $approveDecode->result != "SUCCESS") {
+                        // Customer is charged in Stripe but the CRM upsell is still stuck in QA.
+                        // Log it for manual approval; the funnel continues because the payment and the CRM upsell both exist.
+                        error_log("stripeExpressUpsellImport: order_qa APPROVE failed for upsell order ".$upsellOrderId.
+                                  ", PaymentIntent ".$paymentIntent->id.": ".($approveResp ?: "empty response"));
+                        $this->logWalletImportError(
+                            "upsell_approve",
+                            array_merge($logData, ['orderId' => $upsellOrderId]),
+                            $approveResp ?: json_encode(["result" => "ERROR", "message" => "Empty response from order/qa APPROVE"]),
+                            $paymentIntent,
+                            $orderData['walletCustomerId']
+                        );
+                    }
+
+                    //add note to customer
+                    $this->customer_add_note(
+                        array(
+                            "customerId" => $upsellCustomerId,
+                            "message" => "Upsell order: ".$upsellOrderId." created using Stripe Express Checkout. Stripe Customer id: ".$orderData['walletCustomerId'].
+                                                                        ", Payment Type: ".$orderData["paySource"].
+                                                                        ", Payment Intent Id: ". $paymentIntent->id
+                        )
+                    );
+
+                    $_SESSION['order_data_'.$this->campaignId]["items"]= $resp_decode->message->items;
                 }
             }
 
             unset($_SESSION['order_data_upsell'.$this->campaignId]); //clear order data first
-
-            //add note to customer
-            $this->customer_add_note(
-                array(
-                    "customerId" => $upsellCustomerId,
-                    "message" => "Upsell order: ".$upsellOrderId." created using Stripe Express Checkout. Stripe Customer id: ".$orderData['walletCustomerId'].
-                                                                ", Payment Type: ".$orderData["paySource"].
-                                                                ", Payment Intent Id: ". $paymentIntent->id
-                )
-            );
-
-            $_SESSION['order_data_'.$this->campaignId]["items"]= $resp_decode->message->items;
 
             // Track cumulative qty across accepted upsells
             $upsellQty = intval($data['product1_qty'] ?? 0);
@@ -3135,34 +3231,32 @@ class OfferApi extends KonnektiveApi {
             ]);
     }
 
-    // Mark an already imported Stripe Express (Apple Pay / Google Pay / Link) Checkout Champ upsell
-    // as DECLINED when the Stripe charge failed, then record the decline note and respond to the client.
-    private function stripeExpressUpsellDeclineOrder($upsellOrderId, $data, $declineReason, $paymentIntentId){
-
-            $mainOrderId = $_SESSION['order_data_'.$this->campaignId]['orderId'] ?? null;
-
-            if ((string)$upsellOrderId === (string)$mainOrderId) {
-                // Checkout Champ attached the upsell to the main order id. A QA DECLINE here would
-                // decline the already PAID main order too, so do not decline it: log for manual removal.
-                error_log("stripeExpressUpsellImport: upsell shares main order ".$mainOrderId.
-                          ", QA DECLINE skipped, remove the upsell item manually. Reason: ".$declineReason);
-                $declineReason .= " (upsell is on the main order ".$mainOrderId.", QA decline skipped, remove the upsell item manually)";
-            } else {
-                $declineResp = $this->order_qa([
-                    'orderId' => $upsellOrderId,
-                    'action'  => 'DECLINE'
-                ]);
-                $declineDecode = json_decode($declineResp);
-                if (!isset($declineDecode->result) || $declineDecode->result != "SUCCESS") {
-                    error_log("stripeExpressUpsellImport: order_qa DECLINE failed for upsell order ".$upsellOrderId.": ".($declineResp ?: "empty response"));
-                    $declineReason .= " (order/qa DECLINE failed for upsell order ".$upsellOrderId.", decline it manually)";
-                } else {
-                    $declineReason .= " (upsell order ".$upsellOrderId." QA declined)";
+    // Release a Stripe Express payment that must not be kept because Checkout Champ has no order for it:
+    // an authorization (requires_capture) is canceled, an already captured payment (succeeded) is refunded.
+    // Returns 'canceled' / 'refunded', or null when it could not be released (e.g. processing). Never throws.
+    private function stripeExpressReleasePayment($paymentIntent){
+            try {
+                if ($paymentIntent->status === 'requires_capture') {
+                    $paymentIntent->cancel();
+                    return 'canceled';
                 }
+                if ($paymentIntent->status === 'succeeded') {
+                    \Stripe\Refund::create(['payment_intent' => $paymentIntent->id]);
+                    return 'refunded';
+                }
+            } catch (\Exception $e) {
+                error_log("stripeExpressReleasePayment: failed to release PaymentIntent ".$paymentIntent->id." (".$paymentIntent->status."): ".$e->getMessage());
             }
+            return null;
+    }
 
-            // customer note + "Upsell Transaction Declined" response
-            $this->stripeExpressUpsellDeclineImport($data, $declineReason, $paymentIntentId);
+    // Mark upsell products as taken in the session so a resubmit can never charge them again
+    private function stripeExpressUpsellMarkTaken($productIds){
+            $sessionItems = (array)($_SESSION['order_data_'.$this->campaignId]['items'] ?? []);
+            foreach ($productIds as $productId) {
+                $sessionItems[] = (object)['productId' => $productId];
+            }
+            $_SESSION['order_data_'.$this->campaignId]['items'] = $sessionItems;
     }
 
     // Decide what to do with the Checkout Champ order from a confirmed Stripe Express PaymentIntent status.
