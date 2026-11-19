@@ -560,8 +560,8 @@
     "house_building_no_hk": "\u55ae\u4f4d\u548c\u6a13\u5c64",
     "state_hk": "\u5dde\uff0f\u7701",
     "p_state_hk": "\u9078\u64c7\u5dde\uff0f\u7701",
-    "zip_hk": "\u90f5\u905e\u5340\u865f \/ \u90f5\u653f\u7de8\u865f",
-    "p_zip_hk": "\u90f5\u905e\u5340\u865f",
+    "zip_hk": "\u90f5\u653f\u7de8\u78bc\uff08\u5982\u9069\u7528\uff09",
+    "p_zip_hk": "\u90f5\u653f\u7de8\u78bc\uff08\u5982\u9069\u7528\uff09",
     "address_1": "\u5730\u5740 1",
     "p_address_1": "\u8857\u9053\u5730\u5740",
     "address_2": "\u5730\u5740 2\uff08\u53ef\u9078\uff09",
@@ -598,5 +598,5 @@
     "tw_id_err_family_tw": "\u5168\u5bb6\u5e97\u865f\u70ba 0 \u958b\u982d\u7684 6 \u78bc\u6578\u5b57\u3002",
     "tw_id_err_hilife_tw": "\u840a\u723e\u5bcc\u5e97\u865f\u70ba 4 \u78bc\u6578\u5b57\u3002",
     "tw_mobile_err_tw": "\u8d85\u5546\u53d6\u8ca8\u4ed8\u6b3e\u9700\u586b\u5beb\u624b\u6a5f\u865f\u78bc\uff0c\u8acb\u52ff\u586b\u5beb\u5e02\u8a71\u3002",
-    "tw_mobile_err_len_tw": "請填寫台灣手機號碼，例如 0912 345 678 或 912 345 678。"
+    "tw_mobile_err_len_tw": "\u8acb\u586b\u5beb\u53f0\u7063\u624b\u6a5f\u865f\u78bc\uff0c\u4f8b\u5982 0912 345 678 \u6216 912 345 678\u3002"
 }
