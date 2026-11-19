@@ -3525,13 +3525,13 @@
             return (Number.isFinite(value) && !Number.isInteger(value));
         }
 
-        // Delivery time shown in the Apple Pay / Google Pay sheet: Taiwan 7 days, every other country 2-14 days
+        // Delivery time shown in the Apple Pay / Google Pay sheet. A site can override it by defining window.walletDeliveryEstimate()
+        // (returning a string or a {maximum, minimum} object); without it the original 5-7 days is used.
         form_obj.getDeliveryEstimate = function () {
-            var tw = ($("#userCountry").val() || "").toUpperCase() === "TW";
-            if (tw) return "7 Days"; // plain text, so the sheet reads "7 Days" instead of "7 to 7 days"
+            if (typeof window.walletDeliveryEstimate === "function") return window.walletDeliveryEstimate();
             return {
-                maximum: { unit: 'day', value: 14 },
-                minimum: { unit: 'day', value: 2 }
+                maximum: { unit: 'day', value: 7 },
+                minimum: { unit: 'day', value: 5 }
             };
         };
 
